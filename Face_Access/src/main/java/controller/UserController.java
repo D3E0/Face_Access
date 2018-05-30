@@ -114,6 +114,11 @@ public class UserController {
     }
 
 
+    /**
+     * 照片上传
+     * @param image
+     * @return
+     */
     @RequestMapping("/upload")
     @ResponseBody
     public String savePicture(@RequestPart("image") MultipartFile image) {
