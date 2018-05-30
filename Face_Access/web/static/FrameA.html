@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="./layui/css/layui.css">
+    <script src="./layui/layui.js"></script>
+</head>
+
+<body>
+<div id="A">
+    aaaaaaaaaaaaaa
+</div>
+<iframe id="frameA" src="FrameB.html" height="500px" width="400px"></iframe>
+<script>
+    layui.use(['element', 'laydate', 'jquery', 'layer'], function () {
+        var element = layui.element, laydate = layui.laydate
+            , $ = layui.jquery, layer = layui.layer;
+        layer.open({
+            type: 2,
+            content: 'FrameB.html',
+            shade: 0,
+            area: ['600px', '700px'],
+            success: function (layero, index) {
+                var test = $('#' + layero.find('iframe')[0]['name']).get(0);
+                var doc = test.contentDocument;
+                var x = $("#B", doc).text();
+                console.info(x);
+                // var layframeB = document.getElementById("layui-layer-iframe1");
+                // console.info(layframeB);
+                // var laydocB = layframeB.contentDocument;
+                // laydocB.body.style.backgroundColor = "#0000ff";
+                // console.info(laydocB);
+                // var divB = laydocB.getElementById("B").innerText;
+                // console.info(divB);
+            }
+        });
+
+        // var iframeB = document.getElementById("frameA");
+        // // console.info(iframeB);
+        // var docB = iframeB.contentDocument;
+        // docB.body.style.backgroundColor = "#0000ff";
+        // console.info(docB);
+        // var divB = docB.getElementById("B").innerText;
+        // console.info(divB);
+
+        // window.frames["iframe Name"]或   var oo = top.frames[index].contentDocument;
+    })
+
+
+</script>
+</body>
+
+</html>
