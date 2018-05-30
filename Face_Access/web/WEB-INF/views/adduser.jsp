@@ -78,16 +78,6 @@
             </div>
         </div>
 
-        <%--<div class="layui-form-item" id="keywords">--%>
-        <%--<ul id="result-list">--%>
-        <%--&lt;%&ndash;<li class="resultitem">坚果 TNT</li>&ndash;%&gt;--%>
-        <%--&lt;%&ndash;<li class="resultitem">坚果 R1</li>&ndash;%&gt;--%>
-        <%--&lt;%&ndash;<li class="resultitem">坚果 PRO 2</li>&ndash;%&gt;--%>
-        <%--&lt;%&ndash;&lt;%&ndash;<li class="resultitem">畅呼吸净化器</li>&ndash;%&gt;&ndash;%&gt;--%>
-        <%--&lt;%&ndash;<li class="resultitem">畅呼吸净化器</li>&ndash;%&gt;--%>
-        <%--</ul>--%>
-        <%--</div>--%>
-
         <div class="layui-form-item">
             <label class="layui-form-label">人员 ID</label>
             <div class="layui-input-inline">

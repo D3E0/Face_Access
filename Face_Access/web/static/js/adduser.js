@@ -24,19 +24,12 @@ layui.use(['laydate', 'form', 'layer', 'jquery'], function () {
 
     });
 
-    $("#username").keyup(function () {
-        var str = $(this).val();
-        var url = '/searchuser?id=' + str;
-        console.info(url);
-        $("#username").empty();
-        // $("#keywords").show();
-        $.getJSON(url, function (val) {
-            $.each(val.data, function (i, n) {
-                $("<option>" + n.name + "</option>").appendTo($("#username"));
-                console.info(n.name);
-            });
-        })
-    })
-
+    $.getJSON('/getAllUserId', function (val) {
+        console.info(val);
+        $.each(val.data, function (i, n) {
+            $("<option>" + n.id + "</option>").appendTo($("#username"));
+            console.info(n.id);
+        });
+    });
 
 });

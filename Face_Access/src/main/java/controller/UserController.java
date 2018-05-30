@@ -31,6 +31,13 @@ public class UserController {
     Logger logger = Logger.getLogger("UserController");
 
 
+    /**
+     * 人员详情
+     *
+     * @param id
+     * @param model
+     * @return
+     */
     @RequestMapping("/user")
     public String showUserProfile(@RequestParam(value = "id", defaultValue = "-1") int id, Model model) {
         UserEntity entity = userService.getUserEntity(id);
@@ -38,26 +45,36 @@ public class UserController {
         return "userProfile";
     }
 
-    @RequestMapping("/getUserId")
+    /**
+     * 返回所有人员 ID，用于模糊查找
+     *
+     * @return JSON
+     */
+    @RequestMapping("/getAllUserId")
     @ResponseBody
     public String searchUserProfile() {
-        List<UserEntity> list = userService.getUserEntity();
+        List<UserEntity> list = userService.getUserList();
         JSONArray array = new JSONArray();
         for (UserEntity entity : list) {
             JSONObject object = new JSONObject();
-            object.put("name", entity.getUserName());
+            object.put("id", entity.getUserId());
             array.add(object);
         }
         return "{\"code\":0,\"msg\":\"\",\"count\":1000,\"data\":" + array + "}";
     }
 
+    /**
+     * @return
+     */
     @RequestMapping("/users")
     public String showUsers() {
         return "users";
     }
 
     /**
-     * @return json 字段，包含请求 houseID 下的人员信息以及相关授权信息
+     * 返回包含请求 houseID 下的人员信息以及相关授权信息，
+     *
+     * @return JSON
      */
     @RequestMapping("/users.json")
     @ResponseBody
@@ -79,17 +96,35 @@ public class UserController {
 
     }
 
+    /**
+     * 打输
+     *
+     * @return
+     */
     @RequestMapping("/adduser")
     public String saveUser() {
         return "adduser";
     }
 
+    /**
+     * @param id
+     * @param model
+     * @return 控制跳转
+     */
     @RequestMapping("/updateuser")
     public String updateUser(@RequestParam(value = "id", defaultValue = "0") int id, Model model) {
 //        model.addAttribute("user", )
         return "adduser";
     }
 
+    /**
+     * 日期选择 iframe交互中介
+     *
+     * @param start
+     * @param end
+     * @param model
+     * @return
+     */
     @RequestMapping("/choosedate")
     public String saveDate(@RequestParam(value = "start", defaultValue = "0") String start,
                            @RequestParam(value = "end", defaultValue = "0") String end,
@@ -99,7 +134,12 @@ public class UserController {
         return "chooseDate";
     }
 
-
+    /**
+     * 用户添加人员表单提交处理
+     *
+     * @param request
+     * @return
+     */
     @RequestMapping("/processuser")
     public String processUser(HttpServletRequest request) {
         int id = 1;
@@ -116,6 +156,7 @@ public class UserController {
 
     /**
      * 照片上传
+     *
      * @param image
      * @return
      */
