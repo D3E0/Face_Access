@@ -14,6 +14,8 @@ public interface UserMangeServiceInterface {
 
     public void updateAuthorityOfHouse(int authorityID, Date endDate);
 
+    public void addAuthorityOfHouse(int houseID, int userID, Date startDate, Date endDate);
+
     public UserEntity getUserEntity(int userID);
 
     public List<UserEntity> getUserList();

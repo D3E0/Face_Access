@@ -13,6 +13,9 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/layui/css/layui.css">
     <script src="${pageContext.request.contextPath}/static/layui/layui.js"></script>
     <script src="${pageContext.request.contextPath}/static/js/users.js"></script>
+    <script>
+        var win = {};
+    </script>
     <meta http-equiv="Pragma" content="no-cache">
     <style>
         .content {
@@ -39,6 +42,7 @@
     <a class="layui-btn layui-btn-sm" lay-event="edit">编辑</a>
     <a class="layui-btn layui-btn-danger layui-btn-sm" lay-event="del">删除</a>
 </script>
+
 
 </body>
 </html>

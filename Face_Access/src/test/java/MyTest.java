@@ -1,3 +1,5 @@
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import entity.AuthorityEntity;
 import org.junit.Test;
 
@@ -9,6 +11,14 @@ import java.util.Iterator;
 import java.util.List;
 
 public class MyTest {
+
+    @Test
+    public void testJson() {
+        JSONObject object = new JSONObject();
+        object.put("result", "success");
+        System.out.println(JSON.toJSONString(object));
+    }
+
 
     @Test
     public void testHibernate() {

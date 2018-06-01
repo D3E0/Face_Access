@@ -56,15 +56,15 @@ layui.use(['jquery', 'laypage', 'table', 'layer', 'element', 'laydate'], functio
                 yes: function (index, layero) {
                     var test = $('#' + layero.find('iframe')[0]['name']).get(0);
                     var doc = test.contentDocument;
-                    var x = $("#endDate", doc).val();
-                    // console.info(x);
-                    //这里一般是发送修改的 Ajax 请求
-                    //同步更新表格和缓存对应的值
-                    obj.update({
-                        endDate: x
+                    var endDate = $("#endDate", doc).val();
+                    $.post('/updateAuthority', {end: endDate, id: data.authorityId}, function () {
+                        obj.update({
+                            endDate: endDate
+                        });
+                        layer.msg('修改成功');
+                        layer.close(index); //如果设定了yes回调，需进行手工关闭
                     });
-                    layer.msg('修改成功');
-                    layer.close(index); //如果设定了yes回调，需进行手工关闭
+
                 }
             })
         }
@@ -78,7 +78,10 @@ layui.use(['jquery', 'laypage', 'table', 'layer', 'element', 'laydate'], functio
             area: ['500', '580'],
             resize: false,
             shade: 0,
-            id: "second"
+            id: "second",
+            success: function (layero, index) {
+                win.addFrmaeIndex = index;
+            }
         });
     })
 

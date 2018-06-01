@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <dataSource name="my_data_base@localhost">
-  <database-model serializer="dbm" rdbms="MYSQL" format-version="4.8">
+  <database-model serializer="dbm" rdbms="MYSQL" format-version="4.9">
     <root id="1">
       <ServerVersion>5.7.20</ServerVersion>
       <DefaultEngine>InnoDB</DefaultEngine>
@@ -932,135 +932,128 @@
       <DataType>int(10)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="237" parent="230" name="doorID">
+    <column id="237" parent="230" name="houseID">
       <Position>3</Position>
-      <DataType>int(4)|0s</DataType>
-      <ColumnKind>normal</ColumnKind>
-    </column>
-    <column id="238" parent="230" name="houseID">
-      <Position>4</Position>
       <DataType>int(6)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="239" parent="230" name="startDate">
+    <column id="238" parent="230" name="startDate">
+      <Position>4</Position>
+      <DataType>date|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="239" parent="230" name="endDate">
       <Position>5</Position>
       <DataType>date|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="240" parent="230" name="endDate">
-      <Position>6</Position>
-      <DataType>date|0s</DataType>
-      <ColumnKind>normal</ColumnKind>
-    </column>
-    <index id="241" parent="230" name="userid">
+    <index id="240" parent="230" name="userid">
       <ColNames>userID</ColNames>
       <Type>btree</Type>
     </index>
-    <index id="242" parent="230" name="doorid">
-      <ColNames>doorID</ColNames>
-      <Type>btree</Type>
-    </index>
-    <index id="243" parent="230" name="house_Id">
+    <index id="241" parent="230" name="house_Id">
       <ColNames>houseID</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="244" parent="230" name="PRIMARY">
+    <key id="242" parent="230" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>authorityID</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="245" parent="230" name="userid">
+    <foreign-key id="243" parent="230" name="userid">
       <ColNames>userID</ColNames>
       <RefSchemaName>my_data_base</RefSchemaName>
       <RefTableName>user</RefTableName>
       <RefColNames>userID</RefColNames>
+      <OnUpdate>cascade</OnUpdate>
+      <OnDelete>cascade</OnDelete>
     </foreign-key>
-    <foreign-key id="246" parent="230" name="doorid">
-      <ColNames>doorID</ColNames>
-      <RefSchemaName>my_data_base</RefSchemaName>
-      <RefTableName>door</RefTableName>
-      <RefColNames>doorID</RefColNames>
-    </foreign-key>
-    <foreign-key id="247" parent="230" name="house_Id">
+    <foreign-key id="244" parent="230" name="house_Id">
       <ColNames>houseID</ColNames>
       <RefSchemaName>my_data_base</RefSchemaName>
       <RefTableName>house</RefTableName>
       <RefColNames>houseID</RefColNames>
+      <OnUpdate>cascade</OnUpdate>
+      <OnDelete>cascade</OnDelete>
     </foreign-key>
-    <column id="248" parent="231" name="doorID">
+    <column id="245" parent="231" name="doorID">
       <Position>1</Position>
       <DataType>int(4)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="249" parent="231" name="doorLocation">
+    <column id="246" parent="231" name="doorLocation">
       <Position>2</Position>
       <DataType>varchar(255)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="250" parent="231" name="doorIP">
+    <column id="247" parent="231" name="doorIP">
       <Position>3</Position>
       <DataType>varchar(12)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="251" parent="231" name="doorStasue">
+    <column id="248" parent="231" name="doorStasue">
       <Position>4</Position>
       <DataType>char(10)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <key id="252" parent="231" name="PRIMARY">
+    <key id="249" parent="231" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>doorID</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="253" parent="232" name="houseID">
+    <column id="250" parent="232" name="houseID">
       <Position>1</Position>
       <DataType>int(6)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="254" parent="232" name="housePassword">
+    <column id="251" parent="232" name="housePassword">
       <Position>2</Position>
       <DataType>varchar(255)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="255" parent="232" name="userID">
+    <column id="252" parent="232" name="userID">
       <Position>3</Position>
       <DataType>int(10)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="256" parent="232" name="doorID">
+    <column id="253" parent="232" name="doorID">
       <Position>4</Position>
       <DataType>int(11)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <index id="257" parent="232" name="houserOwner">
+    <index id="254" parent="232" name="houserOwner">
       <ColNames>userID</ColNames>
       <Type>btree</Type>
     </index>
-    <index id="258" parent="232" name="iddoor">
+    <index id="255" parent="232" name="iddoor">
       <ColNames>doorID</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="259" parent="232" name="PRIMARY">
+    <key id="256" parent="232" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>houseID</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="260" parent="232" name="houserOwner">
+    <foreign-key id="257" parent="232" name="houserOwner">
       <ColNames>userID</ColNames>
       <RefSchemaName>my_data_base</RefSchemaName>
       <RefTableName>user</RefTableName>
       <RefColNames>userID</RefColNames>
+      <OnUpdate>set-null</OnUpdate>
+      <OnDelete>set-null</OnDelete>
     </foreign-key>
-    <foreign-key id="261" parent="232" name="iddoor">
+    <foreign-key id="258" parent="232" name="iddoor">
       <ColNames>doorID</ColNames>
       <RefSchemaName>my_data_base</RefSchemaName>
       <RefTableName>door</RefTableName>
       <RefColNames>doorID</RefColNames>
+      <OnUpdate>cascade</OnUpdate>
+      <OnDelete>cascade</OnDelete>
     </foreign-key>
-    <column id="262" parent="233" name="openID">
+    <column id="259" parent="233" name="openID">
       <Position>1</Position>
       <DataType>timestamp|0s</DataType>
       <NotNull>1</NotNull>
@@ -1068,79 +1061,79 @@
       <ColumnKind>normal</ColumnKind>
       <OnUpdate>CURRENT_TIMESTAMP</OnUpdate>
     </column>
-    <column id="263" parent="233" name="userID">
+    <column id="260" parent="233" name="userID">
       <Position>2</Position>
       <DataType>int(11)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="264" parent="233" name="doorID">
+    <column id="261" parent="233" name="doorID">
       <Position>3</Position>
       <DataType>int(4)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="265" parent="233" name="openDate">
+    <column id="262" parent="233" name="openDate">
       <Position>4</Position>
       <DataType>datetime|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="266" parent="233" name="openResult">
+    <column id="263" parent="233" name="openResult">
       <Position>5</Position>
       <DataType>varchar(10)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <index id="267" parent="233" name="User_ID">
+    <index id="264" parent="233" name="User_ID">
       <ColNames>userID</ColNames>
       <Type>btree</Type>
     </index>
-    <index id="268" parent="233" name="Door_ID">
+    <index id="265" parent="233" name="Door_ID">
       <ColNames>doorID</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="269" parent="233" name="PRIMARY">
+    <key id="266" parent="233" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>openID</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="270" parent="233" name="User_ID">
+    <foreign-key id="267" parent="233" name="User_ID">
       <ColNames>userID</ColNames>
       <RefSchemaName>my_data_base</RefSchemaName>
       <RefTableName>user</RefTableName>
       <RefColNames>userID</RefColNames>
     </foreign-key>
-    <foreign-key id="271" parent="233" name="Door_ID">
+    <foreign-key id="268" parent="233" name="Door_ID">
       <ColNames>doorID</ColNames>
       <RefSchemaName>my_data_base</RefSchemaName>
       <RefTableName>door</RefTableName>
       <RefColNames>doorID</RefColNames>
     </foreign-key>
-    <column id="272" parent="234" name="userID">
+    <column id="269" parent="234" name="userID">
       <Position>1</Position>
       <DataType>int(10)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="273" parent="234" name="userName">
+    <column id="270" parent="234" name="userName">
       <Position>2</Position>
       <DataType>varchar(255)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="274" parent="234" name="userPassword">
+    <column id="271" parent="234" name="userPassword">
       <Position>3</Position>
       <DataType>varchar(255)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="275" parent="234" name="userTelephone">
+    <column id="272" parent="234" name="userTelephone">
       <Position>4</Position>
       <DataType>varchar(20)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="276" parent="234" name="userFace">
+    <column id="273" parent="234" name="userFace">
       <Position>5</Position>
       <DataType>blob|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <key id="277" parent="234" name="PRIMARY">
+    <key id="274" parent="234" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>userID</ColNames>
       <Primary>1</Primary>

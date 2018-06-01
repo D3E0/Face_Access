@@ -1,5 +1,6 @@
 package controller;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import entity.AuthorityEntity;
@@ -13,8 +14,10 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import service.UserMangeServiceInterface;
+import util.DateParse;
 
 import javax.servlet.http.HttpServletRequest;
+import java.sql.Date;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -30,13 +33,12 @@ public class UserController {
 
     Logger logger = Logger.getLogger("UserController");
 
-
     /**
-     * 人员详情
+     * 查看个人资料
      *
      * @param id
      * @param model
-     * @return
+     * @return userProfile.jsp
      */
     @RequestMapping("/user")
     public String showUserProfile(@RequestParam(value = "id", defaultValue = "-1") int id, Model model) {
@@ -44,6 +46,24 @@ public class UserController {
         model.addAttribute(entity);
         return "userProfile";
     }
+
+
+    /**
+     * 添加人员时，查看人员详情
+     *
+     * @param id
+     * @return JSON
+     */
+    @RequestMapping("/user.json")
+    @ResponseBody
+    public String showUserProfile(@RequestParam(value = "id", defaultValue = "0") int id) {
+        UserEntity entity = userService.getUserEntity(id);
+        JSONObject object = new JSONObject();
+        object.put("username", entity.getUserName());
+        object.put("usertel", entity.getUserTelephone());
+        return JSON.toJSONString(object);
+    }
+
 
     /**
      * 返回所有人员 ID，用于模糊查找
@@ -60,16 +80,19 @@ public class UserController {
             object.put("id", entity.getUserId());
             array.add(object);
         }
-        return "{\"code\":0,\"msg\":\"\",\"count\":1000,\"data\":" + array + "}";
+        return JSON.toJSONString(array);
     }
 
     /**
-     * @return
+     * 控制跳转，跳转到人员管理界面
+     *
+     * @return users.jsp
      */
     @RequestMapping("/users")
     public String showUsers() {
         return "users";
     }
+
 
     /**
      * 返回包含请求 houseID 下的人员信息以及相关授权信息，
@@ -91,15 +114,15 @@ public class UserController {
             object.put("authorityId", entity.getAuthorityId());
             array.add(object);
         }
-
         return "{\"code\":0,\"msg\":\"\",\"count\":1000,\"data\":" + array + "}";
 
     }
 
+
     /**
-     * 打输
+     * 控制跳转 添加人员界面
      *
-     * @return
+     * @return adduser.jsp
      */
     @RequestMapping("/adduser")
     public String saveUser() {
@@ -118,12 +141,31 @@ public class UserController {
     }
 
     /**
-     * 日期选择 iframe交互中介
+     * 根据 authorityId 更新用户出入门失效时间
+     *
+     * @param end
+     * @param id
+     * @return
+     */
+    @RequestMapping("/updateAuthority")
+    @ResponseBody
+    public String updateAuthority(@RequestParam(value = "end", defaultValue = "0") String end,
+                                  @RequestParam(value = "id", defaultValue = "0") String id) {
+        Date endDate = DateParse.stringToSql(end);
+        int authorityId = Integer.parseInt(id);
+        userService.updateAuthorityOfHouse(authorityId, endDate);
+        JSONObject object = new JSONObject();
+        object.put("result", "success");
+        return JSON.toJSONString(object);
+    }
+
+    /**
+     * 日期选择
      *
      * @param start
      * @param end
      * @param model
-     * @return
+     * @return chooseDate.jsp
      */
     @RequestMapping("/choosedate")
     public String saveDate(@RequestParam(value = "start", defaultValue = "0") String start,
@@ -140,17 +182,22 @@ public class UserController {
      * @param request
      * @return
      */
-    @RequestMapping("/processuser")
+    @RequestMapping("/processAddUser")
+    @ResponseBody
     public String processUser(HttpServletRequest request) {
-        int id = 1;
-        UserEntity userEntity = new UserEntity();
-        userEntity.setUserName(request.getParameter("username"));
-        userEntity.setUserTelephone(request.getParameter("usertel"));
-        String str = request.getParameter("authorityDate");
-        String date = request.getParameter("endDate");
+        String startDate = request.getParameter("startDate");
+        String endDate = request.getParameter("endDate");
+        Date startSqlDate = DateParse.stringToSql(startDate);
+        Date endSqlDate = DateParse.stringToSql(endDate);
+        int userId = Integer.parseInt(request.getParameter("userid"));
 
-        logger.info(userEntity.toString() + " " + str + " " + date);
-        return "redirect:/user?id=" + id;
+        logger.info(userId + " " + startDate + " " + endDate);
+
+        userService.addAuthorityOfHouse(12605, userId, startSqlDate, endSqlDate);
+
+        JSONObject object = new JSONObject();
+        object.put("result", "success");
+        return JSON.toJSONString(object);
     }
 
 

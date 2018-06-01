@@ -40,30 +40,6 @@
             transform: translate(0%, -50%);
             margin-left: 20px;
         }
-
-        #keywords {
-            border: 1px solid #cfcfcf;
-            border-radius: 8px;
-            box-shadow: 0 10px 55px 0 rgba(0, 0, 0, .3);
-            background-color: white;
-            width: 220px;
-            position: absolute;
-            z-index: 100;
-            margin-left: 110px;
-            margin-top: -5px;
-        }
-
-        #result-list {
-            list-style: none;
-        }
-
-        .resultitem {
-            padding: 10px 20px;
-            color: #666;
-            font-size: 14px;
-            border-top: 1px solid rgba(0, 0, 0, .1);
-        }
-
     </style>
 </head>
 <body>
@@ -71,17 +47,16 @@
     <form class="layui-form layui-form-pane son" action="/processuser">
 
         <div class="layui-form-item">
-            <label class="layui-form-label">人员姓名</label>
+            <label class="layui-form-label">人员 ID</label>
             <div class="layui-input-inline">
-                <select name="username" id="username" lay-search>
-                </select>
+                <select name="userid" id="userid" lay-filter="userid" lay-search></select>
             </div>
         </div>
 
         <div class="layui-form-item">
-            <label class="layui-form-label">人员 ID</label>
+            <label class="layui-form-label">人员姓名</label>
             <div class="layui-input-inline">
-                <input disabled type="text" name="userid" class="layui-input" autocomplete="false">
+                <input disabled type="text" name="username" class="layui-input">
             </div>
         </div>
 
@@ -108,7 +83,7 @@
 
         <div class="layui-form-item">
             <div class="layui-input-block">
-                <button class="layui-btn" lay-submit lay-filter="*">立即提交</button>
+                <button class="layui-btn" lay-submit lay-filter="submit">立即提交</button>
             </div>
         </div>
 

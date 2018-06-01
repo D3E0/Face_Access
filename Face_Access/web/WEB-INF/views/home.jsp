@@ -25,7 +25,8 @@
             <li class="layui-nav-item" id="profile">
                 <a>
                     <img src="${pageContext.request.contextPath}/static/images/logo.jpg" class="layui-nav-img">
-                    D3E0
+                    <%--D3E0--%>
+                    ${userid}
                 </a>
             </li>
             <li class="layui-nav-item" id="quit"><a>退下</a></li>
