@@ -19,14 +19,9 @@ layui.use(['jquery', 'layer', 'element'], function () {
         layer.iframeSrc(index, event)
     });
 
-    $('#quit').click(function () {
-        layer.msg("用户退出");
-    });
-
     //监听顶部导航栏点击
     $('#profile').click(function () {
-        layer.iframeSrc(index, '/user?id=2');
-        // layer.msg("用户退出");
+        layer.iframeSrc(index, '/user?id=' + id);
     });
 
 });

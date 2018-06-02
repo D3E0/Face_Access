@@ -3,19 +3,24 @@ layui.use(['jquery', 'laypage', 'table', 'layer', 'element', 'laydate'], functio
         , table = layui.table, layer = layui.layer
         , element = layui.element, laydate = layui.laydate;
 
-    table.render({
+
+    var tableIns = table.render({
         elem: '#userTable'
         , url: '/users.json'
         , page: true
         , cols: [[
-            {field: 'userId', title: 'ID', align: "center"}
+            {field: 'houseId', title: '房间 ID', align: "center"}
+            , {field: 'userId', title: '用户 ID', align: "center"}
             , {field: 'userName', title: '用户名', align: "center"}
             , {field: 'userTelephone', title: '联系方式', align: "center"}
             , {field: 'startDate', title: '授权日期', align: "center"}
             , {field: 'endDate', title: '失效日期', align: "center"}
             , {fixed: 'right', title: '操作', align: 'center', toolbar: '#toolBar'}
         ]]
+        , id: "userTable"
     });
+
+    win.tableIns = tableIns;
 
     //监听工具条 tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
     table.on('tool(userTable)', function (obj) {
@@ -39,7 +44,15 @@ layui.use(['jquery', 'laypage', 'table', 'layer', 'element', 'laydate'], functio
                     layer.msg("取消删除");
                 }
                 , btn2: function () {
-                    layer.msg("确认删除");
+                    $.post("/deleteAuthority", {id: data.authorityId}, function (data) {
+                        var dataObj = eval("(" + data + ")");
+                        if (dataObj.result === 'success') {
+                            layer.msg("删除成功");
+                            obj.del();
+                        } else {
+                            layer.msg("删除失败");
+                        }
+                    })
                 }
             });
         } else if (layEvent === 'edit') { //编辑;
@@ -83,8 +96,7 @@ layui.use(['jquery', 'laypage', 'table', 'layer', 'element', 'laydate'], functio
                 win.addFrmaeIndex = index;
             }
         });
-    })
-
+    });
 });
 
 // function check(date) {

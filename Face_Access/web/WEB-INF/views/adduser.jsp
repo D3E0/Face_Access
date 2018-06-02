@@ -68,6 +68,13 @@
         </div>
 
         <div class="layui-form-item">
+            <label class="layui-form-label">房间 ID</label>
+            <div class="layui-input-inline">
+                <select name="houseId" id="houseId"></select>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
             <label class="layui-form-label">授权日期</label>
             <div class="layui-inline">
                 <input disabled type="text" name="startDate" class="layui-input" id="startDate">

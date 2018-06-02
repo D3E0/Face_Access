@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * @author ACM-PC
  */
-public interface AuthorityDaoInterface {
+public interface AuthorityDao {
     int addAuthority(AuthorityEntity authorityEntity);
 
     void deleteAuthority(int id);

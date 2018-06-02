@@ -1,6 +1,6 @@
 import config.WebConfig;
 import dao.AuthorityDaoImp;
-import dao.AuthorityDaoInterface;
+import dao.AuthorityDao;
 import entity.AuthorityEntity;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -16,7 +16,7 @@ public class MySpringTest {
 
     @Test
     public void testAuthority() {
-        AuthorityDaoInterface dao = new AuthorityDaoImp();
+        AuthorityDao dao = new AuthorityDaoImp();
         List list = dao.getAuthorities();
         Iterator iterable = list.iterator();
         while (iterable.hasNext()) {

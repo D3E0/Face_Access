@@ -22,7 +22,7 @@ public class MyTest {
 
     @Test
     public void testHibernate() {
-//        AuthorityDaoInterface authorityDao = new AuthorityDaoImp();
+//        AuthorityDao authorityDao = new AuthorityDaoImp();
 //        AuthorityEntity entity = authorityDao.getAuthority(6, 1608);
 //        System.out.println(entity.toString());
 //        authorityDao.deleteAuthority(1166);

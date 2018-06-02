@@ -5,6 +5,7 @@
   Time: 13:10
   To change this template use File | Settings | File Templates.
 --%>
+
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
@@ -13,7 +14,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/layui/css/layui.css">
     <script src="${pageContext.request.contextPath}/static/layui/layui.js"></script>
     <script src="${pageContext.request.contextPath}/static/js/home.js"></script>
-    <%--<meta http-equiv="Pragma" content="no-cache">--%>
+    <script>var id = ${userid};</script>
 </head>
 
 <body class="layui-layout-body">
@@ -29,7 +30,7 @@
                     ${userid}
                 </a>
             </li>
-            <li class="layui-nav-item" id="quit"><a>退下</a></li>
+            <li class="layui-nav-item" id="quit"><a href="/quit">退下</a></li>
         </ul>
     </div>
 

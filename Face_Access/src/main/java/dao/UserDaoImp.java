@@ -5,10 +5,12 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 /**
  * @author ACM-PC
@@ -16,10 +18,12 @@ import java.util.List;
 
 @Repository
 @DynamicUpdate
-public class UserDaoImp implements UserDaoInterface {
+public class UserDaoImp implements UserDao {
 
 
     private SessionFactory factory;
+
+    private Logger logger = Logger.getLogger("dsd");
 
     @Autowired
     public void setFactory(SessionFactory factory) {
@@ -69,6 +73,21 @@ public class UserDaoImp implements UserDaoInterface {
 
         session.update(userEntity);
         ts.commit();
+    }
+
+    @Override
+    public UserEntity verifyUser(int userId, String password) {
+        Session session = factory.openSession();
+        session.beginTransaction();
+        Query query = session.createQuery("from UserEntity where userId=:id and userPassword=:word");
+        query.setParameter("id", userId);
+        query.setParameter("word", password);
+        UserEntity entity = null;
+        List list = query.list();
+        if (list.size() > 0) {
+            entity = (UserEntity) list.get(0);
+        }
+        return entity;
     }
 
     @Override

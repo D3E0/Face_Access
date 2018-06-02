@@ -13,11 +13,11 @@ layui.use(['laydate', 'form', 'layer', 'jquery'], function () {
         elem: '#endDate'
         , type: 'date'
         , min: 0
-        , value: "2018-05-30"
+        , value: (new Date())
         , isInitValue: true
     });
 
-    //字符串加密 赵** 131****7788
+    //字符串加密 钱** 131****7788
     form.on('select(userid)', function (data) {
         $.getJSON('/user.json', {id: data.value}, function (val) {
             var username = val.username;
@@ -29,11 +29,14 @@ layui.use(['laydate', 'form', 'layer', 'jquery'], function () {
 
     form.on('submit(submit)', function (data) {
         $.post('/processAddUser', data.field, function (data) {
-            console.info(data);
             if (data.result === 'success') {
                 var index = parent.win.addFrmaeIndex;
                 parent.layer.close(index); //再执行关闭
                 parent.layer.msg("添加成功");
+                //父页面 表格重载
+                parent.win.tableIns.reload({
+                    url: '/users.json'
+                });
             } else {
                 layer.msg("添加失败");
             }
@@ -46,6 +49,14 @@ layui.use(['laydate', 'form', 'layer', 'jquery'], function () {
     $.getJSON('/getAllUserId', function (val) {
         $.each(val, function (i, n) {
             $("<option>" + n.id + "</option>").appendTo($("#userid"));
+        });
+        //更新渲染
+        form.render('select');
+    });
+
+    $.getJSON('/gethouse', {userId: parent.parent.id}, function (val) {
+        $.each(val, function (i, n) {
+            $("<option>" + n.houseId + "</option>").appendTo($("#houseId"));
         });
         //更新渲染
         form.render('select');

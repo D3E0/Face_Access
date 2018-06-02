@@ -1,35 +1,60 @@
 package service;
 
 
-import dao.AuthorityDaoInterface;
-import dao.UserDaoInterface;
+import dao.AuthorityDao;
+import dao.HouseDao;
+import dao.UserDao;
 import entity.AuthorityEntity;
+import entity.HouseEntity;
 import entity.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class UserMangeServiceImp implements UserMangeServiceInterface {
+public class UserMangeServiceImp implements UserMangeService {
 
-    private AuthorityDaoInterface authorityDao;
-    private UserDaoInterface userDao;
+    private AuthorityDao authorityDao;
+    private UserDao userDao;
+    private HouseDao houseDao;
 
     @Autowired
-    public void setAuthorityDao(AuthorityDaoInterface authorityDao) {
+    public void setHouseDao(HouseDao houseDao) {
+        this.houseDao = houseDao;
+    }
+
+    @Autowired
+    public void setAuthorityDao(AuthorityDao authorityDao) {
         this.authorityDao = authorityDao;
     }
 
     @Autowired
-    public void setUserDao(UserDaoInterface userDao) {
+    public void setUserDao(UserDao userDao) {
         this.userDao = userDao;
+    }
+
+
+    @Override
+    public List<HouseEntity> getHousesOfOwner(int userID) {
+        return houseDao.getHouses(userID);
     }
 
     @Override
     public List<AuthorityEntity> getAuthoritiesOfHouse(int houseID) {
         return authorityDao.getAuthoritiesOfHouse(houseID);
+    }
+
+    @Override
+    public List<AuthorityEntity> getAuthoritiesOfOwner(int userID) {
+        List<HouseEntity> houseEntities = getHousesOfOwner(userID);
+        List<AuthorityEntity> authorityEntities = new ArrayList<AuthorityEntity>();
+        for (HouseEntity houseEntity : houseEntities) {
+            authorityEntities.addAll(getAuthoritiesOfHouse(houseEntity.getHouseId()));
+        }
+        return authorityEntities;
     }
 
     @Override
@@ -43,6 +68,11 @@ public class UserMangeServiceImp implements UserMangeServiceInterface {
         entity.setEndDate(endDate);
         entity.setStartDate(startDate);
         authorityDao.addAuthority(entity);
+    }
+
+    @Override
+    public void deleteAuthority(int authorityID) {
+        authorityDao.deleteAuthority(authorityID);
     }
 
     @Override

@@ -18,7 +18,7 @@ import java.util.List;
  */
 @Repository
 @DynamicUpdate
-public class AuthorityDaoImp implements AuthorityDaoInterface {
+public class AuthorityDaoImp implements AuthorityDao {
 
     @Autowired
     private SessionFactory factory;
@@ -64,6 +64,7 @@ public class AuthorityDaoImp implements AuthorityDaoInterface {
         query.setParameter("A", userID);
         query.setParameter("B", houseID);
         AuthorityEntity entity = (AuthorityEntity) query.list().get(0);
+        session.getTransaction().commit();
         return entity;
     }
 
