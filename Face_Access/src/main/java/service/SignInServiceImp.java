@@ -33,4 +33,9 @@ public class SignInServiceImp implements SignInService {
         }
         return false;
     }
+
+    @Override
+    public String getUsername(int userId) {
+        return userDao.findUser(userId).getUserName();
+    }
 }

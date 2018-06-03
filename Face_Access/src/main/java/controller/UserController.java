@@ -98,6 +98,6 @@ public class UserController {
         return "{\"code\":0,\"msg\":\"success\"}";
     }
 
-    //TODO 更新用户信息
+    //TODO 用户个人资料更新
 }
 

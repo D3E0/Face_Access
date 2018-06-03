@@ -11,6 +11,7 @@ import service.SignInService;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+//TODO 注册
 @Controller
 public class SignInController {
 
@@ -22,7 +23,7 @@ public class SignInController {
     }
 
     /**
-     * 登陆表单 提交至此
+     * 登陆表单 提交至此，登陆成功将用户名与 ID 添加至 Session
      *
      * @param req
      * @param session
@@ -43,6 +44,7 @@ public class SignInController {
         String password = req.getParameter("password").trim();
 
         if (signInService.verifyUser(userid, password)) {
+            session.setAttribute("username", signInService.getUsername(userid));
             session.setAttribute("userid", userid);
             object.put("result", "success");
         }

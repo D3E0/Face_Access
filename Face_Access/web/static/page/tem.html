@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>layout 后台大框架布局 - Layui</title>
+
+    <link rel="stylesheet" href="../layui/css/layui.css"/>
+    <script type="text/javascript" src="../layui/layui.js"></script>
+</head>
+<body>
+<div class="layui-layout layui-layout-admin">
+    <div class="layui-header">
+        <div class="layui-logo">Incredible System</div>
+        <!-- 头部区域（可配合layui已有的水平导航） -->
+        <ul class="layui-nav layui-layout-right" lay-filter="topnav">
+            <li class="layui-nav-item" id="profile">
+                <a>
+                    <img src="../images/logo.jpg" class="layui-nav-img">
+                    D3E0
+                </a>
+                <dl class="layui-nav-child">
+                    <dd><a href="">基本资料</a></dd>
+                    <dd><a href="">安全设置</a></dd>
+                </dl>
+            </li>
+            <li class="layui-nav-item" id="quit"><a href="/quit">退下</a></li>
+        </ul>
+    </div>
+    <div class="layui-side layui-bg-black">
+        <div class="layui-side-scroll">
+            <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+
+            <ul class="layui-nav layui-nav-tree site-demo-nav" lay-filter="demo">
+                <li class="layui-nav-item layui-nav-itemed">
+                    <a href="javascript:;">默认展开</a>
+                    <dl class="layui-nav-child">
+                        <dd>
+                            <a href="javascript:;" target="option">选项一</a>
+                        </dd>
+                        <dd>
+                            <a href="javascript:;">选项二</a>
+                        </dd>
+                        <dd>
+                            <a href="javascript:;">选项三</a>
+                        </dd>
+                        <dd>
+                            <a href="#">跳转项</a>
+                        </dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="javascript:;">解决方案</a>
+                    <dl class="layui-nav-child">
+                        <dd>
+                            <a href="">移动模块</a>
+                        </dd>
+                        <dd>
+                            <a href="">后台模版</a>
+                        </dd>
+                        <dd>
+                            <a href="">电商平台</a>
+                        </dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="">云市场</a>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="">社区</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="layui-body">
+        <!-- 内容主体区域 -->
+        <!-- <iframe id="xuanxiang" name="xuanxiang" src="foot.html" style="overflow: visible;" scrolling="no" frameborder="no" width="100%" height="100%"></iframe>-->
+        <iframe id="option" name="option" src="/users" style="overflow: visible;" scrolling="no" frameborder="no"
+                width="100%" height="100%"></iframe>
+    </div>
+    <div class="layui-footer">
+        <!-- 底部固定区域 -->
+    </div>
+</div>
+
+
+<script>
+    layui.use('element', function () {
+        var element = layui.element(); //导航的hover效果、二级菜单等功能，需要依赖element模块
+
+//监听导航点击
+        element.on('nav(demo)', function (elem) {
+//console.log(elem)
+            layer.msg(elem.text());
+        });
+
+
+    });
+</script>
+<script>
+    //JavaScript代码区域
+</script>
+</body>
+</html>
