@@ -37,7 +37,7 @@ public class UserDaoImp implements UserDao {
     public int addUser(UserEntity userEntity) {
         Session session = factory.openSession();
         Transaction ts = session.beginTransaction();
-        Integer userID = null;
+        Integer userID = 0;
         userID = (Integer) session.save(userEntity);
         ts.commit();
         return userID;

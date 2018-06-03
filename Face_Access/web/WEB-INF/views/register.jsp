@@ -89,12 +89,13 @@
     layui.use(['form', 'laydate', 'jquery', 'layer'], function () {
         var form = layui.form, $ = layui.jquery, layer = layui.layer;
         form.on('submit(submit)', function (data) {
-            $.post('/processlogin', data.field, function (val) {
+            $.post('/processRegister', data.field, function (val) {
                 var dataObj = eval("(" + val + ")");
                 if (dataObj.result === 'success') {
-                    window.location.href = '/home';
+                    layer.msg("注册成功");
+                    window.location.href = '/login';
                 } else {
-                    layer.msg("密码错误");
+                    layer.msg("注册失败");
                 }
             });
             return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。

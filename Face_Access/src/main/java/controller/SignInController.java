@@ -3,6 +3,7 @@ package controller;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -20,6 +21,16 @@ public class SignInController {
     @Autowired
     public void setSignInService(SignInService signInService) {
         this.signInService = signInService;
+    }
+
+    /**
+     * 返回登陆界面
+     *
+     * @return login.jsp
+     */
+    @RequestMapping("/login")
+    public String doLogin() {
+        return "login";
     }
 
     /**
@@ -71,16 +82,6 @@ public class SignInController {
         return JSON.toJSONString(object);
     }
 
-    /**
-     * 返回登陆界面
-     *
-     * @return login.jsp
-     */
-    @RequestMapping("/login")
-    public String doLogin() {
-        return "login";
-    }
-
 
     /**
      * 返回注册界面
@@ -91,5 +92,35 @@ public class SignInController {
     public String doRegister() {
         return "register";
     }
+
+
+    /**
+     * 注册表单提交处理
+     * @param request
+     * @return
+     */
+    @RequestMapping("/processRegister")
+    public String processRegister(HttpServletRequest request) {
+        JSONObject object = new JSONObject();
+        object.put("result", "false");
+
+        String username = request.getParameter("username");
+        String userTel = request.getParameter("usertel");
+        String password = request.getParameter("password");
+        String confirmpassword = request.getParameter("confirmpassword");
+
+        if(password != confirmpassword) {
+            return JSON.toJSONString(object);
+        }
+
+        int userID = signInService.addUser(username, userTel, password);
+        if(userID != 0) {
+            object.put("result", "success");
+        }
+
+        return JSON.toJSONString(object);
+
+    }
+
 
 }

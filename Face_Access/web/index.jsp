@@ -34,7 +34,7 @@
                 <a href="/adduser" class="layui-btn" target="_blank">添加用户</a>
                 <a href="/user?id=1" class="layui-btn" target="_blank">用户资料</a>
                 <a href="/login" class="layui-btn" target="_blank">登陆</a>
-                <a href="/login" class="layui-btn" target="_blank">注册</a>
+                <a href="/register" class="layui-btn" target="_blank">注册</a>
                 <a href="/" class="layui-btn" target="_blank">404</a>
                 <a href="/choosedate?start=2018-05-20&end=2018-05-28" class="layui-btn" target="_blank">日期选择</a>
             </div>

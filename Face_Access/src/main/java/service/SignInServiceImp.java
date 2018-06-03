@@ -38,4 +38,14 @@ public class SignInServiceImp implements SignInService {
     public String getUsername(int userId) {
         return userDao.findUser(userId).getUserName();
     }
+
+    @Override
+    public int addUser(String username, String userTel, String password) {
+        UserEntity entity = new UserEntity();
+        entity.setUserName(username);
+        entity.setUserPassword(password);
+        entity.setUserTelephone(userTel);
+        int userID = userDao.addUser(entity);
+        return userID;
+    }
 }
