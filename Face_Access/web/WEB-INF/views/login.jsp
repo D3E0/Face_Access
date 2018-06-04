@@ -50,7 +50,7 @@
         <div class="layui-form-item">
             <label class="layui-form-label" for="userid">账号</label>
             <div class="layui-input-inline">
-                <input type="text" name="userid" id="userid" class="layui-input">
+                <input type="text" name="userid" id="userid" placeholder="请输入用户名" class="layui-input">
             </div>
         </div>
 
@@ -59,6 +59,11 @@
             <div class="layui-input-inline">
                 <input type="password" name="password" id="password" class="layui-input">
             </div>
+        </div>
+
+        <div class="layui-input-block">
+            <a href="javascript:" style="color: #009688">手机号登陆</a>
+            <a href="/register" style="color: #009688" class="layui-layout-right">立即注册</a>
         </div>
 
         <div class="layui-form-item">

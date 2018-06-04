@@ -20,24 +20,30 @@
     </script>
     <meta http-equiv="Pragma" content="no-cache">
     <style>
-        .content {
-            background-color: white;
-            margin: 15px;
-            border-radius: 2px;
-            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .05);
-        }
 
         body {
             background-color: #eee;
+            margin-top: 15px;
         }
     </style>
 </head>
+<body>
+<div class="layui-fluid">
 
-<body class="layui-layout-body">
-<div class="content">
-    <button class="layui-btn" id="add">添加人员</button>
-    <div id="userTable" lay-filter="userTable"></div>
+    <div class="layui-row layui-col-space15">
+
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header">人员管理</div>
+                <div class="layui-card-body">
+                    <button class="layui-btn" id="add">添加人员</button>
+                    <div id="userTable" lay-filter="userTable"></div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
 
 <script type="text/html" id="toolBar">
     <a class="layui-btn layui-btn-sm" lay-event="detail">查看</a>

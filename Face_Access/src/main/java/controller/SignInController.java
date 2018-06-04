@@ -3,7 +3,6 @@ package controller;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -96,10 +95,12 @@ public class SignInController {
 
     /**
      * 注册表单提交处理
+     *
      * @param request
-     * @return
+     * @return JSON
      */
     @RequestMapping("/processRegister")
+    @ResponseBody
     public String processRegister(HttpServletRequest request) {
         JSONObject object = new JSONObject();
         object.put("result", "false");
@@ -107,14 +108,14 @@ public class SignInController {
         String username = request.getParameter("username");
         String userTel = request.getParameter("usertel");
         String password = request.getParameter("password");
-        String confirmpassword = request.getParameter("confirmpassword");
+        String confirmPassword = request.getParameter("confirmpassword");
 
-        if(password != confirmpassword) {
+        if (!password.equals(confirmPassword)) {
             return JSON.toJSONString(object);
         }
 
         int userID = signInService.addUser(username, userTel, password);
-        if(userID != 0) {
+        if (userID != 0) {
             object.put("result", "success");
         }
 

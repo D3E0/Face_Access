@@ -50,17 +50,23 @@
         <div class="layui-form-item">
             <label class="layui-form-label" for="username">用户名</label>
             <div class="layui-input-inline">
-                <input type="text" name="username" id="username" class="layui-input">
+                <input type="text" name="username" id="username" placeholder="请输入用户名" class="layui-input">
             </div>
         </div>
+
+        <%--<div class="layui-form-item">--%>
+        <%--<label class="layui-form-label" for="usertel">联系方式</label>--%>
+        <%--<div class="layui-input-inline">--%>
+        <%--<input type="text" name="usertel" id="usertel" class="layui-input">--%>
+        <%--</div>--%>
+        <%--</div>--%>
 
         <div class="layui-form-item">
-            <label class="layui-form-label" for="usertel">联系方式</label>
+            <label class="layui-form-label" for="realname">真实姓名</label>
             <div class="layui-input-inline">
-                <input type="text" name="usertel" id="usertel" class="layui-input">
+                <input type="text" name="realname" id="realname" placeholder="请输入真实姓名" class="layui-input">
             </div>
         </div>
-
 
         <div class="layui-form-item">
             <label class="layui-form-label" for="password">密码</label>

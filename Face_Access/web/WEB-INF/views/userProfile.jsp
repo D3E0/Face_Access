@@ -13,108 +13,150 @@
     <script src="${pageContext.request.contextPath}/static/layui/layui.js"></script>
     <script src="${pageContext.request.contextPath}/static/js/userProfile.js"></script>
     <style>
-        .center {
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%);
-        }
-
-        .vetically {
-            position: absolute;
-            top: 50%;
-            transform: translate(0%, -50%);
-            margin: auto;
-        }
-
-        .content {
-            background-color: white;
-            padding: 70px;
-            border-radius: 2px;
-            position: relative;
-            height: 460px;
-            width: 350px;
-        }
-
-        .boxShadow {
-            box-shadow: 0 9px 30px -6px rgba(0, 0, 0, .2), 0 18px 20px -10px rgba(0, 0, 0, .04), 0 18px 20px -10px rgba(0, 0, 0, .04), 0 10px 20px -10px rgba(0, 0, 0, .04);
-            border: 1px solid #dadada;
-            border-radius: 10px;
-        }
-
         body {
             background-color: #eee;
+            margin-top: 15px;
         }
     </style>
 </head>
 
 <body>
-<div class="content boxShadow center">
+<div class="layui-fluid">
 
-    <div class="layui-form vetically">
+    <div class="layui-row layui-col-space15">
 
-        <div class="layui-form-item">
-            <label class="layui-form-label">姓名</label>
-            <div class="layui-input-inline">
-                <input type="text" name="username" value="${userEntity.userName}" autocomplete="off"
-                       class="layui-input">
+        <div class="layui-col-md6">
+
+            <div class="layui-card">
+                <div class="layui-card-header">个人资料</div>
+                <div class="layui-card-body">
+                    <div class="layui-form ">
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">用户名</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="username" value="${userEntity.userName}" disabled
+                                       class="layui-input">
+                            </div>
+                            <div class="layui-form-mid layui-word-aux">不可修改，一般用于后台登入名</div>
+                        </div>
+
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">真实姓名</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="realname" value="${userEntity.realName}" disabled
+                                       class="layui-input">
+                            </div>
+                            <div class="layui-form-mid layui-word-aux">不可修改，用户身份标识</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="layui-card">
+                <div class="layui-card-header">密码修改</div>
+                <div class="layui-card-body">
+                    <div class="layui-form ">
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">旧密码</label>
+                            <div class="layui-input-inline">
+                                <input type="password" name="oldPassword" id="oldPassword" class="layui-input">
+                            </div>
+                        </div>
+
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">新密码</label>
+                            <div class="layui-input-inline">
+                                <input type="password" name="newPassword" id="newPassword" class="layui-input">
+                            </div>
+                        </div>
+
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">确认密码</label>
+                            <div class="layui-input-inline">
+                                <input type="password" name="confirm" id="confirm" class="layui-input">
+                            </div>
+                        </div>
+
+                        <div class="layui-form-item">
+                            <div class="layui-input-block">
+                                <button class="layui-btn" lay-filter="passSubmit" id="passSubmit">提交修改</button>
+                                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <div class="layui-form-item">
-            <label class="layui-form-label">联系方式</label>
-            <div class="layui-input-inline">
-                <input type="text" name="userTel" value="${userEntity.userTelephone}" autocomplete="off"
-                       class="layui-input">
+        <div class="layui-col-md6">
+
+            <div class="layui-card">
+                <div class="layui-card-header">手机号码修改</div>
+                <div class="layui-card-body">
+                    <div class="layui-form ">
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">旧手机号</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="userTel" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">验证码</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="userTel" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">新手机号</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="userTel" class="layui-input">
+                            </div>
+                        </div>
+
+                        <div class="layui-form-item">
+                            <div class="layui-input-block">
+                                <button class="layui-btn" lay-filter="*" id="telSubmit">提交修改</button>
+                                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="layui-card">
+                <div class="layui-card-header">个人图片</div>
+                <div class="layui-card-body">
+                    <div class="layui-form ">
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">个人图片</label>
+                            <button type="button" class="layui-btn" id="image" name="image">
+                                <i class="layui-icon">&#xe67c;</i>上传图片
+                            </button>
+                        </div>
+
+                        <div class="layui-form-item" id="preview" hidden>
+                            <div class="layui-input-block">
+                                <img id="demo1" style="width: 113px">
+                            </div>
+                        </div>
+
+                        <div class="layui-form-item">
+                            <div class="layui-input-block">
+                                <button class="layui-btn" lay-filter="*" id="imgSubmit">提交修改</button>
+                                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <div class="layui-form-item">
-            <label class="layui-form-label">旧密码</label>
-            <div class="layui-inline">
-                <input type="password" name="oldPassword" class="layui-input" id="oldPassword" value="">
-            </div>
-        </div>
+    </div>
 
-        <div class="layui-form-item">
-            <label class="layui-form-label">新密码</label>
-            <div class="layui-inline">
-                <input type="password" name="newPassword" class="layui-input" id="newPassword">
-            </div>
-        </div>
-
-        <div class="layui-form-item">
-            <label class="layui-form-label">确认新密码</label>
-            <div class="layui-inline">
-                <input type="password" name="confirmPassword" class="layui-input" id="confirmPassword">
-            </div>
-        </div>
-
-        <div class="layui-form-item">
-            <label class="layui-form-label">个人图片</label>
-            <button type="button" class="layui-btn" id="image" name="image">
-                <i class="layui-icon">&#xe67c;</i>上传图片
-            </button>
-        </div>
-
-        <div class="layui-form-item" id="preview" hidden>
-            <div class="layui-input-block">
-                <img id="demo1" style="width: 113px">
-            </div>
-        </div>
-
-        <div class="layui-form-item">
-            <div class="layui-input-block">
-                <button class="layui-btn" lay-filter="*" id="submit">提交修改</button>
-                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
-            </div>
-        </div>
+    <div id="div_preview" style=" display: none;">
+        <img id="img_preview" style="width: 100%"/>
     </div>
 </div>
-
-<div id="div_preview" style=" display: none;">
-    <img id="img_preview" style="width: 100%"/>
-</div>
-
 </body>
 </html>
+

@@ -13,6 +13,18 @@ public class UserEntity {
     private String userTelephone;
     private String userPassword;
     private byte[] userFace;
+    private String realName;
+
+
+    @Basic
+    @Column(name = "realName")
+    public String getRealName() {
+        return realName;
+    }
+
+    public void setRealName(String realName) {
+        this.realName = realName;
+    }
 
     @Basic
     @Column(name = "userName")
@@ -72,7 +84,9 @@ public class UserEntity {
                 "userName='" + userName + '\'' +
                 ", userId=" + userId +
                 ", userTelephone='" + userTelephone + '\'' +
-                ", userPassword='" + userPassword +
+                ", userPassword='" + userPassword + '\'' +
+                ", userFace=" + Arrays.toString(userFace) +
+                ", realName='" + realName + '\'' +
                 '}';
     }
 

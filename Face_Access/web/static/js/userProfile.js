@@ -35,7 +35,7 @@ layui.use(['laydate', 'form', 'layer', 'upload'], function () {
             closeBtn: 0,
             // skin: 'layui-layer-nobg', //没有背景色
             shadeClose: true,
-            content: $('#div _preview')
+            content: $('#div_preview')
         });
     });
 

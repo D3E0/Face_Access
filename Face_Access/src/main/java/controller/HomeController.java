@@ -12,7 +12,6 @@ import javax.servlet.http.HttpSession;
  * 登陆、注册控制
  */
 
-//TODO  注册
 @Controller
 public class HomeController {
 
