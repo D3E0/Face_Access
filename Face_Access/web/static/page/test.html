@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../layui/css/layui.css">
+    <script src="../layui/layui.js"></script>
+    <style>
+        #main {
+            width: 375px;
+            margin: 0 auto;
+        }
+
+        body {
+            margin-top: 50px;
+        }
+
+    </style>
+</head>
+<body>
+<div id="main">
+    <div class="layui-form">
+
+
+        <div class="layui-form-item">
+            <div class="layui-row">
+                <div class="layui-col-xs2">
+                    <label class="layui-form-label-col">验证码</label>
+                </div>
+                <div class="layui-col-xs5">
+                    <input type="text" name="vercode" lay-verify="required"
+                           placeholder="验证码" class="layui-input">
+                </div>
+                <div class="layui-col-xs5">
+                    <div style="margin-left: 10px;">
+                        <button type="button" class="layui-btn layui-btn-primary layui-btn-fluid">
+                            获取验证码
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <div class="layui-row">
+                <div class="layui-col-xs2">
+                    <label class="layui-form-label-col">验证码</label>
+                </div>
+                <div class="layui-col-xs10">
+                    <input type="text" name="vercode" lay-verify="required"
+                           placeholder="验证码" class="layui-input">
+                </div>
+
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <div class="layui-row">
+                <div class="layui-col-xs2">
+                    <label class="layui-form-label-col">验证码</label>
+                </div>
+                <div class="layui-col-xs10">
+                    <input type="text" name="vercode" lay-verify="required"
+                           placeholder="验证码" class="layui-input">
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    layui.use(['form', 'laypage', 'table', 'layer'], function () {
+        var form = layui.form, laypage = layui.laypage
+            , table = layui.table, layer = layui.layer;
+    })
+</script>
+</body>
+</html>

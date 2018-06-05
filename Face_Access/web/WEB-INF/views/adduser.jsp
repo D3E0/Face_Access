@@ -47,23 +47,29 @@
     <form class="layui-form layui-form-pane son" action="/processuser">
 
         <div class="layui-form-item">
-            <label class="layui-form-label">人员 ID</label>
+            <label class="layui-form-label">用户名</label>
             <div class="layui-input-inline">
-                <select name="userid" id="userid" lay-filter="userid" lay-search></select>
+                <select name="username" id="username" lay-filter="username" lay-search></select>
             </div>
         </div>
 
         <div class="layui-form-item">
-            <label class="layui-form-label">人员姓名</label>
+            <label class="layui-form-label">真实姓名</label>
             <div class="layui-input-inline">
-                <input disabled type="text" name="username" class="layui-input">
+                <input disabled type="text" name="realName" class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item layui-hide">
+            <div class="layui-input-inline">
+                <input disabled type="text" name="userId" class="layui-input">
             </div>
         </div>
 
         <div class="layui-form-item">
             <label class="layui-form-label">联系方式</label>
             <div class="layui-input-inline">
-                <input disabled type="text" name="usertel" class="layui-input">
+                <input disabled type="text" name="userTel" class="layui-input">
             </div>
         </div>
 

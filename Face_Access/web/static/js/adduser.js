@@ -18,12 +18,11 @@ layui.use(['laydate', 'form', 'layer', 'jquery'], function () {
     });
 
     //字符串加密 钱** 131****7788
-    form.on('select(userid)', function (data) {
-        $.getJSON('/user.json', {id: data.value}, function (val) {
-            var username = val.username;
-            var usertel = val.usertel;
-            $("input[name='username']").val(val.username);
-            $("input[name='usertel']").val(val.usertel);
+    form.on('select(username)', function (data) {
+        $.getJSON('/user.json', {username: data.value}, function (val) {
+            $("input[name='realName']").val(val.realName);
+            $("input[name='userTel']").val(val.userTel);
+            $("input[name='userId']").val(val.userId);
         });
     });
 
@@ -46,9 +45,9 @@ layui.use(['laydate', 'form', 'layer', 'jquery'], function () {
     });
 
 
-    $.getJSON('/getAllUserId', function (val) {
+    $.getJSON('/getAllUsername', function (val) {
         $.each(val, function (i, n) {
-            $("<option>" + n.id + "</option>").appendTo($("#userid"));
+            $("<option>" + n.username + "</option>").appendTo($("#username"));
         });
         //更新渲染
         form.render('select');

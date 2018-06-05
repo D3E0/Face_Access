@@ -13,9 +13,11 @@ public interface UserDao {
 
     void updateUser(UserEntity user);
 
-    UserEntity verifyUser(int userId, String password);
+    UserEntity verifyUser(String username, String password);
 
-    UserEntity findUser(int userID);
+    UserEntity getUserById(int userID);
+
+    UserEntity getUserByName(String username);
 
     List<UserEntity> getUserList();
 }

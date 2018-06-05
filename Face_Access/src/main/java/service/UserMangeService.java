@@ -25,7 +25,8 @@ public interface UserMangeService {
 
     public UserEntity getUserEntity(int userID);
 
-    public List<UserEntity> getUserList();
+    public UserEntity getUserOfUsername(String username);
 
+    public List<UserEntity> getUserList();
 
 }

@@ -17,8 +17,8 @@ public class SignInServiceImp implements SignInService {
 
 
     @Override
-    public boolean verifyUserId(int userId) {
-        UserEntity entity = userDao.findUser(userId);
+    public boolean verifyUsername(String username) {
+        UserEntity entity = userDao.getUserByName(username);
         if (entity != null) {
             return true;
         }
@@ -26,8 +26,8 @@ public class SignInServiceImp implements SignInService {
     }
 
     @Override
-    public boolean verifyUser(int userId, String password) {
-        UserEntity entity = userDao.verifyUser(userId, password);
+    public boolean verifyUser(String username, String password) {
+        UserEntity entity = userDao.verifyUser(username, password);
         if (entity != null) {
             return true;
         }
@@ -36,15 +36,20 @@ public class SignInServiceImp implements SignInService {
 
     @Override
     public String getUsername(int userId) {
-        return userDao.findUser(userId).getUserName();
+        return userDao.getUserById(userId).getUserName();
     }
 
     @Override
-    public int addUser(String username, String userTel, String password) {
+    public int getUserId(String username) {
+        return userDao.getUserByName(username).getUserId();
+    }
+
+    @Override
+    public int addUser(String username, String realName, String password) {
         UserEntity entity = new UserEntity();
         entity.setUserName(username);
         entity.setUserPassword(password);
-        entity.setUserTelephone(userTel);
+        entity.setRealName(realName);
         int userID = userDao.addUser(entity);
         return userID;
     }

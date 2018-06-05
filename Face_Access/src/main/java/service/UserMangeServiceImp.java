@@ -77,7 +77,12 @@ public class UserMangeServiceImp implements UserMangeService {
 
     @Override
     public UserEntity getUserEntity(int userID) {
-        return userDao.findUser(userID);
+        return userDao.getUserById(userID);
+    }
+
+    @Override
+    public UserEntity getUserOfUsername(String username) {
+        return userDao.getUserByName(username);
     }
 
     @Override

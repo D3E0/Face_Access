@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import service.UserMangeService;
 import util.DateParse;
+import util.EncryptInfo;
 
 import javax.servlet.http.HttpServletRequest;
 import java.sql.Date;
@@ -46,36 +47,37 @@ public class AuthorityController {
     }
 
     /**
-     * 返回所有人员 ID，用于模糊查找
+     * 返回所有人员 用户名，用于模糊查找
      *
      * @return JSON
      */
-    @RequestMapping("/getAllUserId")
+    @RequestMapping("/getAllUsername")
     @ResponseBody
     public String searchUserProfile() {
         List<UserEntity> list = userService.getUserList();
         JSONArray array = new JSONArray();
         for (UserEntity entity : list) {
             JSONObject object = new JSONObject();
-            object.put("id", entity.getUserId());
+            object.put("username", entity.getUserName());
             array.add(object);
         }
         return JSON.toJSONString(array);
     }
 
     /**
-     * 添加权限时，根据 ID 返回人员详情
+     * 添加权限时，根据 用户名 返回人员详情
      *
-     * @param id
+     * @param username
      * @return JSON
      */
-    @RequestMapping("/user.json")
+    @RequestMapping(value = "/user.json", produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public String showUserProfile(@RequestParam(value = "id", defaultValue = "0") int id) {
-        UserEntity entity = userService.getUserEntity(id);
+    public String getUserProfile(@RequestParam(value = "username") String username) {
+        UserEntity entity = userService.getUserOfUsername(username);
         JSONObject object = new JSONObject();
-        object.put("username", entity.getUserName());
-        object.put("usertel", entity.getUserTelephone());
+        object.put("realName", EncryptInfo.encryptName(entity.getRealName()));
+        object.put("userTel", EncryptInfo.encryptTelephone(entity.getUserTelephone()));
+        object.put("userId", entity.getUserId());
         return JSON.toJSONString(object);
     }
 
@@ -113,7 +115,7 @@ public class AuthorityController {
         String endDate = request.getParameter("endDate");
         Date startSqlDate = DateParse.stringToSql(startDate);
         Date endSqlDate = DateParse.stringToSql(endDate);
-        int userId = Integer.parseInt(request.getParameter("userid"));
+        int userId = Integer.parseInt(request.getParameter("userId"));
         int houseId = Integer.parseInt(request.getParameter("houseId"));
 
         userService.addAuthorityOfHouse(houseId, userId, startSqlDate, endSqlDate);

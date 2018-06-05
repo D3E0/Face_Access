@@ -76,11 +76,11 @@ public class UserDaoImp implements UserDao {
     }
 
     @Override
-    public UserEntity verifyUser(int userId, String password) {
+    public UserEntity verifyUser(String username, String password) {
         Session session = factory.openSession();
         session.beginTransaction();
-        Query query = session.createQuery("from UserEntity where userId=:id and userPassword=:word");
-        query.setParameter("id", userId);
+        Query query = session.createQuery("from UserEntity where userName=:name and userPassword=:word");
+        query.setParameter("name", username);
         query.setParameter("word", password);
         UserEntity entity = null;
         List list = query.list();
@@ -91,12 +91,27 @@ public class UserDaoImp implements UserDao {
     }
 
     @Override
-    public UserEntity findUser(int userID) {
+    public UserEntity getUserById(int userID) {
         Session session = factory.openSession();
         Transaction ts = session.beginTransaction();
         UserEntity user = session.get(UserEntity.class, userID);
         ts.commit();
         return user;
+    }
+
+    @Override
+    public UserEntity getUserByName(String username) {
+        Session session = factory.openSession();
+        session.beginTransaction();
+        Query query = session.createQuery("from UserEntity  where userName = :username");
+        query.setParameter("username", username);
+        List list = query.list();
+        UserEntity entity = null;
+        if (list.size() > 0) {
+            entity = (UserEntity) list.get(0);
+        }
+        session.getTransaction().commit();
+        return entity;
     }
 
     @Override

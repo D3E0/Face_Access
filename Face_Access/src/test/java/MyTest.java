@@ -2,6 +2,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import entity.AuthorityEntity;
 import org.junit.Test;
+import util.EncryptInfo;
 
 import java.sql.Date;
 import java.text.DateFormat;
@@ -11,6 +12,15 @@ import java.util.Iterator;
 import java.util.List;
 
 public class MyTest {
+
+    @Test
+    public void testEncrpy() {
+        System.out.println(EncryptInfo.encryptName("戴霸天"));
+        System.out.println(EncryptInfo.encryptName("戴天"));
+        System.out.println(EncryptInfo.encryptTelephone("13105868827"));
+
+    }
+
 
     @Test
     public void testJson() {

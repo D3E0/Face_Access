@@ -18,7 +18,7 @@ layui.use(['laydate', 'form', 'layer', 'upload'], function () {
         , accept: 'images'
         , acceptMime: 'image/*'
         , auto: false
-        , bindAction: '#submit'
+        , bindAction: '#imgSubmit'
         , choose: function (obj) {
             obj.preview(function (index, file, result) {
                 $("#preview").show();

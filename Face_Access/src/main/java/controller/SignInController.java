@@ -10,12 +10,15 @@ import service.SignInService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.logging.Logger;
 
-//TODO 注册
+//TODO　注册　用户名　字母　数字　下划线
 @Controller
 public class SignInController {
 
     private SignInService signInService;
+
+    private Logger logger = Logger.getLogger("us");
 
     @Autowired
     public void setSignInService(SignInService signInService) {
@@ -42,45 +45,18 @@ public class SignInController {
     @RequestMapping("/processlogin")
     @ResponseBody
     public String processLogin(HttpServletRequest req, HttpSession session) {
-        Integer userid;
         JSONObject object = new JSONObject();
         object.put("result", "fail");
-        try {
-            userid = Integer.parseInt(req.getParameter("userid").trim());
-        } catch (NumberFormatException e) {
-            e.printStackTrace();
-            return JSON.toJSONString(object);
-        }
+        String username = req.getParameter("username").trim();
         String password = req.getParameter("password").trim();
 
-        if (signInService.verifyUser(userid, password)) {
-            session.setAttribute("username", signInService.getUsername(userid));
-            session.setAttribute("userid", userid);
+        if (signInService.verifyUser(username, password)) {
+            session.setAttribute("username", username);
+            session.setAttribute("userid", signInService.getUserId(username));
             object.put("result", "success");
         }
         return JSON.toJSONString(object);
     }
-
-
-    /**
-     * 验证用户 ID 是否存在
-     *
-     * @param req
-     * @return JOSN
-     */
-    @RequestMapping("/verify")
-    @ResponseBody
-    public String validateUsername(HttpServletRequest req) {
-        Integer userid = Integer.valueOf(req.getParameter("userid"));
-        JSONObject object = new JSONObject();
-        if (signInService.verifyUserId(userid)) {
-            object.put("result", "success");
-        } else {
-            object.put("result", "fail");
-        }
-        return JSON.toJSONString(object);
-    }
-
 
     /**
      * 返回注册界面
@@ -106,21 +82,40 @@ public class SignInController {
         object.put("result", "false");
 
         String username = request.getParameter("username");
-        String userTel = request.getParameter("usertel");
+        String realName = request.getParameter("realName");
         String password = request.getParameter("password");
-        String confirmPassword = request.getParameter("confirmpassword");
-
+        String confirmPassword = request.getParameter("confirmPassword");
+        logger.info(password + " " + confirmPassword);
         if (!password.equals(confirmPassword)) {
             return JSON.toJSONString(object);
         }
-
-        int userID = signInService.addUser(username, userTel, password);
+        logger.info(username + " " + realName);
+        int userID = signInService.addUser(username, realName, password);
         if (userID != 0) {
             object.put("result", "success");
         }
 
         return JSON.toJSONString(object);
 
+    }
+
+    /**
+     * 验证 username 是否存在
+     *
+     * @param req
+     * @return JOSN
+     */
+    @RequestMapping("/verify")
+    @ResponseBody
+    public String validateUsername(HttpServletRequest req) {
+        String username = req.getParameter("username");
+        JSONObject object = new JSONObject();
+        if (signInService.verifyUsername(username)) {
+            object.put("result", "success");
+        } else {
+            object.put("result", "fail");
+        }
+        return JSON.toJSONString(object);
     }
 
 

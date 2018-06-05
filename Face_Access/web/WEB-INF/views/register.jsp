@@ -22,7 +22,7 @@
             background-color: white;
             padding: 20px;
             height: 400px;
-            width: 350px;
+            width: 375px;
             /*center*/
             position: absolute;
             left: 50%;
@@ -51,20 +51,15 @@
             <label class="layui-form-label" for="username">用户名</label>
             <div class="layui-input-inline">
                 <input type="text" name="username" id="username" placeholder="请输入用户名" class="layui-input">
+                <%--<div class="layui-form-mid layui-word-aux">不可修改，用户身份标识</div>--%>
             </div>
         </div>
 
-        <%--<div class="layui-form-item">--%>
-        <%--<label class="layui-form-label" for="usertel">联系方式</label>--%>
-        <%--<div class="layui-input-inline">--%>
-        <%--<input type="text" name="usertel" id="usertel" class="layui-input">--%>
-        <%--</div>--%>
-        <%--</div>--%>
-
         <div class="layui-form-item">
-            <label class="layui-form-label" for="realname">真实姓名</label>
+            <label class="layui-form-label" for="realName">真实姓名</label>
             <div class="layui-input-inline">
-                <input type="text" name="realname" id="realname" placeholder="请输入真实姓名" class="layui-input">
+                <input type="text" name="realName" id="realName" placeholder="请输入真实姓名" class="layui-input">
+                <%--<div class="layui-form-mid layui-word-aux">不可修改，用于系统登陆</div>--%>
             </div>
         </div>
 
@@ -76,9 +71,24 @@
         </div>
 
         <div class="layui-form-item">
-            <label class="layui-form-label" for="confirmpassword">确认密码</label>
+            <label class="layui-form-label" for="confirmPassword">确认密码</label>
             <div class="layui-input-inline">
-                <input type="password" name="confirmpassword" id="confirmpassword" class="layui-input">
+                <input type="password" name="confirmPassword" id="confirmPassword" class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <div class="layui-row">
+                <div class="layui-col-md7">
+                    <input type="text" name="captcha" class="layui-input">
+                </div>
+                <div class="layui-col-md5">
+                    <div style="margin-left: 10px;">
+                        <button type="button" class="layui-btn layui-btn-primary layui-btn-fluid">
+                            获取验证码
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -95,8 +105,10 @@
     layui.use(['form', 'laydate', 'jquery', 'layer'], function () {
         var form = layui.form, $ = layui.jquery, layer = layui.layer;
         form.on('submit(submit)', function (data) {
+            console.info(data.field);
             $.post('/processRegister', data.field, function (val) {
                 var dataObj = eval("(" + val + ")");
+                console.info(dataObj);
                 if (dataObj.result === 'success') {
                     layer.msg("注册成功");
                     window.location.href = '/login';
