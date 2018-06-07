@@ -79,7 +79,7 @@
     layui.use(['form', 'laydate', 'jquery', 'layer'], function () {
         var form = layui.form, $ = layui.jquery, layer = layui.layer;
         form.on('submit(submit)', function (data) {
-            $.post('/processlogin', data.field, function (val) {
+            $.post('/processSignIn', data.field, function (val) {
                 var dataObj = eval("(" + val + ")");
                 if (dataObj.result === 'success') {
                     window.location.href = '/home';

@@ -28,11 +28,11 @@ public class SignInController {
     /**
      * 返回登陆界面
      *
-     * @return login.jsp
+     * @return signIn.jsp
      */
-    @RequestMapping("/login")
-    public String doLogin() {
-        return "login";
+    @RequestMapping("/signIn")
+    public String doSignIn() {
+        return "signIn";
     }
 
     /**
@@ -42,9 +42,9 @@ public class SignInController {
      * @param session
      * @return JSON
      */
-    @RequestMapping("/processlogin")
+    @RequestMapping("/processSignIn")
     @ResponseBody
-    public String processLogin(HttpServletRequest req, HttpSession session) {
+    public String processSignIn(HttpServletRequest req, HttpSession session) {
         JSONObject object = new JSONObject();
         object.put("result", "fail");
         String username = req.getParameter("username").trim();
@@ -105,7 +105,7 @@ public class SignInController {
      * 验证 username 是否存在
      *
      * @param req
-     * @return JOSN
+     * @return JSON
      */
     @RequestMapping("/verify")
     @ResponseBody

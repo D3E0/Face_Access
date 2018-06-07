@@ -107,7 +107,7 @@ public class AuthorityController {
      * 处理用户添加人员权限表单提交
      *
      * @param request
-     * @return
+     * @return JSON
      */
     @RequestMapping("/processAddAuthority")
     @ResponseBody
@@ -123,44 +123,19 @@ public class AuthorityController {
 
         userService.addAuthority(houseId, userId, startSqlDate, endSqlDate, remark);
 
-//        logger.info(houseId + " " + userId + "" + remark + " " + startSqlDate);
-
         JSONObject object = new JSONObject();
         object.put("result", "success");
         return JSON.toJSONString(object);
     }
 
     /**
-     * 根据 authorityId 更新用户权限
+     * 处理用户更新权限表单提交
      *
      * @param end
      * @param authorityId
-     * @return JSON
+     * @param remark
+     * @return
      */
-    @RequestMapping("/updateEndDate")
-    @ResponseBody
-    public String updateEndDate(@RequestParam(value = "end", defaultValue = "0 ") String end,
-                                @RequestParam(value = "id", defaultValue = "0") int authorityId) {
-        Date endDate = DateParse.stringToSql(end);
-        userService.updateEndDate(authorityId, endDate);
-        JSONObject object = new JSONObject();
-        object.put("result", "success");
-        return JSON.toJSONString(object);
-    }
-
-    @RequestMapping("/updateRemark")
-    @ResponseBody
-    public String updateRemark(HttpServletRequest request) {
-        JSONObject object = new JSONObject();
-        object.put("result", "fail");
-        String remark = request.getParameter("remark");
-        int authorityId = Integer.parseInt(request.getParameter("id"));
-        userService.updateRemark(authorityId, remark);
-        object.put("result", "success");
-        return JSON.toJSONString(object);
-    }
-
-
     @RequestMapping("/updateAuthority")
     @ResponseBody
     public String updateAuthority(@RequestParam(value = "end", defaultValue = "0 ") String end,
@@ -176,7 +151,7 @@ public class AuthorityController {
     }
 
     /**
-     * 更新权限时，返回原授权日期与失效日期给选择界面
+     * 更新权限时，返回原授权日期、失效日期、备注
      *
      * @param start
      * @param end
@@ -194,7 +169,12 @@ public class AuthorityController {
         return "updateAuthority";
     }
 
-    //删除用户权限
+    /**
+     * 删除用户权限
+     *
+     * @param request
+     * @return
+     */
     @RequestMapping("/deleteAuthority")
     @ResponseBody
     public String deleteAuthority(HttpServletRequest request) {

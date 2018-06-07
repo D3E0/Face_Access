@@ -29,11 +29,10 @@ layui.use(['laydate', 'form', 'layer', 'upload'], function () {
     });
 
     $("#demo1").click(function () {
-        layer.open({
+        parent.layer.open({
             type: 1,
             title: false,
             closeBtn: 0,
-            // skin: 'layui-layer-nobg', //没有背景色
             shadeClose: true,
             content: $('#div_preview')
         });

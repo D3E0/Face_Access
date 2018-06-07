@@ -33,7 +33,7 @@
     <div class="layui-form-item">
         <label class="layui-form-label">失效日期</label>
         <div class="layui-input-inline">
-            <input type="text" class="layui-input" id="endDate" value="${end}">
+            <input type="text" disabled class="layui-input" id="endDate" value="${end}">
         </div>
     </div>
     <div class="layui-form-item">

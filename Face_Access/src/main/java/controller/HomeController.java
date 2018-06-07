@@ -32,7 +32,7 @@ public class HomeController {
     public String showHomePage(HttpSession session) {
         String username = (String) session.getAttribute("username");
         if (username == null) {
-            return "redirect:/login";
+            return "redirect:/signIn";
         }
         return "home";
     }
@@ -41,14 +41,14 @@ public class HomeController {
      * 用户退出，清除 Session, 重定向至登陆界面
      *
      * @param session
-     * @return login.jsp
+     * @return signIn.jsp
      */
 
     @RequestMapping("/quit")
     public String quit(HttpSession session) {
         session.removeAttribute("userid");
         session.removeAttribute("username");
-        return "redirect:/login";
+        return "redirect:/signIn";
     }
 
 
