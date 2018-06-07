@@ -38,35 +38,41 @@ public class UserMangeServiceImp implements UserMangeService {
 
 
     @Override
-    public List<HouseEntity> getHousesOfOwner(int userID) {
+    public List<HouseEntity> getHousesByOwner(int userID) {
         return houseDao.getHouses(userID);
     }
 
     @Override
-    public List<AuthorityEntity> getAuthoritiesOfHouse(int houseID) {
+    public List<AuthorityEntity> getAuthoritiesByHouse(int houseID) {
         return authorityDao.getAuthoritiesOfHouse(houseID);
     }
 
     @Override
-    public List<AuthorityEntity> getAuthoritiesOfOwner(int userID) {
-        List<HouseEntity> houseEntities = getHousesOfOwner(userID);
+    public List<AuthorityEntity> getAuthoritiesByOwner(int userID) {
+        List<HouseEntity> houseEntities = getHousesByOwner(userID);
         List<AuthorityEntity> authorityEntities = new ArrayList<AuthorityEntity>();
         for (HouseEntity houseEntity : houseEntities) {
-            authorityEntities.addAll(getAuthoritiesOfHouse(houseEntity.getHouseId()));
+            authorityEntities.addAll(getAuthoritiesByHouse(houseEntity.getHouseId()));
         }
         return authorityEntities;
     }
 
     @Override
-    public void updateAuthorityOfHouse(int authorityID, Date endDate) {
-        authorityDao.updateAuthority(authorityID, endDate);
+    public void updateEndDate(int authorityID, Date endDate) {
+        authorityDao.updateEndDate(authorityID, endDate);
     }
 
     @Override
-    public void addAuthorityOfHouse(int houseID, int userID, Date startDate, Date endDate) {
+    public int updateRemark(int authorityID, String remark) {
+        return authorityDao.updateRemark(authorityID, remark);
+    }
+
+    @Override
+    public void addAuthority(int houseID, int userID, Date startDate, Date endDate, String remark) {
         AuthorityEntity entity = new AuthorityEntity(userID, houseID);
         entity.setEndDate(endDate);
         entity.setStartDate(startDate);
+        entity.setRemark(remark);
         authorityDao.addAuthority(entity);
     }
 
@@ -81,7 +87,7 @@ public class UserMangeServiceImp implements UserMangeService {
     }
 
     @Override
-    public UserEntity getUserOfUsername(String username) {
+    public UserEntity getUserByUsername(String username) {
         return userDao.getUserByName(username);
     }
 

@@ -18,6 +18,17 @@ public class AuthorityEntity {
     private Date endDate;
     private UserEntity user;
     private HouseEntity house;
+    private String remark;
+
+    @Basic
+    @Column(name = "remark")
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
 
     public AuthorityEntity() {
     }

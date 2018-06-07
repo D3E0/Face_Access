@@ -11,21 +11,23 @@ import java.util.List;
 public interface UserMangeService {
 
 
-    public List<HouseEntity> getHousesOfOwner(int userID);
+    public List<HouseEntity> getHousesByOwner(int userID);
 
-    public List<AuthorityEntity> getAuthoritiesOfHouse(int houseID);
+    public List<AuthorityEntity> getAuthoritiesByHouse(int houseID);
 
-    public List<AuthorityEntity> getAuthoritiesOfOwner(int userID);
+    public List<AuthorityEntity> getAuthoritiesByOwner(int userID);
 
-    public void updateAuthorityOfHouse(int authorityID, Date endDate);
+    public void updateEndDate(int authorityID, Date endDate);
 
-    public void addAuthorityOfHouse(int houseID, int userID, Date startDate, Date endDate);
+    public int updateRemark(int authorityID, String remark);
+
+    public void addAuthority(int houseID, int userID, Date startDate, Date endDate, String remark);
 
     public void deleteAuthority(int authorityID);
 
     public UserEntity getUserEntity(int userID);
 
-    public UserEntity getUserOfUsername(String username);
+    public UserEntity getUserByUsername(String username);
 
     public List<UserEntity> getUserList();
 

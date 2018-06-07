@@ -14,6 +14,12 @@ import java.util.List;
 public class MyTest {
 
     @Test
+    public void testDao() {
+
+    }
+
+
+    @Test
     public void testEncrpy() {
         System.out.println(EncryptInfo.encryptName("戴霸天"));
         System.out.println(EncryptInfo.encryptName("戴天"));

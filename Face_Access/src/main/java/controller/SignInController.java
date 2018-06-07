@@ -82,15 +82,17 @@ public class SignInController {
         object.put("result", "false");
 
         String username = request.getParameter("username");
-        String realName = request.getParameter("realName");
+        String telephone = request.getParameter("telephone");
+        String verifyCode = request.getParameter("verifyCode");
         String password = request.getParameter("password");
         String confirmPassword = request.getParameter("confirmPassword");
+
         logger.info(password + " " + confirmPassword);
         if (!password.equals(confirmPassword)) {
             return JSON.toJSONString(object);
         }
-        logger.info(username + " " + realName);
-        int userID = signInService.addUser(username, realName, password);
+        logger.info(username + " " + telephone + " " + verifyCode);
+        int userID = signInService.addUser(username, telephone, password);
         if (userID != 0) {
             object.put("result", "success");
         }

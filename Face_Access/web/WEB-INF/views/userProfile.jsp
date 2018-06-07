@@ -37,17 +37,8 @@
                                 <input type="text" name="username" value="${userEntity.userName}" disabled
                                        class="layui-input">
                             </div>
-                            <div class="layui-form-mid layui-word-aux">不可修改，一般用于后台登入名</div>
                         </div>
 
-                        <div class="layui-form-item">
-                            <label class="layui-form-label">真实姓名</label>
-                            <div class="layui-input-inline">
-                                <input type="text" name="realName" value="${userEntity.realName}" disabled
-                                       class="layui-input">
-                            </div>
-                            <div class="layui-form-mid layui-word-aux">不可修改，用户身份标识</div>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -93,31 +84,32 @@
             <div class="layui-card">
                 <div class="layui-card-header">修改绑定手机</div>
                 <div class="layui-card-body">
-                    <div class="layui-form ">
+                    <div class="layui-form " style="width: 378px;">
                         <div class="layui-form-item">
                             <label class="layui-form-label">旧手机号</label>
-                            <div class="layui-input-inline">
+                            <div class="layui-input-block">
                                 <input type="text" name="userTel" class="layui-input"
                                        value="${userEntity.userTelephone}">
                             </div>
                         </div>
-
                         <div class="layui-form-item">
-                            <div class="layui-row">
-                                <div class="layui-col-xs7">
-                                    <label class="layui-form-label">短信验证码</label>
-                                    <input type="text" name="captcha" class="layui-input">
+                            <div class="layui-inline">
+                                <label class="layui-form-label">验证码</label>
+                                <div class="layui-input-inline " style="width: 150px;">
+                                    <input type="text" name="verifyCode" lay-verify="required"
+                                           placeholder="验证码" class="layui-input">
                                 </div>
-                                <div class="layui-col-xs5">
-                                    <button class="layui-btn layui-btn-primary">发送验证码</button>
+                                <div class="layui-input-inline" style="width: 50px">
+                                    <button type="button" class="layui-btn layui-btn-primary">
+                                        获取验证码
+                                    </button>
                                 </div>
                             </div>
                         </div>
 
-
                         <div class="layui-form-item">
                             <label class="layui-form-label">新手机号</label>
-                            <div class="layui-input-inline">
+                            <div class="layui-input-block">
                                 <input type="text" name="newTel" class="layui-input">
                             </div>
                         </div>

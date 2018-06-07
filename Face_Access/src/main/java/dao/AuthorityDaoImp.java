@@ -47,13 +47,27 @@ public class AuthorityDaoImp implements AuthorityDao {
     }
 
     @Override
-    public void updateAuthority(int id, Date endDate) {
+    public void updateEndDate(int id, Date endDate) {
         Session session = factory.openSession();
         session.beginTransaction();
         AuthorityEntity entity = session.find(AuthorityEntity.class, id);
         entity.setEndDate(endDate);
         session.update(entity);
         session.getTransaction().commit();
+    }
+
+    @Override
+    public int updateRemark(int authorityID, String remark) {
+        Session session = factory.openSession();
+        session.beginTransaction();
+        Query query = session.createQuery("update AuthorityEntity set remark=:remark" +
+                " where authorityId=:id");
+        query.setParameter("remark", remark);
+        query.setParameter("id", authorityID);
+        int count = query.executeUpdate();
+        session.getTransaction().commit();
+        return count;
+
     }
 
     @Override

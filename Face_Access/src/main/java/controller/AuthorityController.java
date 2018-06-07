@@ -18,6 +18,7 @@ import util.EncryptInfo;
 import javax.servlet.http.HttpServletRequest;
 import java.sql.Date;
 import java.util.List;
+import java.util.logging.Logger;
 
 /**
  * @author ACM-PC
@@ -29,6 +30,8 @@ import java.util.List;
 public class AuthorityController {
 
     private UserMangeService userService;
+
+    private Logger logger = Logger.getLogger("heh");
 
     @Autowired
 
@@ -73,9 +76,8 @@ public class AuthorityController {
     @RequestMapping(value = "/user.json", produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public String getUserProfile(@RequestParam(value = "username") String username) {
-        UserEntity entity = userService.getUserOfUsername(username);
+        UserEntity entity = userService.getUserByUsername(username);
         JSONObject object = new JSONObject();
-        object.put("realName", EncryptInfo.encryptName(entity.getRealName()));
         object.put("userTel", EncryptInfo.encryptTelephone(entity.getUserTelephone()));
         object.put("userId", entity.getUserId());
         return JSON.toJSONString(object);
@@ -91,7 +93,7 @@ public class AuthorityController {
     @RequestMapping("/gethouse")
     @ResponseBody
     public String getHouse(@RequestParam(value = "userId", defaultValue = "0") int id) {
-        List<HouseEntity> houseEntities = userService.getHousesOfOwner(id);
+        List<HouseEntity> houseEntities = userService.getHousesByOwner(id);
         JSONArray array = new JSONArray();
         for (HouseEntity entity : houseEntities) {
             JSONObject object = new JSONObject();
@@ -113,12 +115,15 @@ public class AuthorityController {
 
         String startDate = request.getParameter("startDate");
         String endDate = request.getParameter("endDate");
+        String remark = request.getParameter("remark");
         Date startSqlDate = DateParse.stringToSql(startDate);
         Date endSqlDate = DateParse.stringToSql(endDate);
         int userId = Integer.parseInt(request.getParameter("userId"));
         int houseId = Integer.parseInt(request.getParameter("houseId"));
 
-        userService.addAuthorityOfHouse(houseId, userId, startSqlDate, endSqlDate);
+        userService.addAuthority(houseId, userId, startSqlDate, endSqlDate, remark);
+
+//        logger.info(houseId + " " + userId + "" + remark + " " + startSqlDate);
 
         JSONObject object = new JSONObject();
         object.put("result", "success");
@@ -129,17 +134,28 @@ public class AuthorityController {
      * 根据 authorityId 更新用户权限
      *
      * @param end
-     * @param id
+     * @param authorityId
      * @return JSON
      */
-    @RequestMapping("/updateAuthority")
+    @RequestMapping("/updateEndDate")
     @ResponseBody
-    public String updateAuthority(@RequestParam(value = "end", defaultValue = "0 ") String end,
-                                  @RequestParam(value = "id", defaultValue = "0") String id) {
+    public String updateEndDate(@RequestParam(value = "end", defaultValue = "0 ") String end,
+                                @RequestParam(value = "id", defaultValue = "0") int authorityId) {
         Date endDate = DateParse.stringToSql(end);
-        int authorityId = Integer.parseInt(id);
-        userService.updateAuthorityOfHouse(authorityId, endDate);
+        userService.updateEndDate(authorityId, endDate);
         JSONObject object = new JSONObject();
+        object.put("result", "success");
+        return JSON.toJSONString(object);
+    }
+
+    @RequestMapping("/updateRemark")
+    @ResponseBody
+    public String updateRemark(HttpServletRequest request) {
+        JSONObject object = new JSONObject();
+        object.put("result", "fail");
+        String remark = request.getParameter("remark");
+        int authorityId = Integer.parseInt(request.getParameter("id"));
+        userService.updateRemark(authorityId, remark);
         object.put("result", "success");
         return JSON.toJSONString(object);
     }

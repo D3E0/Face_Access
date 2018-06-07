@@ -5,102 +5,88 @@
   Time: 20:32
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Login</title>
+    <title>Register</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/layui/css/layui.css">
     <script src="${pageContext.request.contextPath}/static/layui/layui.js"></script>
     <style>
-
         body {
             background-color: #eee;
+            margin-top: 50px;
         }
 
-        .father {
-            background-color: white;
-            padding: 20px;
-            height: 400px;
+        #main {
             width: 375px;
-            /*center*/
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%);
-            /*shadow*/
-            box-shadow: 0 9px 30px -6px rgba(0, 0, 0, .2), 0 18px 20px -10px rgba(0, 0, 0, .04), 0 18px 20px -10px rgba(0, 0, 0, .04), 0 10px 20px -10px rgba(0, 0, 0, .04);
-            border: 1px solid #dadada;
-            border-radius: 10px;
-        }
-
-        .son {
-            position: absolute;
-            top: 50%;
-            transform: translate(0%, -50%);
-            margin-left: 20px;
+            margin: 0 auto;
         }
     </style>
 
 </head>
 <body>
-<div class="father">
-    <form class="layui-form layui-form-pane son">
+<div id="main">
+    <div class="layui-form layui-form-pane">
 
         <div class="layui-form-item">
-            <label class="layui-form-label" for="username">用户名</label>
-            <div class="layui-input-inline">
-                <input type="text" name="username" id="username" placeholder="请输入用户名" class="layui-input">
-                <%--<div class="layui-form-mid layui-word-aux">不可修改，用户身份标识</div>--%>
-            </div>
-        </div>
-
-        <div class="layui-form-item">
-            <label class="layui-form-label" for="realName">真实姓名</label>
-            <div class="layui-input-inline">
-                <input type="text" name="realName" id="realName" placeholder="请输入真实姓名" class="layui-input">
-                <%--<div class="layui-form-mid layui-word-aux">不可修改，用于系统登陆</div>--%>
-            </div>
-        </div>
-
-        <div class="layui-form-item">
-            <label class="layui-form-label" for="password">密码</label>
-            <div class="layui-input-inline">
-                <input type="password" name="password" id="password" class="layui-input">
-            </div>
-        </div>
-
-        <div class="layui-form-item">
-            <label class="layui-form-label" for="confirmPassword">确认密码</label>
-            <div class="layui-input-inline">
-                <input type="password" name="confirmPassword" id="confirmPassword" class="layui-input">
-            </div>
-        </div>
-
-        <div class="layui-form-item">
-            <div class="layui-row">
-                <div class="layui-col-md7">
-                    <input type="text" name="captcha" class="layui-input">
-                </div>
-                <div class="layui-col-md5">
-                    <div style="margin-left: 10px;">
-                        <button type="button" class="layui-btn layui-btn-primary layui-btn-fluid">
-                            获取验证码
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="layui-form-item">
+            <label class="layui-form-label">用户名</label>
             <div class="layui-input-block">
-                <button class="layui-btn" lay-submit lay-filter="submit">注册</button>
-                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                <input type="text" name="username" lay-verify="required|username"
+                       placeholder="请输入用户名" class="layui-input">
             </div>
         </div>
 
-    </form>
+        <div class="layui-form-item">
+            <label class="layui-form-label">手机号</label>
+            <div class="layui-input-block">
+                <input type="text" name="telephone" lay-verify="required|phone"
+                       placeholder="请输入手机号" class="layui-input">
+            </div>
+        </div>
+
+
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">验证码</label>
+                <div class="layui-input-inline " style="width: 150px;">
+                    <input type="text" name="verifyCode" lay-verify="required"
+                           placeholder="验证码" class="layui-input">
+                </div>
+
+                <div class="layui-input-inline" style="width: 50px">
+                    <button type="button" class="layui-btn layui-btn-primary">
+                        获取验证码
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">密码</label>
+            <div class="layui-input-block">
+                <input type="text" name="password" lay-verify="required"
+                       placeholder="请输入密码" class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">确认密码</label>
+            <div class="layui-input-block">
+                <input type="password" name="confirmPassword" lay-verify="required"
+                       placeholder="确认密码" class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <button class="layui-btn  layui-btn-fluid" lay-submit lay-filter="submit">注册</button>
+        </div>
+
+
+    </div>
 </div>
+
+
 <script>
     layui.use(['form', 'laydate', 'jquery', 'layer'], function () {
         var form = layui.form, $ = layui.jquery, layer = layui.layer;
@@ -117,6 +103,20 @@
                 }
             });
             return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
+        });
+
+        form.verify({
+            username: function (value, item) { //value：表单的值、item：表单的DOM对象
+                if (!new RegExp("^[a-zA-Z0-9_\u4e00-\u9fa5\\s·]+$").test(value)) {
+                    return '用户名不能有特殊字符';
+                }
+                if (/(^\_)|(\__)|(\_+$)/.test(value)) {
+                    return '用户名首尾不能出现下划线\'_\'';
+                }
+                if (/^\d+\d+\d$/.test(value)) {
+                    return '用户名不能全为数字';
+                }
+            }
         });
     })
 </script>

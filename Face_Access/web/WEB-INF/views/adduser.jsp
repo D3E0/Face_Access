@@ -53,13 +53,6 @@
             </div>
         </div>
 
-        <div class="layui-form-item">
-            <label class="layui-form-label">真实姓名</label>
-            <div class="layui-input-inline">
-                <input disabled type="text" name="realName" class="layui-input">
-            </div>
-        </div>
-
         <div class="layui-form-item layui-hide">
             <div class="layui-input-inline">
                 <input disabled type="text" name="userId" class="layui-input">
@@ -91,6 +84,13 @@
             <label class="layui-form-label">失效日期</label>
             <div class="layui-inline">
                 <input type="text" name="endDate" class="layui-input" id="endDate">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">备注</label>
+            <div class="layui-inline">
+                <input type="text" name="remark" class="layui-input" id="remark">
             </div>
         </div>
 

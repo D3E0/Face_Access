@@ -45,11 +45,11 @@ public class SignInServiceImp implements SignInService {
     }
 
     @Override
-    public int addUser(String username, String realName, String password) {
+    public int addUser(String username, String telephone, String password) {
         UserEntity entity = new UserEntity();
         entity.setUserName(username);
         entity.setUserPassword(password);
-        entity.setRealName(realName);
+        entity.setUserTelephone(telephone);
         int userID = userDao.addUser(entity);
         return userID;
     }

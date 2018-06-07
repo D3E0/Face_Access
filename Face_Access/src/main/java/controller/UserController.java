@@ -59,11 +59,11 @@ public class UserController {
      *
      * @return JSON
      */
-    @RequestMapping("/users.json")
+    @RequestMapping(value = "/users.json", produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public String showUserJson(HttpSession session) {
         Integer userId = (Integer) session.getAttribute("userid");
-        List<AuthorityEntity> list = userService.getAuthoritiesOfOwner(userId);
+        List<AuthorityEntity> list = userService.getAuthoritiesByOwner(userId);
         JSONArray array = new JSONArray();
         for (AuthorityEntity entity : list) {
             JSONObject object = new JSONObject();
@@ -74,6 +74,7 @@ public class UserController {
             object.put("endDate", entity.getEndDate().toString());
             object.put("houseId", entity.getHouse().getHouseId());
             object.put("authorityId", entity.getAuthorityId());
+            object.put("remark", entity.getRemark());
             array.add(object);
         }
         return "{\"code\":0,\"msg\":\"\",\"count\":1000,\"data\":" + array + "}";

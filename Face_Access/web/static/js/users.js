@@ -10,14 +10,23 @@ layui.use(['jquery', 'laypage', 'table', 'layer', 'element', 'laydate'], functio
         , page: true
         , cols: [[
             {field: 'houseId', title: '房间 ID', align: "center"}
-            , {field: 'userId', title: '用户 ID', align: "center"}
             , {field: 'userName', title: '用户名', align: "center"}
-            , {field: 'userTelephone', title: '联系方式', align: "center"}
+            , {field: 'remark', title: '备注', align: "center"}
             , {field: 'startDate', title: '授权日期', align: "center"}
             , {field: 'endDate', title: '失效日期', align: "center"}
             , {fixed: 'right', title: '操作', align: 'center', toolbar: '#toolBar'}
         ]]
         , id: "userTable"
+    });
+
+    table.on('edit(userTable)', function (obj) { //注：edit是固定事件名，test是table原始容器的属性 lay-filter="对应的值"
+        console.log(obj.value); //得到修改后的值
+        console.log(obj.field); //当前编辑的字段名
+        console.log(obj.data); //所在行的所有相关数据
+
+        $.post('/updateRemark', {id: obj.data.authorityId, remark: obj.value()}, function (data) {
+            console.info(data);
+        })
     });
 
     win.tableIns = tableIns;
@@ -33,7 +42,7 @@ layui.use(['jquery', 'laypage', 'table', 'layer', 'element', 'laydate'], functio
                 title: false,
                 closeBtn: 0,
                 shadeClose: true,
-                content: '<div><img src="/static/images/666.jpg" style="width: 100%"/></div>'//$('#div_preview')
+                content: '<div><img src="/static/images/666.jpg" style="width: 100%"/></div>'
             });
         } else if (layEvent === 'del') { //删除
             layer.open({
@@ -62,7 +71,7 @@ layui.use(['jquery', 'laypage', 'table', 'layer', 'element', 'laydate'], functio
                 title: "请选择失效日期",
                 shade: 0,
                 btn: ['确认', '取消'],
-                area: ['450', '480'],
+                area: ['450', '580'],
                 btnAlign: 'c',
                 id: 'first',
                 resize: false,
@@ -70,7 +79,7 @@ layui.use(['jquery', 'laypage', 'table', 'layer', 'element', 'laydate'], functio
                     var test = $('#' + layero.find('iframe')[0]['name']).get(0);
                     var doc = test.contentDocument;
                     var endDate = $("#endDate", doc).val();
-                    $.post('/updateAuthority', {end: endDate, id: data.authorityId}, function () {
+                    $.post('/updateEndDate', {end: endDate, id: data.authorityId}, function () {
                         obj.update({
                             endDate: endDate
                         });

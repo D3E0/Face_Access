@@ -13,7 +13,9 @@ public interface AuthorityDao {
 
     void deleteAuthority(int id);
 
-    void updateAuthority(int authorityID, Date endDate);
+    void updateEndDate(int authorityID, Date endDate);
+
+    int updateRemark(int authorityID, String remark);
 
     AuthorityEntity getAuthority(int userID, int houseID);
 

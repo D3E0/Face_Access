@@ -17,10 +17,8 @@ layui.use(['laydate', 'form', 'layer', 'jquery'], function () {
         , isInitValue: true
     });
 
-    //字符串加密 钱** 131****7788
     form.on('select(username)', function (data) {
         $.getJSON('/user.json', {username: data.value}, function (val) {
-            $("input[name='realName']").val(val.realName);
             $("input[name='userTel']").val(val.userTel);
             $("input[name='userId']").val(val.userId);
         });
@@ -40,7 +38,7 @@ layui.use(['laydate', 'form', 'layer', 'jquery'], function () {
                 layer.msg("添加失败");
             }
         }, 'json');
-        // console.log(data.field) //当前容器的全部表单字段，名值对形式：{name: value}
+        // console.log(data.field); //当前容器的全部表单字段，名值对形式：{name: value}
         return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
     });
 

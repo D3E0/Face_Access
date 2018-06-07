@@ -11,24 +11,30 @@
 <head>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/layui/css/layui.css">
     <script src="${pageContext.request.contextPath}/static/layui/layui.js"></script>
-    <style>
-        .center {
-            position: absolute;
-            top: 50%;
-            transform: translate(0%, -50%);
-        }
-    </style>
 </head>
 <body>
-<div class="layui-form" style="margin: 30px 0px 0px 60px">
+<div class="layui-fluid">
+    <div class="layui-card" style="width: 375px">
+        <div class="layui-card-header">个人资料</div>
+        <div class="layui-card-body">
+            <div class="layui-form">
 
-    <div class="layui-form-item" style="margin-left: 30px">
-        <div id="test"></div>
-    </div>
-    <div class="layui-form-item">
-        <label class="layui-form-label">失效日期</label>
-        <div class="layui-inline">
-            <input type="text" class="layui-input" id="endDate" value="${end}">
+                <div class="layui-form-item" style="margin-left: 30px">
+                    <div id="test"></div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">失效日期</label>
+                    <div class="layui-inline">
+                        <input type="text" class="layui-input" id="endDate" value="${end}">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">备注</label>
+                    <div class="layui-inline">
+                        <input type="text" class="layui-input" id="remark" value="${end}">
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
