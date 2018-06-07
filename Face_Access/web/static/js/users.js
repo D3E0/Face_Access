@@ -3,7 +3,6 @@ layui.use(['jquery', 'laypage', 'table', 'layer', 'element', 'laydate'], functio
         , table = layui.table, layer = layui.layer
         , element = layui.element, laydate = layui.laydate;
 
-
     var tableIns = table.render({
         elem: '#userTable'
         , url: '/users.json'
@@ -37,12 +36,12 @@ layui.use(['jquery', 'laypage', 'table', 'layer', 'element', 'laydate'], functio
         var layEvent = obj.event; //获得 lay-event 对应的值
         // console.info(data.userId + " " + data.authorityId);
         if (layEvent === 'detail') { //查看
-            layer.open({
+            parent.layer.open({
                 type: 1,
                 title: false,
                 closeBtn: 0,
                 shadeClose: true,
-                content: '<div><img src="/static/images/666.jpg" style="width: 100%"/></div>'
+                content: '<div><img src="/static/images/666.jpg" style="width: 100%"/></div>',
             });
         } else if (layEvent === 'del') { //删除
             layer.open({
@@ -65,13 +64,13 @@ layui.use(['jquery', 'laypage', 'table', 'layer', 'element', 'laydate'], functio
                 }
             });
         } else if (layEvent === 'edit') { //编辑;
-            var index = layer.open({
+            var index = parent.layer.open({
                 type: 2,
                 content: ['/choosedate?start=' + data.startDate + '&end=' + data.endDate, 'no'],
                 title: "请选择失效日期",
                 shade: 0,
                 btn: ['确认', '取消'],
-                area: ['450', '580'],
+                area: ['450', '500'],
                 btnAlign: 'c',
                 id: 'first',
                 resize: false,
@@ -93,11 +92,11 @@ layui.use(['jquery', 'laypage', 'table', 'layer', 'element', 'laydate'], functio
     });
 
     $("#add").click(function () {
-        layer.open({
+        parent.layer.open({
             type: 2,
             content: ['/adduser', 'no'],
             title: '添加人员',
-            area: ['500', '580'],
+            area: ['500', '540'],
             resize: false,
             shade: 0,
             id: "second",

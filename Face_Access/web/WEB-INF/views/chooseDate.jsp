@@ -13,31 +13,25 @@
     <script src="${pageContext.request.contextPath}/static/layui/layui.js"></script>
 </head>
 <body>
-<div class="layui-fluid">
-    <div class="layui-card" style="width: 375px">
-        <div class="layui-card-header">个人资料</div>
-        <div class="layui-card-body">
-            <div class="layui-form">
+    <div class="layui-form layui-form-pane" style="width: 375px;">
 
-                <div class="layui-form-item" style="margin-left: 30px">
-                    <div id="test"></div>
-                </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label">失效日期</label>
-                    <div class="layui-inline">
-                        <input type="text" class="layui-input" id="endDate" value="${end}">
-                    </div>
-                </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label">备注</label>
-                    <div class="layui-inline">
-                        <input type="text" class="layui-input" id="remark" value="${end}">
-                    </div>
-                </div>
+        <div class="layui-form-item" style="margin-left: 30px">
+            <div id="test"></div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">失效日期</label>
+            <div class="layui-input-inline">
+                <input type="text" class="layui-input" id="endDate" value="${end}">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">备注</label>
+            <div class="layui-input-inline">
+                <input type="text" class="layui-input" id="remark" value="${end}">
             </div>
         </div>
     </div>
-</div>
+</body>
 <script>
     layui.use(['laydate', 'form', 'layer', 'upload'], function () {
         var laydate = layui.laydate, $ = layui.jquery;

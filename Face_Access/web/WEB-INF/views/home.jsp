@@ -20,6 +20,19 @@
             width: 100%;
             height: 100%;
         }
+
+        #content {
+            position: absolute;
+            left: 200px;
+            right: 0;
+            top: 60px;
+            bottom: 0;
+            z-index: 998;
+            width: auto;
+            overflow: hidden;
+            overflow-y: auto;
+            box-sizing: border-box
+        }
     </style>
 </head>
 
@@ -65,15 +78,18 @@
         </div>
     </div>
 
-    <div class="layui-body">
-        <!-- 内容主体区域 -->
-        <iframe id="frame" name="frame" src="/users" scrolling="no"></iframe>
+    <div id="content">
+        <iframe id="frame" name="frame" src="/users"></iframe>
     </div>
+    <%--<div class="layui-body">--%>
+    <%--<!-- 内容主体区域 -->--%>
+    <%--<iframe id="frame" name="frame" src="/users"></iframe>--%>
+    <%--</div>--%>
 
-    <div class="layui-footer">
-        <!-- 底部固定区域 -->
-        © layui.com - 底部固定区域
-    </div>
+    <%--<div class="layui-footer">--%>
+    <%--<!-- 底部固定区域 -->--%>
+    <%--© layui.com - 底部固定区域--%>
+    <%--</div>--%>
 </div>
 <script>
     var id = ${userid};
