@@ -42,11 +42,11 @@ public class AuthorityController {
     /**
      * 控制跳转 添加人员权限界面
      *
-     * @return adduser.jsp
+     * @return addAuthority.jsp
      */
-    @RequestMapping("/adduser")
+    @RequestMapping("/addAuthority")
     public String saveUser() {
-        return "adduser";
+        return "addAuthority";
     }
 
     /**
@@ -90,7 +90,7 @@ public class AuthorityController {
      * @param id
      * @return JSON
      */
-    @RequestMapping("/gethouse")
+    @RequestMapping("/getHouse")
     @ResponseBody
     public String getHouse(@RequestParam(value = "userId", defaultValue = "0") int id) {
         List<HouseEntity> houseEntities = userService.getHousesByOwner(id);
@@ -109,9 +109,9 @@ public class AuthorityController {
      * @param request
      * @return
      */
-    @RequestMapping("/processAddUser")
+    @RequestMapping("/processAddAuthority")
     @ResponseBody
-    public String processUser(HttpServletRequest request) {
+    public String processAddUser(HttpServletRequest request) {
 
         String startDate = request.getParameter("startDate");
         String endDate = request.getParameter("endDate");
@@ -160,21 +160,38 @@ public class AuthorityController {
         return JSON.toJSONString(object);
     }
 
+
+    @RequestMapping("/updateAuthority")
+    @ResponseBody
+    public String updateAuthority(@RequestParam(value = "end", defaultValue = "0 ") String end,
+                                  @RequestParam(value = "id", defaultValue = "0") int authorityId,
+                                  @RequestParam(value = "remark") String remark) {
+        JSONObject object = new JSONObject();
+        object.put("result", "fail");
+        Date endDate = DateParse.stringToSql(end);
+        userService.updateEndDate(authorityId, endDate);
+        userService.updateRemark(authorityId, remark);
+        object.put("result", "success");
+        return JSON.toJSONString(object);
+    }
+
     /**
      * 更新权限时，返回原授权日期与失效日期给选择界面
      *
      * @param start
      * @param end
      * @param model
-     * @return chooseDate.jsp
+     * @return updateAuthority.jsp
      */
-    @RequestMapping("/choosedate")
+    @RequestMapping("/authorityInfo")
     public String saveDate(@RequestParam(value = "start", defaultValue = "0") String start,
                            @RequestParam(value = "end", defaultValue = "0") String end,
+                           @RequestParam(value = "remark") String remark,
                            Model model) {
+        model.addAttribute("remark", remark);
         model.addAttribute("start", start);
         model.addAttribute("end", end);
-        return "chooseDate";
+        return "updateAuthority";
     }
 
     //删除用户权限

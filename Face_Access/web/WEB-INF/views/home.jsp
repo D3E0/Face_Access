@@ -13,6 +13,7 @@
     <title>Home</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/layui/css/layui.css">
     <script src="${pageContext.request.contextPath}/static/layui/layui.js"></script>
+    <script>var register = {};</script>
     <style>
         #frame {
             overflow: visible;

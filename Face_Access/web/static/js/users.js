@@ -3,7 +3,7 @@ layui.use(['jquery', 'laypage', 'table', 'layer', 'element', 'laydate'], functio
         , table = layui.table, layer = layui.layer
         , element = layui.element, laydate = layui.laydate;
 
-    var tableIns = table.render({
+    parent.register.userTable = table.render({
         elem: '#userTable'
         , url: '/users.json'
         , page: true
@@ -18,18 +18,6 @@ layui.use(['jquery', 'laypage', 'table', 'layer', 'element', 'laydate'], functio
         , id: "userTable"
     });
 
-    table.on('edit(userTable)', function (obj) { //注：edit是固定事件名，test是table原始容器的属性 lay-filter="对应的值"
-        console.log(obj.value); //得到修改后的值
-        console.log(obj.field); //当前编辑的字段名
-        console.log(obj.data); //所在行的所有相关数据
-
-        $.post('/updateRemark', {id: obj.data.authorityId, remark: obj.value()}, function (data) {
-            console.info(data);
-        })
-    });
-
-    win.tableIns = tableIns;
-
     //监听工具条 tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
     table.on('tool(userTable)', function (obj) {
         var data = obj.data; //获得当前行数据
@@ -41,7 +29,7 @@ layui.use(['jquery', 'laypage', 'table', 'layer', 'element', 'laydate'], functio
                 title: false,
                 closeBtn: 0,
                 shadeClose: true,
-                content: '<div><img src="/static/images/666.jpg" style="width: 100%"/></div>',
+                content: '<div><img src="/static/images/666.jpg" style="width: 100%"/></div>'
             });
         } else if (layEvent === 'del') { //删除
             layer.open({
@@ -64,26 +52,34 @@ layui.use(['jquery', 'laypage', 'table', 'layer', 'element', 'laydate'], functio
                 }
             });
         } else if (layEvent === 'edit') { //编辑;
-            var index = parent.layer.open({
+            parent.layer.open({
                 type: 2,
-                content: ['/choosedate?start=' + data.startDate + '&end=' + data.endDate, 'no'],
-                title: "请选择失效日期",
+                content: ['/authorityInfo?start=' + data.startDate + '&end=' + data.endDate + '&remark=' + data.remark, 'no'],
+                title: false,
                 shade: 0,
                 btn: ['确认', '取消'],
-                area: ['450', '500'],
+                area: ['400', '470'],
                 btnAlign: 'c',
                 id: 'first',
                 resize: false,
                 yes: function (index, layero) {
-                    var test = $('#' + layero.find('iframe')[0]['name']).get(0);
-                    var doc = test.contentDocument;
-                    var endDate = $("#endDate", doc).val();
-                    $.post('/updateEndDate', {end: endDate, id: data.authorityId}, function () {
-                        obj.update({
-                            endDate: endDate
-                        });
-                        layer.msg('修改成功');
-                        layer.close(index); //如果设定了yes回调，需进行手工关闭
+                    var editFrame = parent.document.getElementById(layero.find('iframe')[0]['name']);
+                    var editDoc = editFrame.contentDocument;
+                    var endDate = $("#endDate", editDoc).val();
+                    var remark = $("#remark", editDoc).val();
+                    $.post('/updateAuthority', {end: endDate, id: data.authorityId, remark: remark}, function (val) {
+                        var dataObj = eval("(" + val + ")");
+                        if (dataObj.result === 'success') {
+                            obj.update({
+                                endDate: endDate,
+                                remark: remark
+                            });
+                            parent.layer.msg('修改成功');
+                            parent.layer.close(index); //如果设定了yes回调，需进行手工关闭
+                        } else {
+                            parent.layer.msg("修改失败");
+                        }
+
                     });
 
                 }
@@ -92,17 +88,15 @@ layui.use(['jquery', 'laypage', 'table', 'layer', 'element', 'laydate'], functio
     });
 
     $("#add").click(function () {
-        parent.layer.open({
+        //用于关闭自身
+        parent.register.addIndex = parent.layer.open({
             type: 2,
-            content: ['/adduser', 'no'],
+            content: ['/addAuthority', 'no'],
             title: '添加人员',
             area: ['500', '540'],
             resize: false,
             shade: 0,
-            id: "second",
-            success: function (layero, index) {
-                win.addFrmaeIndex = index;
-            }
+            id: "second"//同一 ID 窗口打开一个
         });
     });
 });
@@ -116,3 +110,8 @@ layui.use(['jquery', 'laypage', 'table', 'layer', 'element', 'laydate'], functio
 //         return new Date(date).getDate() == date.substring(date.length - 2);
 //     }
 // }
+
+
+// $.post('/updateRemark', {id: obj.data.authorityId, remark: obj.value()}, function (data) {
+//     console.info(data);
+// })

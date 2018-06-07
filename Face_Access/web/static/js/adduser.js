@@ -25,13 +25,13 @@ layui.use(['laydate', 'form', 'layer', 'jquery'], function () {
     });
 
     form.on('submit(submit)', function (data) {
-        $.post('/processAddUser', data.field, function (data) {
+        $.post('/processAddAuthority', data.field, function (data) {
             if (data.result === 'success') {
-                var index = parent.win.addFrmaeIndex;
-                parent.layer.close(index); //再执行关闭
+                var index = parent.register.addIndex;
+                parent.layer.close(index); //关闭自身
                 parent.layer.msg("添加成功");
-                //父页面 表格重载
-                parent.win.tableIns.reload({
+                //userTable 表格重载
+                parent.register.userTable.reload({
                     url: '/users.json'
                 });
             } else {
@@ -51,13 +51,12 @@ layui.use(['laydate', 'form', 'layer', 'jquery'], function () {
         form.render('select');
     });
 
-    $.getJSON('/gethouse', {userId: parent.parent.id}, function (val) {
+    $.getJSON('/getHouse', {userId: parent.id}, function (val) {
         $.each(val, function (i, n) {
             $("<option>" + n.houseId + "</option>").appendTo($("#houseId"));
         });
         //更新渲染
         form.render('select');
     });
-
 
 });
