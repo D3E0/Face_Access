@@ -1,5 +1,6 @@
 package controller;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import entity.AuthorityEntity;
@@ -13,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import service.UserMangeService;
+import util.EncryptInfo;
+import util.VerifyCodeProducer;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -50,6 +53,7 @@ public class UserController {
     @RequestMapping("/user")
     public String showUserProfile(@RequestParam(value = "id", defaultValue = "-1") int id, Model model) {
         UserEntity entity = userService.getUserEntity(id);
+        entity.setUserTelephone(EncryptInfo.encryptTelephone(entity.getUserTelephone()));
         model.addAttribute(entity);
         return "userProfile";
     }
@@ -78,6 +82,53 @@ public class UserController {
             array.add(object);
         }
         return "{\"code\":0,\"msg\":\"\",\"count\":1000,\"data\":" + array + "}";
+
+    }
+
+    @RequestMapping("/updatePassword")
+    @ResponseBody
+    public String updatePassword(@RequestParam String username,
+                                 @RequestParam String oldPassword,
+                                 @RequestParam String password,
+                                 @RequestParam String confirmPassword) {
+        JSONObject object = new JSONObject();
+
+        if (confirmPassword.equals(password)) {
+            UserEntity entity = userService.getUserByUsername(username);
+            if (entity.getUserPassword().equals(oldPassword)) {
+                userService.updatePassword(entity.getUserId(), password);
+                object.put("result", "success");
+            }
+        }
+        object.put("result", "fail");
+        return JSON.toJSONString(object);
+    }
+
+    @RequestMapping("/updateTelephone")
+    @ResponseBody
+    public String updateTelephone(@RequestParam String username,
+                                  @RequestParam String verifyCode,
+                                  @RequestParam String telephone,
+                                  HttpSession session) {
+        JSONObject object = new JSONObject();
+        object.put("result", "fail");
+        String digitVerifyCode = (String) session.getAttribute("digitVerifyCode");
+        if(verifyCode.equals(digitVerifyCode)) {
+            UserEntity entity = userService.getUserByUsername(username);
+            userService.updateTelephone(entity.getUserId(), telephone);
+            object.put("result", "success");
+        }
+        return JSON.toJSONString(object);
+    }
+
+    @RequestMapping("/getDigitVerifyCode")
+    @ResponseBody
+    public String getUpdateCode(HttpSession session) {
+        String digitVerifyCode = VerifyCodeProducer.getDigitVerifyCode();
+        session.setAttribute("digitVerifyCode", digitVerifyCode);
+        JSONObject object = new JSONObject();
+        object.put("digitVerifyCode", digitVerifyCode);
+        return JSON.toJSONString(object);
 
     }
 

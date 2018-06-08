@@ -87,7 +87,7 @@
                         <div class="layui-form-item">
                             <label class="layui-form-label">旧手机号</label>
                             <div class="layui-input-block">
-                                <input type="text" name="userTel" class="layui-input"
+                                <input type="text" disabled name="userTel" class="layui-input"
                                        value="${userEntity.userTelephone}">
                             </div>
                         </div>

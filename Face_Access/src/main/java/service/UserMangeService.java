@@ -10,7 +10,6 @@ import java.util.List;
 
 public interface UserMangeService {
 
-
     public List<HouseEntity> getHousesByOwner(int userID);
 
     public List<AuthorityEntity> getAuthoritiesByHouse(int houseID);
@@ -20,6 +19,12 @@ public interface UserMangeService {
     public void updateEndDate(int authorityID, Date endDate);
 
     public int updateRemark(int authorityID, String remark);
+
+    public int updatePassword(int userId, String password);
+
+    public int updateTelephone(int userId, String telephone);
+
+    public int updateUserFace(int userId, byte[] face);
 
     public void addAuthority(int houseID, int userID, Date startDate, Date endDate, String remark);
 

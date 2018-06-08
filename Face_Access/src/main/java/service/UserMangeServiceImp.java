@@ -68,6 +68,33 @@ public class UserMangeServiceImp implements UserMangeService {
     }
 
     @Override
+    public int updatePassword(int userId, String password) {
+        UserEntity entity = new UserEntity();
+        entity.setUserPassword(password);
+        entity.setUserId(userId);
+        userDao.updateUser(entity);
+        return 0;
+    }
+
+    @Override
+    public int updateTelephone(int userId, String telephone) {
+        UserEntity entity = new UserEntity();
+        entity.setUserTelephone(telephone);
+        entity.setUserId(userId);
+        userDao.updateUser(entity);
+        return 0;
+    }
+
+    @Override
+    public int updateUserFace(int userId, byte[] face) {
+        UserEntity entity = new UserEntity();
+        entity.setUserFace(face);
+        entity.setUserId(userId);
+        userDao.updateUser(entity);
+        return 0;
+    }
+
+    @Override
     public void addAuthority(int houseID, int userID, Date startDate, Date endDate, String remark) {
         AuthorityEntity entity = new AuthorityEntity(userID, houseID);
         entity.setEndDate(endDate);

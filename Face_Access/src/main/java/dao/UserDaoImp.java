@@ -71,6 +71,10 @@ public class UserDaoImp implements UserDao {
             userEntity.setUserPassword(user.getUserPassword());
         }
 
+        if (user.getUserTelephone() != null) {
+            userEntity.setUserTelephone(user.getUserTelephone());
+        }
+
         session.update(userEntity);
         ts.commit();
     }

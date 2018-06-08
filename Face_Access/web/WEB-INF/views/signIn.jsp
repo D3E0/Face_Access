@@ -90,6 +90,8 @@
             return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
         });
     })
+
+    //    TODO 密码MD5加密后发送到服务器
 </script>
 </body>
 </html>

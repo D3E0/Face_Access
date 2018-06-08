@@ -23,4 +23,11 @@ public class RootConfig {
         SessionFactory factory = new MetadataSources(registry).buildMetadata().buildSessionFactory();
         return factory;
     }
+
+//    @Bean(name = "captchaProducer")
+//    public com.google.code.kaptcha.impl.DefaultKaptcha captchaProducer() {
+//
+//
+//    }
+
 }
