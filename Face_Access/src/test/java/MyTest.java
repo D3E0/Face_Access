@@ -15,7 +15,8 @@ public class MyTest {
 
     @Test
     public void testCode() {
-
+        System.out.println(EncryptInfo.MD5("admin"));
+        System.out.println(EncryptInfo.MD5("root"));
     }
 
 

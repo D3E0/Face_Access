@@ -50,21 +50,24 @@
                         <div class="layui-form-item">
                             <label class="layui-form-label">旧密码</label>
                             <div class="layui-input-block">
-                                <input type="password" name="oldPassword" class="layui-input">
+                                <input type="password" name="oldPassword" class="layui-input"
+                                       placeholder="旧密码">
                             </div>
                         </div>
 
                         <div class="layui-form-item">
                             <label class="layui-form-label">新密码</label>
                             <div class="layui-input-block">
-                                <input type="password" name="password" class="layui-input">
+                                <input type="password" name="password" class="layui-input"
+                                       placeholder="新密码">
                             </div>
                         </div>
 
                         <div class="layui-form-item">
                             <label class="layui-form-label">确认密码</label>
                             <div class="layui-input-block">
-                                <input type="password" name="confirm" class="layui-input">
+                                <input type="password" name="confirm" placeholder="确认密码"
+                                       class="layui-input">
                             </div>
                         </div>
 

@@ -56,6 +56,7 @@ public class SignInController {
             session.setAttribute("userid", signInService.getUserId(username));
             object.put("result", "success");
         }
+
         return JSON.toJSONString(object);
     }
 
@@ -86,13 +87,11 @@ public class SignInController {
         String telephone = request.getParameter("telephone");
         String verifyCode = request.getParameter("verifyCode");
         String password = request.getParameter("password");
-        String confirmPassword = request.getParameter("confirmPassword");
+        String confirm = request.getParameter("confirm");
 
-        logger.info(password + " " + confirmPassword);
-        if (!password.equals(confirmPassword)) {
+        if (!password.equals(confirm)) {
             return JSON.toJSONString(object);
         }
-        logger.info(username + " " + telephone + " " + verifyCode);
         int userID = signInService.addUser(username, telephone, password);
         if (userID != 0) {
             object.put("result", "success");

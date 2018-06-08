@@ -9,6 +9,7 @@ import entity.HouseEntity;
 import entity.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import util.EncryptInfo;
 
 import java.sql.Date;
 import java.util.ArrayList;
@@ -68,11 +69,15 @@ public class UserMangeServiceImp implements UserMangeService {
     }
 
     @Override
-    public int updatePassword(int userId, String password) {
-        UserEntity entity = new UserEntity();
-        entity.setUserPassword(password);
-        entity.setUserId(userId);
-        userDao.updateUser(entity);
+    public int updatePassword(int userId, String password, String oldPassword) {
+        UserEntity entity = userDao.getUserById(userId);
+        password = EncryptInfo.MD5(password);
+        oldPassword = EncryptInfo.MD5(oldPassword);
+        if (entity.getUserPassword().equals(oldPassword)) {
+            entity.setUserPassword(password);
+            userDao.updateUser(entity);
+            return 1;
+        }
         return 0;
     }
 

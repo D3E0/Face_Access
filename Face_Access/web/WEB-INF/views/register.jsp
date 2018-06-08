@@ -32,9 +32,10 @@
         <div class="layui-form-item">
             <label class="layui-form-label">用户名</label>
             <div class="layui-input-block">
-                <input type="text" name="username" lay-verify="required|username"
-                       placeholder="请输入用户名" class="layui-input">
+                <input type="text" name="username" lay-verify="required|username" class="layui-input"
+                       placeholder="请输入用户名">
             </div>
+            <div class="layui-form-mid layui-word-aux" id="nameTip">用户名至少6位，包括字母、数字、下划线</div>
         </div>
 
         <div class="layui-form-item">
@@ -43,6 +44,7 @@
                 <input type="text" name="telephone" lay-verify="required|phone"
                        placeholder="请输入手机号" class="layui-input">
             </div>
+            <div class="layui-form-mid layui-word-aux" id="telephoneTip"></div>
         </div>
 
 
@@ -60,29 +62,30 @@
                     </button>
                 </div>
             </div>
+            <div class="layui-form-mid layui-word-aux" id="verifyCodeTip"></div>
         </div>
 
         <div class="layui-form-item">
             <label class="layui-form-label">密码</label>
             <div class="layui-input-block">
-                <input type="text" name="password" lay-verify="required"
+                <input type="text" name="password" lay-verify="required|password"
                        placeholder="请输入密码" class="layui-input">
             </div>
+            <div class="layui-form-mid layui-word-aux" id="passwordTip"></div>
         </div>
 
         <div class="layui-form-item">
             <label class="layui-form-label">确认密码</label>
             <div class="layui-input-block">
-                <input type="password" name="confirmPassword" lay-verify="required"
+                <input type="password" name="confirm" lay-verify="required|password"
                        placeholder="确认密码" class="layui-input">
             </div>
+            <div class="layui-form-mid layui-word-aux" id="confirmTip"></div>
         </div>
 
         <div class="layui-form-item">
             <button class="layui-btn  layui-btn-fluid" lay-submit lay-filter="submit">注册</button>
         </div>
-
-
     </div>
 </div>
 
@@ -107,17 +110,35 @@
 
         form.verify({
             username: function (value, item) { //value：表单的值、item：表单的DOM对象
-                if (!new RegExp("^[a-zA-Z0-9_\u4e00-\u9fa5\\s·]+$").test(value)) {
-                    return '用户名不能有特殊字符';
+                if (!new RegExp("^[a-zA-Z0-9_]{6,16}$").test(value)) {
+                    return '用户名至少6位，包括字母、数字、下划线';
                 }
-                if (/(^\_)|(\__)|(\_+$)/.test(value)) {
-                    return '用户名首尾不能出现下划线\'_\'';
-                }
-                if (/^\d+\d+\d$/.test(value)) {
-                    return '用户名不能全为数字';
-                }
+            },
+            password: function (value, item) {
+
             }
         });
+
+        $("input[name='username']").blur(function () {
+            var data = $(this).val();
+            console.info(data);
+            if (!new RegExp("^[a-zA-Z0-9_]{6,16}$").test(data)) {
+                // return '用户名至少6位，包括字母、数字、下划线';
+                layer.tips('只想提示地精准些', $("input[name='username']"), {
+                    tips: [2, '#3595CC']
+                });
+                // $("#nameTip").text('用户名至少6位，包括字母、数字、下划线');
+            } else {
+                $.post('/verify', {username: data}, function (data) {
+                    if (data.result === '1') {
+                        $("#nameTip").text('验证通过');
+                    } else {
+                        $("#nameTip").text('用户名已存在');
+                    }
+                });
+            }
+
+        })
     })
 </script>
 </body>

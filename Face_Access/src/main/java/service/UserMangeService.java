@@ -20,7 +20,7 @@ public interface UserMangeService {
 
     public int updateRemark(int authorityID, String remark);
 
-    public int updatePassword(int userId, String password);
+    public int updatePassword(int userId, String password, String oldPassword);
 
     public int updateTelephone(int userId, String telephone);
 

@@ -40,7 +40,7 @@
 <body class="layui-layout-body">
 <div class="layui-layout layui-layout-admin">
     <div class="layui-header">
-        <div class="layui-logo">Incredible System</div>
+        <div class="layui-logo">智慧人脸门禁系统</div>
         <!-- 头部区域（可配合layui已有的水平导航） -->
         <ul class="layui-nav layui-layout-right" lay-filter="topnav">
             <li class="layui-nav-item">

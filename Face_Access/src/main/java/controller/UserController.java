@@ -92,14 +92,11 @@ public class UserController {
                                  @RequestParam String oldPassword,
                                  @RequestParam String password) {
         JSONObject object = new JSONObject();
-
-        UserEntity entity = userService.getUserEntity(userId);
-        if (entity.getUserPassword().equals(oldPassword)) {
-            userService.updatePassword(entity.getUserId(), password);
+        object.put("result", "fail");
+        int result = userService.updatePassword(userId, password, oldPassword);
+        if (result == 1) {
             object.put("result", "success");
         }
-
-        object.put("result", "fail");
         return JSON.toJSONString(object);
     }
 
@@ -112,7 +109,6 @@ public class UserController {
         JSONObject object = new JSONObject();
         object.put("result", "fail");
         String digitVerifyCode = (String) session.getAttribute("digitVerifyCode");
-        logger.info(userId + " " + verifyCode + " " + telephone + " " + digitVerifyCode);
         if (verifyCode.equals(digitVerifyCode)) {
             userService.updateTelephone(userId, telephone);
             object.put("result", "success");

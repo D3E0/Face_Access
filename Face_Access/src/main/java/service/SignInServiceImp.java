@@ -4,6 +4,7 @@ import dao.UserDao;
 import entity.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import util.EncryptInfo;
 
 @Service
 public class SignInServiceImp implements SignInService {
@@ -27,6 +28,7 @@ public class SignInServiceImp implements SignInService {
 
     @Override
     public boolean verifyUser(String username, String password) {
+        password = EncryptInfo.MD5(password);
         UserEntity entity = userDao.verifyUser(username, password);
         if (entity != null) {
             return true;
@@ -48,7 +50,7 @@ public class SignInServiceImp implements SignInService {
     public int addUser(String username, String telephone, String password) {
         UserEntity entity = new UserEntity();
         entity.setUserName(username);
-        entity.setUserPassword(password);
+        entity.setUserPassword(EncryptInfo.MD5(password));
         entity.setUserTelephone(telephone);
         int userID = userDao.addUser(entity);
         return userID;

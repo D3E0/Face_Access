@@ -48,16 +48,18 @@
     <form class="layui-form layui-form-pane son">
 
         <div class="layui-form-item">
-            <label class="layui-form-label" for="username">账号</label>
+            <label class="layui-form-label">账号</label>
             <div class="layui-input-inline">
-                <input type="text" name="username" id="username" placeholder="请输入用户名" class="layui-input">
+                <input type="text" name="username" class="layui-input" lay-verify="required|username"
+                      placeholder="请输入用户名">
             </div>
         </div>
 
         <div class="layui-form-item">
-            <label class="layui-form-label" for="password">密码</label>
+            <label class="layui-form-label">密码</label>
             <div class="layui-input-inline">
-                <input type="password" name="password" id="password" class="layui-input">
+                <input type="password" name="password" class="layui-input"
+                       placeholder="请输入密码" >
             </div>
         </div>
 
@@ -89,9 +91,15 @@
             });
             return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
         });
-    })
 
-    //    TODO 密码MD5加密后发送到服务器
+        form.verify({
+            username: function (value, item) { //value：表单的值，item：表单的DOM对象
+                if (!new RegExp("^[a-zA-Z0-9_]{6,16}$").test(value)) {
+                    return '用户名至少6位，包括字母、数字、下划线';
+                }
+            }
+        });
+    })
 </script>
 </body>
 </html>
