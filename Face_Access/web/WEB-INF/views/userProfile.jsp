@@ -46,30 +46,33 @@
                 <div class="layui-card-header">密码修改</div>
                 <div class="layui-card-body">
                     <div class="layui-form ">
+
+                        <input type="text" name="userId" value=${userEntity.userId} hidden>
+
                         <div class="layui-form-item">
                             <label class="layui-form-label">旧密码</label>
                             <div class="layui-input-inline">
-                                <input type="password" name="oldPassword" id="oldPassword" class="layui-input">
+                                <input type="password" name="oldPassword" class="layui-input">
                             </div>
                         </div>
 
                         <div class="layui-form-item">
                             <label class="layui-form-label">新密码</label>
                             <div class="layui-input-inline">
-                                <input type="password" name="newPassword" id="newPassword" class="layui-input">
+                                <input type="password" name="password" class="layui-input">
                             </div>
                         </div>
 
                         <div class="layui-form-item">
                             <label class="layui-form-label">确认密码</label>
                             <div class="layui-input-inline">
-                                <input type="password" name="confirm" id="confirm" class="layui-input">
+                                <input type="password" name="confirm" class="layui-input">
                             </div>
                         </div>
 
                         <div class="layui-form-item">
                             <div class="layui-input-block">
-                                <button class="layui-btn" lay-filter="passwordChange" id="passwordChange">提交修改</button>
+                                <button class="layui-btn" lay-filter="updatePassword">提交修改</button>
                                 <button type="reset" class="layui-btn layui-btn-primary">重置</button>
                             </div>
                         </div>
@@ -84,6 +87,9 @@
                 <div class="layui-card-header">修改绑定手机</div>
                 <div class="layui-card-body">
                     <div class="layui-form " style="width: 378px;">
+
+                        <input type="text" name="userId" value=${userEntity.userId} hidden>
+
                         <div class="layui-form-item">
                             <label class="layui-form-label">旧手机号</label>
                             <div class="layui-input-block">
@@ -127,6 +133,9 @@
                 <div class="layui-card-header">个人图片</div>
                 <div class="layui-card-body">
                     <div class="layui-form ">
+
+                        <input type="text" name="userId" value=${userEntity.userId} hidden>
+
                         <div class="layui-form-item">
                             <label class="layui-form-label">个人图片</label>
                             <button type="button" class="layui-btn" id="image" name="image">

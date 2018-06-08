@@ -2,7 +2,6 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import entity.AuthorityEntity;
 import org.junit.Test;
-import util.CodeProducer;
 import util.EncryptInfo;
 
 import java.sql.Date;
@@ -16,10 +15,6 @@ public class MyTest {
 
     @Test
     public void testCode() {
-        System.out.println(CodeProducer.getIntergerCode());
-        System.out.println(CodeProducer.getIntergerCode());
-        System.out.println(CodeProducer.getIntergerCode());
-        System.out.println(CodeProducer.getIntergerCode());
 
     }
 

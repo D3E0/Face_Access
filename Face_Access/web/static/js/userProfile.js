@@ -38,4 +38,16 @@ layui.use(['laydate', 'form', 'layer', 'upload'], function () {
         });
     });
 
+    form.on('submit(updatePassword)', function (data) {
+        $.post('/updatePassword', data.field, function (val) {
+            var dataObj = eval("(" + val + ")");
+            if (dataObj.result === 'success') {
+                layer.msg("修改成功")
+            } else {
+                layer.msg("密码错误");
+            }
+        });
+        return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
+    });
+
 });

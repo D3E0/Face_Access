@@ -87,14 +87,14 @@ public class UserController {
 
     @RequestMapping("/updatePassword")
     @ResponseBody
-    public String updatePassword(@RequestParam String username,
+    public String updatePassword(@RequestParam int userId,
                                  @RequestParam String oldPassword,
                                  @RequestParam String password,
-                                 @RequestParam String confirmPassword) {
+                                 @RequestParam String confirm) {
         JSONObject object = new JSONObject();
 
-        if (confirmPassword.equals(password)) {
-            UserEntity entity = userService.getUserByUsername(username);
+        if (confirm.equals(password)) {
+            UserEntity entity = userService.getUserEntity(userId);
             if (entity.getUserPassword().equals(oldPassword)) {
                 userService.updatePassword(entity.getUserId(), password);
                 object.put("result", "success");
