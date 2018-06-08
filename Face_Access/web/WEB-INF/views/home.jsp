@@ -50,7 +50,7 @@
                     ${username}
                 </a>
                 <dl class="layui-nav-child">
-                    <dd><a href="/user?id=1" target="frame">基本资料</a></dd>
+                    <dd><a href="/user?id=${userid}" target="frame">基本资料</a></dd>
                     <dd><a href="javascript:">密码修改</a></dd>
                 </dl>
             </li>
@@ -92,12 +92,17 @@
     <%--© layui.com - 底部固定区域--%>
     <%--</div>--%>
 </div>
+<div id="divPreview">
+    <img id="updatePreview" style="width: 100%"/>
+</div>
 <script>
     var id = ${userid};
 
     layui.use(['jquery', 'layer', 'element'], function () {
         var $ = layui.$, layer = layui.layer, element = layui.element;
+        $("#updatePreview").hide();
     })
+
 </script>
 </body>
 </html>

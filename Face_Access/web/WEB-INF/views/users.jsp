@@ -45,7 +45,7 @@
 
 
 <script type="text/html" id="toolBar">
-    <a class="layui-btn layui-btn-sm" lay-event="detail">查看</a>
+    <%--<a class="layui-btn layui-btn-sm" lay-event="detail">查看</a>--%>
     <a class="layui-btn layui-btn-sm" lay-event="edit">编辑</a>
     <a class="layui-btn layui-btn-danger layui-btn-sm" lay-event="del">删除</a>
 </script>

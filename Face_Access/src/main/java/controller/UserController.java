@@ -51,7 +51,8 @@ public class UserController {
      * @return userProfile.jsp
      */
     @RequestMapping("/user")
-    public String showUserProfile(@RequestParam(value = "id", defaultValue = "-1") int id, Model model) {
+    public String showUserProfile(@RequestParam(value = "id", defaultValue = "-1") int id,
+                                  Model model) {
         UserEntity entity = userService.getUserEntity(id);
         entity.setUserTelephone(EncryptInfo.encryptTelephone(entity.getUserTelephone()));
         model.addAttribute(entity);
@@ -89,34 +90,33 @@ public class UserController {
     @ResponseBody
     public String updatePassword(@RequestParam int userId,
                                  @RequestParam String oldPassword,
-                                 @RequestParam String password,
-                                 @RequestParam String confirm) {
+                                 @RequestParam String password) {
         JSONObject object = new JSONObject();
 
-        if (confirm.equals(password)) {
-            UserEntity entity = userService.getUserEntity(userId);
-            if (entity.getUserPassword().equals(oldPassword)) {
-                userService.updatePassword(entity.getUserId(), password);
-                object.put("result", "success");
-            }
+        UserEntity entity = userService.getUserEntity(userId);
+        if (entity.getUserPassword().equals(oldPassword)) {
+            userService.updatePassword(entity.getUserId(), password);
+            object.put("result", "success");
         }
+
         object.put("result", "fail");
         return JSON.toJSONString(object);
     }
 
     @RequestMapping("/updateTelephone")
     @ResponseBody
-    public String updateTelephone(@RequestParam String username,
+    public String updateTelephone(@RequestParam int userId,
                                   @RequestParam String verifyCode,
                                   @RequestParam String telephone,
                                   HttpSession session) {
         JSONObject object = new JSONObject();
         object.put("result", "fail");
         String digitVerifyCode = (String) session.getAttribute("digitVerifyCode");
-        if(verifyCode.equals(digitVerifyCode)) {
-            UserEntity entity = userService.getUserByUsername(username);
-            userService.updateTelephone(entity.getUserId(), telephone);
+        logger.info(userId + " " + verifyCode + " " + telephone + " " + digitVerifyCode);
+        if (verifyCode.equals(digitVerifyCode)) {
+            userService.updateTelephone(userId, telephone);
             object.put("result", "success");
+            object.put("telephone", EncryptInfo.encryptTelephone(telephone));
         }
         return JSON.toJSONString(object);
     }
@@ -129,7 +129,6 @@ public class UserController {
         JSONObject object = new JSONObject();
         object.put("digitVerifyCode", digitVerifyCode);
         return JSON.toJSONString(object);
-
     }
 
     /**

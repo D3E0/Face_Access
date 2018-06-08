@@ -51,6 +51,7 @@ public class SignInController {
         String password = req.getParameter("password").trim();
 
         if (signInService.verifyUser(username, password)) {
+//            UserEntity entity = signInService.
             session.setAttribute("username", username);
             session.setAttribute("userid", signInService.getUserId(username));
             object.put("result", "success");
