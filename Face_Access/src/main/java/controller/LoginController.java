@@ -14,7 +14,7 @@ public class LoginController {
     }
     @RequestMapping("/checkpic")
     @ResponseBody
-    public String checkpic(@RequestParam(value = "img") String imgStr){
+    public String checkpic(@RequestParam(value = "img",defaultValue = "0") String imgStr){
         imgStr=imgStr.replaceFirst("data:image/jpeg;base64,", "");
         return Face.search(imgStr);
     }
