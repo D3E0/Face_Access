@@ -51,7 +51,7 @@
                             <label class="layui-form-label">旧密码</label>
                             <div class="layui-input-block">
                                 <input type="password" name="oldPassword" class="layui-input"
-                                       placeholder="旧密码">
+                                       placeholder="旧密码" lay-verify="required|password">
                             </div>
                         </div>
 
@@ -59,7 +59,7 @@
                             <label class="layui-form-label">新密码</label>
                             <div class="layui-input-block">
                                 <input type="password" name="password" class="layui-input"
-                                       placeholder="新密码">
+                                       placeholder="新密码" lay-verify="required|password">
                             </div>
                         </div>
 
@@ -67,7 +67,7 @@
                             <label class="layui-form-label">确认密码</label>
                             <div class="layui-input-block">
                                 <input type="password" name="confirm" placeholder="确认密码"
-                                       class="layui-input">
+                                       class="layui-input" lay-verify="required|check|password">
                             </div>
                         </div>
 
@@ -115,7 +115,8 @@
                         <div class="layui-form-item">
                             <label class="layui-form-label">新手机号</label>
                             <div class="layui-input-block">
-                                <input type="text" name="telephone" class="layui-input">
+                                <input type="text" name="telephone" class="layui-input"
+                                       lay-verify="required|phone">
                             </div>
                         </div>
 

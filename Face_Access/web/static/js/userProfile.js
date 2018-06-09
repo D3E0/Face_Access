@@ -38,12 +38,10 @@ layui.use(['laydate', 'form', 'layer', 'upload'], function () {
             content: $('#updatePreview', topDoc).show(),
             end: function () {
                 $('#updatePreview', topDoc).hide();
-                console.info("end");
             }
         });
     });
 
-    // TODO 加密
     form.on('submit(updatePassword)', function (data) {
         $("input[name = 'oldPassword']").val('');
         $("input[name = 'confirm']").val('');
@@ -78,13 +76,28 @@ layui.use(['laydate', 'form', 'layer', 'upload'], function () {
         return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
     });
 
+    form.verify({
+        check: function (value, item) {
+            var data = $("input[name='password']").val();
+            if (value !== data) {
+                return "两次密码不一致";
+            }
+        },
+        password: function (value, item) {
+            if (value.length < 6) {
+                return "密码至少6位";
+            }
+        }
+
+    });
+
     $("#getCode").click(function () {
         var COUNT = 10;
         var timeCount = COUNT;
 
         var elem = $("#getCode");
-        elem.attr('disabled', true);
-
+        // elem.attr('disabled', true);
+        elem.toggleClass("layui-btn-disabled", true);
         $.post('/getDigitVerifyCode', {}, function (data) {
             console.info(data);
         });
@@ -99,7 +112,8 @@ layui.use(['laydate', 'form', 'layer', 'upload'], function () {
         setTimeout(function () {
             clearInterval(id);
             elem.text("获取验证码");
-            elem.attr('disabled', false);
+            // elem.attr('disabled', false);
+            elem.toggleClass("layui-btn-disabled", false);
             timeCount = COUNT;
         }, COUNT * 1000);
     });

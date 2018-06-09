@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import service.SignInService;
 
@@ -51,7 +52,6 @@ public class SignInController {
         String password = req.getParameter("password").trim();
 
         if (signInService.verifyUser(username, password)) {
-//            UserEntity entity = signInService.
             session.setAttribute("username", username);
             session.setAttribute("userid", signInService.getUserId(username));
             object.put("result", "success");
@@ -74,31 +74,33 @@ public class SignInController {
     /**
      * 注册表单提交处理
      *
-     * @param request
+     * @param username
+     * @param telephone
+     * @param verifyCode
+     * @param password
+     * @param confirm
+     * @param session
      * @return JSON
      */
     @RequestMapping("/processRegister")
     @ResponseBody
-    public String processRegister(HttpServletRequest request) {
+    public String processRegister(@RequestParam String username,
+                                  @RequestParam String telephone,
+                                  @RequestParam String verifyCode,
+                                  @RequestParam String password,
+                                  @RequestParam String confirm,
+                                  HttpSession session) {
         JSONObject object = new JSONObject();
         object.put("result", "false");
+        String digitVerifyCode = (String) session.getAttribute("digitVerifyCode");
 
-        String username = request.getParameter("username");
-        String telephone = request.getParameter("telephone");
-        String verifyCode = request.getParameter("verifyCode");
-        String password = request.getParameter("password");
-        String confirm = request.getParameter("confirm");
-
-        if (!password.equals(confirm)) {
-            return JSON.toJSONString(object);
+        if (password.equals(confirm) && verifyCode.equals(digitVerifyCode)) {
+            int userID = signInService.addUser(username, telephone, password);
+            if (userID != 0) {
+                object.put("result", "success");
+            }
         }
-        int userID = signInService.addUser(username, telephone, password);
-        if (userID != 0) {
-            object.put("result", "success");
-        }
-
         return JSON.toJSONString(object);
-
     }
 
     /**
@@ -112,7 +114,7 @@ public class SignInController {
     public String validateUsername(HttpServletRequest req) {
         String username = req.getParameter("username");
         JSONObject object = new JSONObject();
-        if (signInService.verifyUsername(username)) {
+        if (!signInService.verifyUsername(username)) {
             object.put("result", "success");
         } else {
             object.put("result", "fail");

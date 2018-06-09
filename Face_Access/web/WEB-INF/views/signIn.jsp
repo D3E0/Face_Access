@@ -50,8 +50,8 @@
         <div class="layui-form-item">
             <label class="layui-form-label">账号</label>
             <div class="layui-input-inline">
-                <input type="text" name="username" class="layui-input" lay-verify="required|username"
-                      placeholder="请输入用户名">
+                <input type="text" name="username" class="layui-input"
+                       lay-verify="required|username" placeholder="请输入用户名">
             </div>
         </div>
 
@@ -59,7 +59,7 @@
             <label class="layui-form-label">密码</label>
             <div class="layui-input-inline">
                 <input type="password" name="password" class="layui-input"
-                       placeholder="请输入密码" >
+                       lay-verify="required" placeholder="请输入密码">
             </div>
         </div>
 
@@ -94,9 +94,14 @@
 
         form.verify({
             username: function (value, item) { //value：表单的值，item：表单的DOM对象
-                if (!new RegExp("^[a-zA-Z0-9_]{6,16}$").test(value)) {
-                    return '用户名至少6位，包括字母、数字、下划线';
-                }
+                // if (!new RegExp("^[a-zA-Z0-9_]{6,16}$").test(value)) {
+                //     return '用户名至少6位，包括字母、数字、下划线';
+                // }
+            },
+            password: function (value, item) {
+                // if (value.length < 6) {
+                //     return "密码至少6位";
+                // }
             }
         });
     })
