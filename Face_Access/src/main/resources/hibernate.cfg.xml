@@ -16,6 +16,7 @@
         <mapping class="entity.AuthorityEntity"/>
         <mapping class="entity.DoorEntity"/>
         <mapping class="entity.HouseEntity"/>
+        <mapping class="entity.OpenRecordEntity"/>
 
         <!-- DB schema will be updated if needed -->
         <!-- <property name="hbm2ddl.auto">update</property> -->
