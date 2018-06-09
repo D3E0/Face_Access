@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../layui/css/layui.css">
+    <script src="../layui/layui.js"></script>
+    <script src="../js/jquery-3.3.1.js"></script>
+</head>
+<body>
+<button id="test">test</button>
+<script>
+    var timeCount = 5;
+
+    $("#test").click(function () {
+
+        var elem = $("#test");
+
+        console.info(elem.text() + "-" + elem.val());
+
+        //不可点击
+        $(this).attr('disabled', true);
+        console.info("begin");
+
+        //倒计时开始
+        var id = setInterval(function () {
+            console.info("1 Second Past " + timeCount + " Left");
+            timeCount--;
+        }, 1000);
+
+        //倒计时结束 可以点击
+        setTimeout(function () {
+            clearInterval(id);
+            $("#test").attr('disabled', false);
+            console.info("finished");
+            console.info(timeCount);
+            timeCount = 5;
+
+        }, 5000);
+
+
+    });
+
+</script>
+</body>
+</html>
