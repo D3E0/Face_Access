@@ -29,8 +29,8 @@ public class DoorMangeServiceImp implements DoorMangeServiceInterface {
     }
 
     @Override
-    public List<DoorEntity> getDoorList() {
-        return doorDao.getdoorList();
+    public List<DoorEntity> getDoorList(int page,int limit) {
+        return doorDao.getdoorList(page,limit);
     }
 
     @Override

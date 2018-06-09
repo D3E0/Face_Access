@@ -26,8 +26,8 @@ public class DoorController {
 
     @RequestMapping(value="doorsjson", produces = "text/html; charset=utf-8")
     @ResponseBody
-    public String showDoorJSon() throws UnsupportedEncodingException {
-        List<DoorEntity> list = doorService.getDoorList();
+    public String showDoorJSon(@RequestParam(value = "page",defaultValue = "1")String page,@RequestParam(value = "limit",defaultValue = "10")String limit) throws UnsupportedEncodingException {
+        List<DoorEntity> list = doorService.getDoorList(Integer.parseInt(page),Integer.parseInt(limit));
         JSONArray array = new JSONArray();
         for (DoorEntity entity : list) {
             JSONObject object = new JSONObject();

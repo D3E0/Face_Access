@@ -5,6 +5,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -114,13 +115,20 @@ public class DoorDaoImp implements DoorDaoInterface{
     }
 
     @Override
-    public List<DoorEntity> getdoorList() {
+    public List<DoorEntity> getdoorList(int page,int limit) {
+        int start=(page-1)*limit;
+        System.out.println(page);
+        System.out.println(limit);
+        int count=limit;
         Session session=factory.openSession();
         Transaction tx = null;
         List<DoorEntity> doorList=null;
         try {
             tx = session.beginTransaction();
-            doorList = session.createQuery("from DoorEntity").list();
+            Query query = session.createQuery("from DoorEntity");
+            query.setFirstResult(start);
+            query.setMaxResults(limit);
+            doorList=query.list();
             tx.commit();
         }
         catch (Exception e) {
@@ -131,4 +139,25 @@ public class DoorDaoImp implements DoorDaoInterface{
         }
         return doorList;
     }
+
+    @Override
+    public Long countDoor() {
+        Session session=factory.openSession();
+        Transaction tx = null;
+        Long count=null;
+        try {
+            tx = session.beginTransaction();
+            Query q   = session.createQuery("select count(*) from DoorEntity");
+            count=(Long)q.uniqueResult();
+            tx.commit();
+        }
+        catch (Exception e) {
+            if (tx!=null) tx.rollback();
+            e.printStackTrace();
+        }finally {
+            session.close();
+        }
+        return count;
+    }
+
 }
