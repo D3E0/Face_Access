@@ -1,0 +1,15 @@
+@startuml
+actor :普通用户: as User
+actor :门: as Door
+
+left to right direction
+
+ rectangle 人脸门禁系统 {
+    User --> (进入系统)
+    User --> (Open)
+    (Open) --> Door
+    User --> (修改资料)
+  }
+
+
+@enduml

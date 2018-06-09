@@ -56,7 +56,6 @@ public class SignInController {
             session.setAttribute("userid", signInService.getUserId(username));
             object.put("result", "success");
         }
-
         return JSON.toJSONString(object);
     }
 
