@@ -63,10 +63,17 @@
             <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
             <ul class="layui-nav layui-nav-tree" lay-filter="sidenav">
                 <li class="layui-nav-item  layui-this"><a href="/users" target="frame">人员管理</a></li>
+<<<<<<< HEAD
                 <li class="layui-nav-item"><a href="/user?id=${userid}" target="frame">门禁管理</a></li>
                 <li class="layui-nav-item"><a href="/user?id=${userid+1}" target="frame">房间管理</a></li>
                 <li class="layui-nav-item"><a href="/user?id=${userid+2}" target="frame">可通行门列表</a></li>
                 <li class="layui-nav-item"><a href="/user?id=${userid+3}" target="frame">进出门记录查看</a></li>
+=======
+                <li class="layui-nav-item"><a href="/doors" target="frame">门禁管理</a></li>
+                <li class="layui-nav-item"><a href="/user?id=${userid+1}" target="frame">房间管理</a></li>
+                <li class="layui-nav-item"><a href="/user?id=${userid+2}" target="frame">可通行门列表</a></li>
+                <li class="layui-nav-item"><a href="/recordsview" target="frame">进出门记录查看</a></li>
+>>>>>>> 0651ff796d8961fede7d49bb5fcd9f6a7af1fd31
                 <li class="layui-nav-item layui-nav-itemed">
                     <a href="javascript:">解决方案</a>
                     <dl class="layui-nav-child">

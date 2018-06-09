@@ -35,6 +35,10 @@
                 <a href="/user?id=1" class="layui-btn" target="_blank">用户资料</a>
                 <a href="/signIn" class="layui-btn" target="_blank">登陆</a>
                 <a href="/register" class="layui-btn" target="_blank">注册</a>
+<<<<<<< HEAD
+=======
+                <a href="/login" class="layui-btn" target="_blank">登录y</a>
+>>>>>>> 0651ff796d8961fede7d49bb5fcd9f6a7af1fd31
                 <a href="/" class="layui-btn" target="_blank">404</a>
                 <a href="/choosedate?start=2018-05-20&end=2018-05-28" class="layui-btn" target="_blank">日期选择</a>
             </div>
