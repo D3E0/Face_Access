@@ -12,4 +12,5 @@ public interface DoorMangeServiceInterface {
     public String update(DoorEntity doorEntity);
     public String delete(int id);
     public String adddoor(DoorEntity doorEntity);
+    public Long countdoor();
 }

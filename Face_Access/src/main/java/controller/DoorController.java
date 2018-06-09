@@ -37,7 +37,7 @@ public class DoorController {
             object.put("Ip", entity.getDoorIp());
             array.add(object);
         }
-        String ans="{\"code\":0,\"msg\":\"\",\"count\":1000,\"data\":" + array + "}";
+        String ans="{\"code\":0,\"msg\":\"\",\"count\":"+doorService.countdoor()+",\"data\":" + array + "}";
         return ans;
     }
     @RequestMapping("/doors")

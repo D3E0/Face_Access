@@ -46,4 +46,9 @@ public class DoorMangeServiceImp implements DoorMangeServiceInterface {
     public String adddoor(DoorEntity doorEntity) {
         return doorDao.addDoor(doorEntity);
     }
+
+    @Override
+    public Long countdoor() {
+        return doorDao.countDoor();
+    }
 }
