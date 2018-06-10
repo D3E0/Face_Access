@@ -145,5 +145,6 @@ public class UserController {
         return "{\"code\":0,\"msg\":\"success\"}";
     }
 
+    //TODO 用户个人资料更新
 }
 
