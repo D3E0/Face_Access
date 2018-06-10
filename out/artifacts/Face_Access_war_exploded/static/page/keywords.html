@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        #top {
+            position: relative;
+            width: 180px;
+            height: 40px;
+            margin: 10px;
+            background-color: #2D93CA
+
+        }
+
+        .bottom {
+            width: 180px;
+            height: 40px;
+            margin: 10px;
+            background-color: #2F4056;
+        }
+
+        .center {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+        .list{
+          list-style: none;
+        }
+
+        .result{
+            width: 180px;
+            background-color: #5FB878;
+            margin: 10px;
+            position: absolute;
+        }
+    </style>
+    <script>
+        function f() {
+
+        }
+    </script>
+</head>
+<body>
+<div class="center">
+    <div id="top">
+        <div class="center">
+            <button>show</button>
+            <button>hidden</button>
+        </div>
+
+    </div>
+    <div class="result">
+        <ul class="list">
+            <li>A</li>
+            <li>A</li>
+            <li>A</li>
+            <li>A</li>
+            <li>A</li>
+            <li>A</li>
+        </ul>
+    </div>
+    <div class="bottom" id="bottom"></div>
+    <div class="bottom"></div>
+    <div class="bottom"></div>
+    <div class="bottom"></div>
+
+</div>
+</body>
+</html>
