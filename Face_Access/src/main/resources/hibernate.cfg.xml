@@ -4,7 +4,9 @@
         "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
     <session-factory>
-        <property name="connection.url">jdbc:mysql://120.78.195.162:3306/my_data_base</property>
+        <property name="connection.url">
+            jdbc:mysql://120.78.195.162:3306/my_data_base?useUnicode=true&amp;characterEncoding=utf8
+        </property>
         <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
         <property name="hibernate.connection.password">admin</property>
         <property name="hibernate.connection.username">root</property>

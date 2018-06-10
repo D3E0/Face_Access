@@ -63,8 +63,9 @@ public class AuthorityEntity {
                 "authorityId=" + authorityId +
                 ", startDate=" + startDate +
                 ", endDate=" + endDate +
-                ", " + user.toString() +
-                ", " + house.toString() +
+                ", user=" + user +
+                ", house=" + house +
+                ", remark='" + remark + '\'' +
                 '}';
     }
 

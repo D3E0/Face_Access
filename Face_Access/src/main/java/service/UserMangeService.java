@@ -12,9 +12,11 @@ public interface UserMangeService {
 
     public List<HouseEntity> getHousesByOwner(int userID);
 
-    public List<AuthorityEntity> getAuthoritiesByHouse(int houseID);
+    public List getAuthoritiesByHouse(int houseID);
 
     public List<AuthorityEntity> getAuthoritiesByOwner(int userID);
+
+    public List searchAuthoritiesByOwner(int userID);
 
     public void updateEndDate(int authorityID, Date endDate);
 

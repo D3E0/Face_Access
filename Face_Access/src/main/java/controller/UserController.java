@@ -34,16 +34,6 @@ public class UserController {
     Logger logger = Logger.getLogger("UserController");
 
     /**
-     * 控制跳转，跳转到人员管理界面
-     *
-     * @return users.jsp
-     */
-    @RequestMapping("/users")
-    public String showUsers() {
-        return "users";
-    }
-
-    /**
      * 查看个人资料
      *
      * @param id
@@ -57,33 +47,6 @@ public class UserController {
         entity.setUserTelephone(EncryptInfo.encryptTelephone(entity.getUserTelephone()));
         model.addAttribute(entity);
         return "userProfile";
-    }
-
-    /**
-     * 返回包含请求 userID 下的人员信息以及相关授权信息，
-     *
-     * @return JSON
-     */
-    @RequestMapping(value = "/users.json", produces = {"application/json;charset=UTF-8"})
-    @ResponseBody
-    public String showUserJson(HttpSession session) {
-        Integer userId = (Integer) session.getAttribute("userid");
-        List<AuthorityEntity> list = userService.getAuthoritiesByOwner(userId);
-        JSONArray array = new JSONArray();
-        for (AuthorityEntity entity : list) {
-            JSONObject object = new JSONObject();
-            object.put("userId", entity.getUser().getUserId());
-            object.put("userName", entity.getUser().getUserName());
-            object.put("userTelephone", entity.getUser().getUserTelephone());
-            object.put("startDate", entity.getStartDate().toString());
-            object.put("endDate", entity.getEndDate().toString());
-            object.put("houseId", entity.getHouse().getHouseId());
-            object.put("authorityId", entity.getAuthorityId());
-            object.put("remark", entity.getRemark());
-            array.add(object);
-        }
-        return "{\"code\":0,\"msg\":\"\",\"count\":1000,\"data\":" + array + "}";
-
     }
 
     @RequestMapping("/updatePassword")

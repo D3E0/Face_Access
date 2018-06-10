@@ -21,7 +21,9 @@ public interface AuthorityDao {
 
     List getAuthoritiesOfUser(int userID);
 
-    List<AuthorityEntity> getAuthoritiesOfHouse(int houseID);
+    List getAuthoritiesOfHouse(int houseID);
+
+    List searchAuthoritiesOfHouse(int houseID, String data);
 
     List getAuthorities();
 

@@ -44,7 +44,7 @@ public class UserMangeServiceImp implements UserMangeService {
     }
 
     @Override
-    public List<AuthorityEntity> getAuthoritiesByHouse(int houseID) {
+    public List getAuthoritiesByHouse(int houseID) {
         return authorityDao.getAuthoritiesOfHouse(houseID);
     }
 
@@ -56,6 +56,12 @@ public class UserMangeServiceImp implements UserMangeService {
             authorityEntities.addAll(getAuthoritiesByHouse(houseEntity.getHouseId()));
         }
         return authorityEntities;
+    }
+
+    @Override
+    public List searchAuthoritiesByOwner(int userID) {
+        List list = authorityDao.searchAuthoritiesOfHouse(1666, "T");
+        return list;
     }
 
     @Override

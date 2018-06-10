@@ -3,6 +3,7 @@ package controller;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import entity.AuthorityEntity;
 import entity.HouseEntity;
 import entity.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ import util.DateParse;
 import util.EncryptInfo;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.sql.Date;
 import java.util.List;
 import java.util.logging.Logger;
@@ -37,6 +39,51 @@ public class AuthorityController {
 
     public void setUserService(UserMangeService userService) {
         this.userService = userService;
+    }
+
+    /**
+     * 控制跳转，跳转到人员管理界面
+     *
+     * @return users.jsp
+     */
+    @RequestMapping("/users")
+    public String showUsers() {
+        return "users";
+    }
+
+    /**
+     * 返回包含请求 userID 下的人员信息以及相关授权信息
+     *
+     * @return JSON
+     */
+    @RequestMapping(value = "/Authorities", produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
+    public String showUserJson(HttpSession session, HttpServletRequest request) {
+        Integer userId = (Integer) session.getAttribute("userid");
+        String additional = request.getParameter("data");
+        List<AuthorityEntity> list = userService.getAuthoritiesByOwner(userId);
+        JSONArray array = new JSONArray();
+        for (AuthorityEntity entity : list) {
+            JSONObject object = new JSONObject();
+            object.put("userId", entity.getUser().getUserId());
+            object.put("userName", entity.getUser().getUserName());
+            object.put("userTelephone", entity.getUser().getUserTelephone());
+            object.put("startDate", entity.getStartDate().toString());
+            object.put("endDate", entity.getEndDate().toString());
+            object.put("houseId", entity.getHouse().getHouseId());
+            object.put("authorityId", entity.getAuthorityId());
+            object.put("remark", entity.getRemark());
+            array.add(object);
+        }
+        return "{\"code\":0,\"msg\":\"\",\"count\":1000,\"data\":" + array + "}";
+
+    }
+
+    @RequestMapping(value = "/test", produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
+    public String test() {
+        List list = userService.searchAuthoritiesByOwner(1);
+        return JSON.toJSONString(list);
     }
 
     /**
