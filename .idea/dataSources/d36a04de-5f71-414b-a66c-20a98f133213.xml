@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataSource name="my_data_base@120.78.195.162">
+  <database-model serializer="dbm" rdbms="MYSQL" format-version="4.4">
+    <root id="1"/>
+    <schema id="2" parent="1" name="my_data_base">
+      <Current>1</Current>
+      <Visible>1</Visible>
+    </schema>
+    <schema id="3" parent="1" name="information_schema"/>
+    <schema id="4" parent="1" name="mysql"/>
+    <schema id="5" parent="1" name="performance_schema"/>
+    <schema id="6" parent="1" name="sys"/>
+    <schema id="7" parent="1" name="test"/>
+    <table id="8" parent="2" name="authority"/>
+    <table id="9" parent="2" name="door"/>
+    <table id="10" parent="2" name="house"/>
+    <table id="11" parent="2" name="open_record"/>
+    <table id="12" parent="2" name="user"/>
+    <column id="13" parent="8" name="authorityID">
+      <Position>1</Position>
+      <DataType>int(10)|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="14" parent="8" name="userID">
+      <Position>2</Position>
+      <DataType>int(10)|0</DataType>
+    </column>
+    <column id="15" parent="8" name="houseID">
+      <Position>3</Position>
+      <DataType>int(6)|0</DataType>
+    </column>
+    <column id="16" parent="8" name="startDate">
+      <Position>4</Position>
+      <DataType>date|0</DataType>
+    </column>
+    <column id="17" parent="8" name="endDate">
+      <Position>5</Position>
+      <DataType>date|0</DataType>
+    </column>
+    <column id="18" parent="8" name="remark">
+      <Position>6</Position>
+      <DataType>varchar(255)|0</DataType>
+    </column>
+    <index id="19" parent="8" name="house_Id">
+      <ColNames>houseID</ColNames>
+    </index>
+    <index id="20" parent="8" name="userid">
+      <ColNames>userID</ColNames>
+    </index>
+    <key id="21" parent="8" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>authorityID</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <foreign-key id="22" parent="8" name="userid">
+      <ColNames>userID</ColNames>
+      <RefSchemaName>my_data_base</RefSchemaName>
+      <RefTableName>user</RefTableName>
+      <RefColNames>userID</RefColNames>
+      <OnUpdate>cascade</OnUpdate>
+      <OnDelete>cascade</OnDelete>
+    </foreign-key>
+    <foreign-key id="23" parent="8" name="house_Id">
+      <ColNames>houseID</ColNames>
+      <RefSchemaName>my_data_base</RefSchemaName>
+      <RefTableName>house</RefTableName>
+      <RefColNames>houseID</RefColNames>
+      <OnUpdate>cascade</OnUpdate>
+      <OnDelete>cascade</OnDelete>
+    </foreign-key>
+    <column id="24" parent="9" name="doorID">
+      <Position>1</Position>
+      <DataType>int(4)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="25" parent="9" name="doorLocation">
+      <Position>2</Position>
+      <DataType>varchar(255)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="26" parent="9" name="doorIP">
+      <Position>3</Position>
+      <DataType>varchar(12)|0</DataType>
+    </column>
+    <column id="27" parent="9" name="doorStasue">
+      <Position>4</Position>
+      <DataType>char(10)|0</DataType>
+    </column>
+    <key id="28" parent="9" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>doorID</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="29" parent="10" name="houseID">
+      <Position>1</Position>
+      <DataType>int(6)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="30" parent="10" name="housePassword">
+      <Position>2</Position>
+      <DataType>varchar(255)|0</DataType>
+    </column>
+    <column id="31" parent="10" name="userID">
+      <Position>3</Position>
+      <DataType>int(10)|0</DataType>
+    </column>
+    <column id="32" parent="10" name="doorID">
+      <Position>4</Position>
+      <DataType>int(11)|0</DataType>
+    </column>
+    <index id="33" parent="10" name="houserOwner">
+      <ColNames>userID</ColNames>
+    </index>
+    <index id="34" parent="10" name="iddoor">
+      <ColNames>doorID</ColNames>
+    </index>
+    <key id="35" parent="10" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>houseID</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <foreign-key id="36" parent="10" name="houserOwner">
+      <ColNames>userID</ColNames>
+      <RefSchemaName>my_data_base</RefSchemaName>
+      <RefTableName>user</RefTableName>
+      <RefColNames>userID</RefColNames>
+      <OnUpdate>set-null</OnUpdate>
+      <OnDelete>set-null</OnDelete>
+    </foreign-key>
+    <foreign-key id="37" parent="10" name="iddoor">
+      <ColNames>doorID</ColNames>
+      <RefSchemaName>my_data_base</RefSchemaName>
+      <RefTableName>door</RefTableName>
+      <RefColNames>doorID</RefColNames>
+      <OnUpdate>cascade</OnUpdate>
+      <OnDelete>cascade</OnDelete>
+    </foreign-key>
+    <column id="38" parent="11" name="openID">
+      <Position>1</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="39" parent="11" name="userID">
+      <Position>2</Position>
+      <DataType>int(11)|0</DataType>
+    </column>
+    <column id="40" parent="11" name="doorID">
+      <Position>3</Position>
+      <DataType>int(11)|0</DataType>
+    </column>
+    <column id="41" parent="11" name="openDate">
+      <Position>4</Position>
+      <DataType>datetime|0</DataType>
+    </column>
+    <column id="42" parent="11" name="openResult">
+      <Position>5</Position>
+      <DataType>varchar(255)|0</DataType>
+    </column>
+    <index id="43" parent="11" name="door">
+      <ColNames>doorID</ColNames>
+    </index>
+    <index id="44" parent="11" name="user">
+      <ColNames>userID</ColNames>
+    </index>
+    <key id="45" parent="11" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>openID</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <foreign-key id="46" parent="11" name="user">
+      <ColNames>userID</ColNames>
+      <RefSchemaName>my_data_base</RefSchemaName>
+      <RefTableName>user</RefTableName>
+      <RefColNames>userID</RefColNames>
+    </foreign-key>
+    <foreign-key id="47" parent="11" name="door">
+      <ColNames>doorID</ColNames>
+      <RefSchemaName>my_data_base</RefSchemaName>
+      <RefTableName>door</RefTableName>
+      <RefColNames>doorID</RefColNames>
+    </foreign-key>
+    <column id="48" parent="12" name="userID">
+      <Position>1</Position>
+      <DataType>int(10)|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="49" parent="12" name="userName">
+      <Position>2</Position>
+      <Comment>unique</Comment>
+      <DataType>varchar(255)|0</DataType>
+    </column>
+    <column id="50" parent="12" name="userPassword">
+      <Position>3</Position>
+      <DataType>varchar(255)|0</DataType>
+    </column>
+    <column id="51" parent="12" name="userTelephone">
+      <Position>4</Position>
+      <DataType>varchar(20)|0</DataType>
+    </column>
+    <column id="52" parent="12" name="userFace">
+      <Position>5</Position>
+      <DataType>blob|0</DataType>
+    </column>
+    <index id="53" parent="12" name="Username">
+      <ColNames>userName</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <key id="54" parent="12" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>userID</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <key id="55" parent="12" name="Username">
+      <ColNames>userName</ColNames>
+      <UnderlyingIndexName>Username</UnderlyingIndexName>
+    </key>
+  </database-model>
+</dataSource>

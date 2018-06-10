@@ -4,7 +4,11 @@
         "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
     <session-factory>
+<<<<<<< HEAD
         <property name="connection.url">jdbc:mysql://localhost:3306/my_data_base</property>
+=======
+        <property name="connection.url">jdbc:mysql://120.78.195.162:3306/my_data_base</property>
+>>>>>>> 43da13950cffc7e1610273a37af777ff4848acf1
         <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
         <property name="hibernate.connection.password">admin</property>
         <property name="hibernate.connection.username">root</property>
@@ -16,6 +20,10 @@
         <mapping class="entity.AuthorityEntity"/>
         <mapping class="entity.DoorEntity"/>
         <mapping class="entity.HouseEntity"/>
+<<<<<<< HEAD
+=======
+        <mapping class="entity.OpenRecordEntity"/>
+>>>>>>> 43da13950cffc7e1610273a37af777ff4848acf1
 
         <!-- DB schema will be updated if needed -->
         <!-- <property name="hbm2ddl.auto">update</property> -->
