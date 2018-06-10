@@ -6,11 +6,28 @@
     <link rel="stylesheet" href="../layui/css/layui.css">
     <script src="../layui/layui.js"></script>
     <script src="../js/jquery-3.3.1.js"></script>
+    <style>
+        .border {
+            border: 1px solid #2D93CA;
+        }
+    </style>
 </head>
 <body>
+<input type="text" name="username" id="username">;
 <button id="test">test</button>
 <script>
     var timeCount = 5;
+
+    var elem = $("#username");
+
+    elem.focus(function () {
+        $(this).toggleClass("border", true);
+    });
+
+    elem.blur(function () {
+        $(this).toggleClass("border", false);
+    });
+
 
     $("#test").click(function () {
 

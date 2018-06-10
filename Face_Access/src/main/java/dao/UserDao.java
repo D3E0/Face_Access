@@ -19,5 +19,7 @@ public interface UserDao {
 
     UserEntity getUserByName(String username);
 
+    UserEntity getUserByTelephone(String telephone);
+
     List<UserEntity> getUserList();
 }

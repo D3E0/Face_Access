@@ -119,6 +119,21 @@ public class UserDaoImp implements UserDao {
     }
 
     @Override
+    public UserEntity getUserByTelephone(String telephone) {
+        Session session = factory.openSession();
+        session.beginTransaction();
+        Query query = session.createQuery("from UserEntity where userTelephone = :phone");
+        query.setParameter("phone", telephone);
+        List list = query.list();
+        UserEntity entity = null;
+        if (list.size() > 0) {
+            entity = (UserEntity) list.get(0);
+        }
+        session.getTransaction().commit();
+        return entity;
+    }
+
+    @Override
     public List<UserEntity> getUserList() {
         Session session = factory.openSession();
         Transaction ts = session.beginTransaction();

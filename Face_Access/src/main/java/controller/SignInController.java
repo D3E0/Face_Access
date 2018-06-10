@@ -2,6 +2,7 @@ package controller;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import entity.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,7 +14,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.logging.Logger;
 
-//TODO　注册　用户名　字母　数字　下划线
 @Controller
 public class SignInController {
 
@@ -39,22 +39,40 @@ public class SignInController {
     /**
      * 登陆表单 提交至此，登陆成功将用户名与 ID 添加至 Session
      *
-     * @param req
+     * @param username
+     * @param password
      * @param session
-     * @return JSON
+     * @return
      */
     @RequestMapping("/processSignIn")
     @ResponseBody
-    public String processSignIn(HttpServletRequest req, HttpSession session) {
+    public String processSignIn(@RequestParam String username,
+                                @RequestParam String password,
+                                HttpSession session) {
         JSONObject object = new JSONObject();
         object.put("result", "fail");
-        String username = req.getParameter("username").trim();
-        String password = req.getParameter("password").trim();
 
         if (signInService.verifyUser(username, password)) {
-//            UserEntity entity = signInService.
             session.setAttribute("username", username);
             session.setAttribute("userid", signInService.getUserId(username));
+            object.put("result", "success");
+        }
+
+        return JSON.toJSONString(object);
+    }
+
+    @RequestMapping("/processSignInByTelephone")
+    @ResponseBody
+    public String processSignInByTelephone(@RequestParam String telephone,
+                                           @RequestParam String verifyCode,
+                                           HttpSession session) {
+        JSONObject object = new JSONObject();
+        object.put("result", "fail");
+        String digitVerifyCode = (String) session.getAttribute("digitVerifyCode");
+        if (verifyCode.equals(digitVerifyCode)) {
+            UserEntity entity = signInService.getUserByTelephone(telephone);
+            session.setAttribute("username", entity.getUserName());
+            session.setAttribute("userid", entity.getUserId());
             object.put("result", "success");
         }
 

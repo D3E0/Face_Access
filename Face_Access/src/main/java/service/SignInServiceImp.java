@@ -47,6 +47,11 @@ public class SignInServiceImp implements SignInService {
     }
 
     @Override
+    public UserEntity getUserByTelephone(String telephone) {
+        return userDao.getUserByTelephone(telephone);
+    }
+
+    @Override
     public int addUser(String username, String telephone, String password) {
         UserEntity entity = new UserEntity();
         entity.setUserName(username);

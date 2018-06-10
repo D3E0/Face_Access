@@ -1,5 +1,7 @@
 package service;
 
+import entity.UserEntity;
+
 public interface SignInService {
 
     public boolean verifyUsername(String username);
@@ -9,6 +11,8 @@ public interface SignInService {
     public String getUsername(int userId);
 
     public int getUserId(String username);
+
+    public UserEntity getUserByTelephone(String telephone);
 
     public int addUser(String username, String userTel, String password);
 }
