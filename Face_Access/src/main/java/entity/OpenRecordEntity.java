@@ -32,7 +32,6 @@ public class OpenRecordEntity {
     public void setUserEntity(UserEntity userEntity) {
         this.userEntity = userEntity;
     }
-
     @Id
     @Column(name = "openID")
     public int getOpenId() {

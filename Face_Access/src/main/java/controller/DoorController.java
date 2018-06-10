@@ -58,6 +58,7 @@ public class DoorController {
         doorEntity.setDoorStasue(status);
         doorEntity.setDoorIp(ip);
         doorEntity.setDoorLocation(location);
+        System.out.println(location);
         return  doorService.update(doorEntity);
     }
     @RequestMapping("/deldoor")
@@ -70,8 +71,9 @@ public class DoorController {
 
     @RequestMapping("/adddoor")
     @ResponseBody
-    public String adddoor(@RequestParam (value = "location")String location, @RequestParam (value = "ip")String ip, @RequestParam (value = "status")String status){
+    public String adddoor(@RequestParam (value = "location")String location, @RequestParam (value = "ip")String ip, @RequestParam (value = "status")String status,@RequestParam (value = "id")String id){
         DoorEntity doorEntity=new DoorEntity();
+        doorEntity.setDoorId(Integer.parseInt(id));
         doorEntity.setDoorLocation(location);
         doorEntity.setDoorIp(ip);
         doorEntity.setDoorStasue(status);

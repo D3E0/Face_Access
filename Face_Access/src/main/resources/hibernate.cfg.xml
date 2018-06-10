@@ -9,6 +9,7 @@
         <property name="hibernate.connection.password">admin</property>
         <property name="hibernate.connection.username">root</property>
 
+
         <property name="hibernate.show_sql">true</property>
 
         <property name="dialect">org.hibernate.dialect.MySQLDialect</property>

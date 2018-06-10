@@ -2,7 +2,7 @@ layui.use(['jquery', 'laypage', 'table', 'layer', 'element', 'laydate'], functio
     var $ = layui.$, laypage = layui.laypage
         , table = layui.table, layer = layui.layer
         , element = layui.element;
-
+    layer.load();
     table.render({
         elem: '#doorTable'
         , url: '/doorsjson'
@@ -13,9 +13,11 @@ layui.use(['jquery', 'laypage', 'table', 'layer', 'element', 'laydate'], functio
             , {field: 'Status', title: '状态', align: "center"}
             , {field: 'Ip', title: 'ip地址', align: "center"}
             , {fixed: 'right', title: '操作', align: 'center', toolbar: '#toolBar'}
-        ]]
+        ]],
+        done:function(res, curr, count){
+            layer.closeAll('loading');
+        }
     });
-
     //监听工具条 tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
     table.on('tool(doorTable)', function (obj) {
         var data = obj.data; //获得当前行数据
@@ -58,7 +60,10 @@ layui.use(['jquery', 'laypage', 'table', 'layer', 'element', 'laydate'], functio
                     var location = $("#location", doc).val();
                     var ip = $("#ip", doc).val();
                     var status = $("#status", doc).val();
-
+                    if (!isValidIP(ip)) {
+                        layer.msg("请输入正确的ip地址");
+                        return false
+                    }
                     $.post("/updatedoor",
                         {
                             "Content-Type:text/html;charset":"utf8",
@@ -68,14 +73,14 @@ layui.use(['jquery', 'laypage', 'table', 'layer', 'element', 'laydate'], functio
                             status:status
                         },
                         function(data,status){
-                            // layer.msg(data);
+                            layer.msg(data);
                         });
                     obj.update({
                         Location: location,
                         Ip:ip,
                         Status:status
                     });
-                    layer.msg('修改成功'+ip);
+                    // layer.msg('修改成功'+ip);
                     layer.close(index); //如果设定了yes回调，需进行手工关闭
                 }
             })
@@ -87,11 +92,59 @@ layui.use(['jquery', 'laypage', 'table', 'layer', 'element', 'laydate'], functio
             type: 2,
             content: ['/adddoorview', 'no'],
             title: '添加门禁',
+            btn: ['确认', '取消'],
             area: ['500', '580'],
             resize: false,
+            btnAlign:'c',
             shade: 0,
-            id: "second"
+            id: "second",
+            yes: function (index, layero) {
+                var test = $('#' + layero.find('iframe')[0]['name']).get(0);
+                var doc = test.contentDocument;
+                var id = $("#id", doc).val();
+                var location = $("#location", doc).val();
+                var ip = $("#ip", doc).val();
+                var status = $("#status", doc).val();
+                if (!isValidID(id)) {
+                    layer.msg("请输入一到四位的纯数字");
+                    return false;
+                }
+                if (!isValidIP(ip)) {
+                    layer.msg("请输入正确的ip地址");
+                    return false;
+                }
+                $.post("/adddoor",
+                    {
+                        "Content-Type:text/html;charset":"utf8",
+                        id:id,
+                        location:location,
+                        ip: ip,
+                        status:status
+                    },
+                    function(data,status){
+                         layer.msg(data);
+                    });
+                // obj.add({
+                //     Id:id,
+                //     Location: location,
+                //     Ip:ip,
+                //     Status:status
+                // });
+                layer.msg('添加成功');
+                layer.close(index); //如果设定了yes回调，需进行手工关闭
+            }
         });
     })
 
 });
+function isValidIP(ip)
+{
+    var reg =  /^(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$/
+    return reg.test(ip);
+}
+function isValidID(id)
+{
+    var reg =  /^\d{1,4}$/;
+    return reg.test(id);
+}
+

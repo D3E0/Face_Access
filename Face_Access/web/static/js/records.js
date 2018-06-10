@@ -2,7 +2,7 @@ layui.use(['jquery', 'laypage', 'table', 'layer', 'element', 'laydate'], functio
     var $ = layui.$, laypage = layui.laypage
         , table = layui.table, layer = layui.layer
         , element = layui.element;
-
+    layer.load();
     table.render({
         elem: '#recordTable'
         , url: '/recordsjson'
@@ -16,7 +16,10 @@ layui.use(['jquery', 'laypage', 'table', 'layer', 'element', 'laydate'], functio
             , {field: 'openDate', title: '开门日期', align: "center"}
             , {field: 'openResult', title: '结果', align: "center"}
             , {fixed: 'right', title: '操作', align: 'center', toolbar: '#toolBar'}
-        ]]
+        ]],
+        done:function(res, curr, count){
+            layer.closeAll('loading');
+        }
     });
     laypage.render({
         limit:10

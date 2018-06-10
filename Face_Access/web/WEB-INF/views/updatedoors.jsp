@@ -11,35 +11,7 @@
     <title>Title</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/layui/css/layui.css">
     <script src="${pageContext.request.contextPath}/static/layui/layui.js"></script>
-    <style>
-
-        body {
-            background-color: #eee;
-        }
-
-        .father {
-            background-color: white;
-            padding: 20px;
-            height: 400px;
-            width: 350px;
-            /*center*/
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%);
-            /*shadow*/
-            box-shadow: 0 9px 30px -6px rgba(0, 0, 0, .2), 0 18px 20px -10px rgba(0, 0, 0, .04), 0 18px 20px -10px rgba(0, 0, 0, .04), 0 10px 20px -10px rgba(0, 0, 0, .04);
-            border: 1px solid #dadada;
-            border-radius: 10px;
-        }
-
-        .son {
-            position: absolute;
-            top: 50%;
-            transform: translate(0%, -50%);
-            margin-left: 20px;
-        }
-    </style>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/static/layui/css/normal.css">
 </head>
 <body>
 <div class="father">
