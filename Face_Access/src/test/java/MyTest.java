@@ -18,7 +18,8 @@ public class MyTest {
     @Test
     public void testDataBase() {
         AuthorityDao authorityDao = new AuthorityDaoImp();
-        List list = authorityDao.searchAuthoritiesOfHouse(1666, "戴");
+//        List list = authorityDao.searchAuthoritiesOfHouse(1666, "戴");
+        List list = authorityDao.getAuthoritiesOfOwnerLimit(1666, 1, 5);
         System.out.println(list.size());
         for (Object entity : list) {
             System.out.println(entity.toString());

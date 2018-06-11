@@ -32,7 +32,7 @@
                 <div class="layui-card-header">人员管理</div>
                 <div class="layui-card-body">
                     <div class="layui-input-inline">
-                        <input class="layui-input" name="search">
+                        <input class="layui-input" id="searchVal">
                     </div>
                     <button class="layui-btn" id="search">
                         <i class="layui-icon">&#xe615;</i> 搜索

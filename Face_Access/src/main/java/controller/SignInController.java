@@ -58,7 +58,7 @@ public class SignInController {
             object.put("result", "success");
         }
 
-        return JSON.toJSONString(object);
+        return object.toJSONString();
     }
 
     @RequestMapping("/processSignInByTelephone")
@@ -76,7 +76,7 @@ public class SignInController {
             object.put("result", "success");
         }
 
-        return JSON.toJSONString(object);
+        return object.toJSONString();
     }
 
     /**
@@ -119,7 +119,7 @@ public class SignInController {
                 object.put("result", "success");
             }
         }
-        return JSON.toJSONString(object);
+        return object.toJSONString();
     }
 
     /**
@@ -138,7 +138,7 @@ public class SignInController {
         } else {
             object.put("result", "fail");
         }
-        return JSON.toJSONString(object);
+        return object.toJSONString();
     }
 
 

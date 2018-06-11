@@ -101,7 +101,8 @@ layui.use(['jquery', 'laypage', 'table', 'layer', 'element', 'laydate'], functio
     });
 
     $("#search").click(function () {
-        var data = $("input [name='search']").val();
+        var data = $("#searchVal").val();
+        console.info(data);
         parent.register.userTable.reload({
             where: { //设定异步数据接口的额外参数，任意设
                 data: data

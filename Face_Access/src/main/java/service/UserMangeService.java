@@ -1,7 +1,6 @@
 package service;
 
 
-import entity.AuthorityEntity;
 import entity.HouseEntity;
 import entity.UserEntity;
 
@@ -14,9 +13,15 @@ public interface UserMangeService {
 
     public List getAuthoritiesByHouse(int houseID);
 
-    public List<AuthorityEntity> getAuthoritiesByOwner(int userID);
+    public List getAuthoritiesByOwner(int ownerID);
 
-    public List searchAuthoritiesByOwner(int userID);
+    public List getAuthoritiesByOwnerLimit(int ownerID, int start, int offset);
+
+    public List searchAuthoritiesByOwner(int userID, String additional);
+
+    public List searchAuthoritiesByOwnerLimit(int ownerID, String additional, int start, int offset);
+
+    public Long getCountOfAuthoritiesByOwner(int ownerID);
 
     public void updateEndDate(int authorityID, Date endDate);
 

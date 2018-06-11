@@ -31,9 +31,11 @@ layui.use(['laydate', 'form', 'layer', 'jquery'], function () {
                 parent.layer.close(index); //关闭自身
                 parent.layer.msg("添加成功");
                 //userTable 表格重载
-                parent.register.userTable.reload({
-                    url: '/users.json'
-                });
+                var siberDoc = parent.document.getElementById("frame").contentDocument;
+                $(".layui-laypage-btn", siberDoc)[0].click();
+                // parent.register.userTable.reload({
+                //     url: '/users.json'
+                // });
             } else {
                 layer.msg("添加失败");
             }

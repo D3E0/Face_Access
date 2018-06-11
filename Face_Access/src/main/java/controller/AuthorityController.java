@@ -1,6 +1,5 @@
 package controller;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import entity.AuthorityEntity;
@@ -58,11 +57,33 @@ public class AuthorityController {
      */
     @RequestMapping(value = "/Authorities", produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public String showUserJson(HttpSession session, HttpServletRequest request) {
+    public String showUserJson(HttpSession session, HttpServletRequest request,
+                               @RequestParam int limit,
+                               @RequestParam int page) {
         Integer userId = (Integer) session.getAttribute("userid");
         String additional = request.getParameter("data");
-        List<AuthorityEntity> list = userService.getAuthoritiesByOwner(userId);
+        List<AuthorityEntity> list;
+        logger.info(page + " " + limit);
+        if (additional == null) {
+            list = userService.getAuthoritiesByOwnerLimit(userId, (page - 1) * limit, limit);
+        } else {
+            list = userService.searchAuthoritiesByOwnerLimit(userId, additional, (page - 1) * limit, limit);
+        }
         JSONArray array = new JSONArray();
+
+//        for (int i = start; i < Math.min(end, list.size()); i++) {
+//            AuthorityEntity entity = list.get(i);
+//            JSONObject object = new JSONObject();
+//            object.put("userId", entity.getUser().getUserId());
+//            object.put("userName", entity.getUser().getUserName());
+//            object.put("userTelephone", entity.getUser().getUserTelephone());
+//            object.put("startDate", entity.getStartDate().toString());
+//            object.put("endDate", entity.getEndDate().toString());
+//            object.put("houseId", entity.getHouse().getHouseId());
+//            object.put("authorityId", entity.getAuthorityId());
+//            object.put("remark", entity.getRemark());
+//            array.add(object);
+//        }
         for (AuthorityEntity entity : list) {
             JSONObject object = new JSONObject();
             object.put("userId", entity.getUser().getUserId());
@@ -75,15 +96,13 @@ public class AuthorityController {
             object.put("remark", entity.getRemark());
             array.add(object);
         }
-        return "{\"code\":0,\"msg\":\"\",\"count\":1000,\"data\":" + array + "}";
+        JSONObject object = new JSONObject();
+        object.put("code", 0);
+        object.put("msg", "msg");
+        object.put("count", userService.getCountOfAuthoritiesByOwner(userId));
+        object.put("data", array);
+        return object.toJSONString();
 
-    }
-
-    @RequestMapping(value = "/test", produces = {"application/json;charset=UTF-8"})
-    @ResponseBody
-    public String test() {
-        List list = userService.searchAuthoritiesByOwner(1);
-        return JSON.toJSONString(list);
     }
 
     /**
@@ -111,7 +130,7 @@ public class AuthorityController {
             object.put("username", entity.getUserName());
             array.add(object);
         }
-        return JSON.toJSONString(array);
+        return array.toJSONString();
     }
 
     /**
@@ -127,7 +146,7 @@ public class AuthorityController {
         JSONObject object = new JSONObject();
         object.put("userTel", EncryptInfo.encryptTelephone(entity.getUserTelephone()));
         object.put("userId", entity.getUserId());
-        return JSON.toJSONString(object);
+        return object.toJSONString();
     }
 
 
@@ -147,7 +166,7 @@ public class AuthorityController {
             object.put("houseId", entity.getHouseId());
             array.add(object);
         }
-        return JSON.toJSONString(array);
+        return array.toJSONString();
     }
 
     /**
@@ -172,7 +191,7 @@ public class AuthorityController {
 
         JSONObject object = new JSONObject();
         object.put("result", "success");
-        return JSON.toJSONString(object);
+        return object.toJSONString();
     }
 
     /**
@@ -194,7 +213,7 @@ public class AuthorityController {
         userService.updateEndDate(authorityId, endDate);
         userService.updateRemark(authorityId, remark);
         object.put("result", "success");
-        return JSON.toJSONString(object);
+        return object.toJSONString();
     }
 
     /**
@@ -232,13 +251,13 @@ public class AuthorityController {
             authorityId = Integer.parseInt(request.getParameter("id"));
         } catch (NumberFormatException e) {
             e.printStackTrace();
-            return JSON.toJSONString(object);
+            return object.toJSONString();
         }
 
         userService.deleteAuthority(authorityId);
 
         object.put("result", "success");
-        return JSON.toJSONString(object);
+        return object.toJSONString();
     }
 
 

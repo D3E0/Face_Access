@@ -1,19 +1,16 @@
 package dao;
 
+import dto.AuthorityDTO;
 import entity.AuthorityEntity;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.annotations.DynamicUpdate;
-import org.hibernate.boot.MetadataSources;
-import org.hibernate.boot.registry.StandardServiceRegistry;
-import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Date;
 import java.util.List;
-import java.util.logging.Logger;
 
 /**
  * @author ACM-PC
@@ -24,12 +21,16 @@ import java.util.logging.Logger;
 @DynamicUpdate
 public class AuthorityDaoImp implements AuthorityDao {
 
-    @Autowired
     private SessionFactory factory;
 
-    public AuthorityDaoImp() {
-        StandardServiceRegistry registry = new StandardServiceRegistryBuilder().configure().build();
-        factory = new MetadataSources(registry).buildMetadata().buildSessionFactory();
+//    public AuthorityDaoImp() {
+//        StandardServiceRegistry registry = new StandardServiceRegistryBuilder().configure().build();
+//        factory = new MetadataSources(registry).buildMetadata().buildSessionFactory();
+//    }
+
+    @Autowired
+    public void setFactory(SessionFactory factory) {
+        this.factory = factory;
     }
 
     @Override
@@ -130,6 +131,20 @@ public class AuthorityDaoImp implements AuthorityDao {
     }
 
     @Override
+    public AuthorityDTO getAuthoritiesOfOwnerLimit(int ownerID, int start, int offset) {
+        Session session = factory.openSession();
+        session.beginTransaction();
+        Query query = session.createQuery("from AuthorityEntity where house.user.userId=:A");
+        query.setParameter("A", ownerID);
+        query.setFirstResult(start);
+        query.setMaxResults(offset);
+        AuthorityDTO authorityDTO = new AuthorityDTO();
+        authorityDTO.setList(query.list());
+        session.getTransaction().commit();
+        return authorityDTO;
+    }
+
+    @Override
     public List searchAuthoritiesOfHouse(int houseID, String data) {
         Session session = factory.openSession();
         session.beginTransaction();
@@ -147,6 +162,23 @@ public class AuthorityDaoImp implements AuthorityDao {
         return list;
     }
 
+    @Override
+    public AuthorityDTO searchAuthoritiesOfOwnerLimit(int ownerID, String data, int start, int offset) {
+        Session session = factory.openSession();
+        session.beginTransaction();
+        String hql = "from AuthorityEntity where (user.userName like :A or remark like :B)" +
+                " and house.user.userId= :C ";
+        Query query = session.createQuery(hql);
+        query.setParameter("A", "%" + data + "%");
+        query.setParameter("B", "%" + data + "%");
+        query.setParameter("C", ownerID);
+        List list = query.list();
+        query.setFirstResult(start);
+        query.setMaxResults(offset);
+        session.getTransaction().commit();
+        return list;
+    }
+
 
     @Override
     public List getAuthorities() {
@@ -156,4 +188,14 @@ public class AuthorityDaoImp implements AuthorityDao {
         session.getTransaction().commit();
         return list;
     }
+
+    @Override
+    public Long getCountOfAuthoritiesByOwner(int ownerID) {
+        Session session = factory.openSession();
+        session.beginTransaction();
+        Query query = session.createQuery("select count(*) from AuthorityEntity where house.user.userId=:A");
+        query.setParameter("A", ownerID);
+        return (Long) query.uniqueResult();
+    }
+
 }

@@ -11,7 +11,7 @@
     <title>UserForm</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/layui/css/layui.css">
     <script src="${pageContext.request.contextPath}/static/layui/layui.js"></script>
-    <script src="${pageContext.request.contextPath}/static/js/adduser.js"></script>
+    <script src="${pageContext.request.contextPath}/static/js/addAuthority.js"></script>
     <style>
 
         body {

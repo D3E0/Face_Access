@@ -1,9 +1,6 @@
 package controller;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import entity.AuthorityEntity;
 import entity.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,7 +15,6 @@ import util.EncryptInfo;
 import util.VerifyCodeProducer;
 
 import javax.servlet.http.HttpSession;
-import java.util.List;
 import java.util.logging.Logger;
 
 @Controller
@@ -60,7 +56,7 @@ public class UserController {
         if (result == 1) {
             object.put("result", "success");
         }
-        return JSON.toJSONString(object);
+        return object.toJSONString();
     }
 
     @RequestMapping("/updateTelephone")
@@ -77,7 +73,7 @@ public class UserController {
             object.put("result", "success");
             object.put("telephone", EncryptInfo.encryptTelephone(telephone));
         }
-        return JSON.toJSONString(object);
+        return object.toJSONString();
     }
 
     @RequestMapping("/getDigitVerifyCode")
@@ -87,7 +83,7 @@ public class UserController {
         session.setAttribute("digitVerifyCode", digitVerifyCode);
         JSONObject object = new JSONObject();
         object.put("digitVerifyCode", digitVerifyCode);
-        return JSON.toJSONString(object);
+        return object.toJSONString();
     }
 
     /**

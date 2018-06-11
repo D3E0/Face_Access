@@ -49,8 +49,8 @@ public class UserMangeServiceImp implements UserMangeService {
     }
 
     @Override
-    public List<AuthorityEntity> getAuthoritiesByOwner(int userID) {
-        List<HouseEntity> houseEntities = getHousesByOwner(userID);
+    public List getAuthoritiesByOwner(int ownerID) {
+        List<HouseEntity> houseEntities = getHousesByOwner(ownerID);
         List<AuthorityEntity> authorityEntities = new ArrayList<AuthorityEntity>();
         for (HouseEntity houseEntity : houseEntities) {
             authorityEntities.addAll(getAuthoritiesByHouse(houseEntity.getHouseId()));
@@ -59,9 +59,28 @@ public class UserMangeServiceImp implements UserMangeService {
     }
 
     @Override
-    public List searchAuthoritiesByOwner(int userID) {
-        List list = authorityDao.searchAuthoritiesOfHouse(1666, "T");
-        return list;
+    public List getAuthoritiesByOwnerLimit(int ownerID, int start, int offset) {
+        return authorityDao.getAuthoritiesOfOwnerLimit(ownerID, start, offset);
+    }
+
+    @Override
+    public List searchAuthoritiesByOwner(int userID, String additional) {
+        List<HouseEntity> houseEntities = getHousesByOwner(userID);
+        List<AuthorityEntity> authorityEntities = new ArrayList<AuthorityEntity>();
+        for (HouseEntity houseEntity : houseEntities) {
+            authorityEntities.addAll(authorityDao.searchAuthoritiesOfHouse(houseEntity.getHouseId(), additional));
+        }
+        return authorityEntities;
+    }
+
+    @Override
+    public List searchAuthoritiesByOwnerLimit(int ownerID, String additional, int start, int offset) {
+        return (List<AuthorityEntity>) authorityDao.searchAuthoritiesOfOwnerLimit(ownerID, additional, start, offset);
+    }
+
+    @Override
+    public Long getCountOfAuthoritiesByOwner(int ownerID) {
+        return authorityDao.getCountOfAuthoritiesByOwner(ownerID);
     }
 
     @Override
