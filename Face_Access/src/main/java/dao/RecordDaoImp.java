@@ -67,7 +67,8 @@ public class RecordDaoImp implements RecordDao {
         List<OpenRecordEntity> recordList=null;
         try {
             tx = session.beginTransaction();
-            recordList = session.createQuery("from OpenRecordEntity where doorEntity.doorId=doorId and userEntity.userId=userId and openId between "+start+" and "+(start+count-1)).list();
+            recordList=session.createQuery("from OpenRecordEntity where openId between "+start+" and "+(start+count-1)).list();
+//            recordList = session.createQuery("from OpenRecordEntity where doorEntity.doorId=doorId and userEntity.userId=userId and openId between "+start+" and "+(start+count-1)).list();
             tx.commit();
         }
         catch (Exception e) {

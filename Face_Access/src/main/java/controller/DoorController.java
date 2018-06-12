@@ -77,7 +77,6 @@ public class DoorController {
         doorEntity.setDoorLocation(location);
         doorEntity.setDoorIp(ip);
         doorEntity.setDoorStasue(status);
-        doorService.adddoor(doorEntity);
-        return "success";
+        return doorService.adddoor(doorEntity);
     }
 }

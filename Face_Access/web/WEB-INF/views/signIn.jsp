@@ -92,13 +92,13 @@
             return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
         });
 
-        form.verify({
-            username: function (value, item) { //value：表单的值，item：表单的DOM对象
-                if (!new RegExp("^[a-zA-Z0-9_]{6,16}$").test(value)) {
-                    return '用户名至少6位，包括字母、数字、下划线';
-                }
-            }
-        });
+//        form.verify({
+//            username: function (value, item) { //value：表单的值，item：表单的DOM对象
+//                if (!new RegExp("^[a-zA-Z0-9_]{6,16}$").test(value)) {
+//                    return '用户名至少6位，包括字母、数字、下划线';
+//                }
+//            }
+//        });
     })
 </script>
 </body>

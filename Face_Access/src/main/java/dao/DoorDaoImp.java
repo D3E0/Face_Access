@@ -28,10 +28,9 @@ public class DoorDaoImp implements DoorDao {
         String back="success";
         Session session = factory.openSession();
         Transaction tx = null;
-        Integer doorId=null;
         try {
             tx = session.beginTransaction();
-            doorId = (Integer) session.save(doorEntity);
+            session.save(doorEntity);
             tx.commit();
         } catch (Exception e) {
             back="fail";

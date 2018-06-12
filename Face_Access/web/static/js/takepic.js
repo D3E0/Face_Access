@@ -22,7 +22,7 @@ function noStream(err) {
 }
 
 function takepic() {
-    ctx.drawImage(aVideo, 0, 0, 300, 300);
+    ctx.drawImage(aVideo, 0, 0, 350, 350);
     console.log(1,aCanvas.toDataURL("image/jpeg"));
     $.post("/checkpic", {type: "data", img: aCanvas.toDataURL("image/jpeg")},
         function(data,status){
