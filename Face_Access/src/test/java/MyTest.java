@@ -2,6 +2,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import dao.AuthorityDao;
 import dao.AuthorityDaoImp;
+import dto.AuthorityDTO;
 import entity.AuthorityEntity;
 import org.junit.Test;
 import util.EncryptInfo;
@@ -19,12 +20,12 @@ public class MyTest {
     public void testDataBase() {
         AuthorityDao authorityDao = new AuthorityDaoImp();
 //        List list = authorityDao.searchAuthoritiesOfHouse(1666, "戴");
-        List list = authorityDao.getAuthoritiesOfOwnerLimit(1666, 1, 5);
+//        List list = authorityDao.getAuthoritiesOfOwnerLimit(1666, 1, 5);
+        List<AuthorityDTO> list = authorityDao.getAuthoritiesOfOwnerLimit(1666, 1, 5);
         System.out.println(list.size());
-        for (Object entity : list) {
-            System.out.println(entity.toString());
+        for (AuthorityDTO authorityDTO : list) {
+            System.out.println(authorityDTO.getAuthorityId());
         }
-
     }
 
     @Test

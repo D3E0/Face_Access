@@ -1,12 +1,13 @@
 package dao;
 
-import dto.AuthorityDTO;
 import entity.AuthorityEntity;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.boot.MetadataSources;
+import org.hibernate.boot.registry.StandardServiceRegistry;
+import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.query.Query;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Date;
@@ -23,15 +24,15 @@ public class AuthorityDaoImp implements AuthorityDao {
 
     private SessionFactory factory;
 
-//    public AuthorityDaoImp() {
-//        StandardServiceRegistry registry = new StandardServiceRegistryBuilder().configure().build();
-//        factory = new MetadataSources(registry).buildMetadata().buildSessionFactory();
-//    }
-
-    @Autowired
-    public void setFactory(SessionFactory factory) {
-        this.factory = factory;
+    public AuthorityDaoImp() {
+        StandardServiceRegistry registry = new StandardServiceRegistryBuilder().configure().build();
+        factory = new MetadataSources(registry).buildMetadata().buildSessionFactory();
     }
+
+//    @Autowired
+//    public void setFactory(SessionFactory factory) {
+//        this.factory = factory;
+//    }
 
     @Override
     public int addAuthority(AuthorityEntity authorityEntity) {
@@ -131,17 +132,17 @@ public class AuthorityDaoImp implements AuthorityDao {
     }
 
     @Override
-    public AuthorityDTO getAuthoritiesOfOwnerLimit(int ownerID, int start, int offset) {
+    public List getAuthoritiesOfOwnerLimit(int ownerID, int start, int offset) {
         Session session = factory.openSession();
         session.beginTransaction();
-        Query query = session.createQuery("from AuthorityEntity where house.user.userId=:A");
+        String hql = "select new dto.AuthorityDTO( house.houseId, user.userName,authorityId, startDate, endDate, remark) from AuthorityEntity where house.user.userId=:A";
+        Query query = session.createQuery(hql);
         query.setParameter("A", ownerID);
         query.setFirstResult(start);
         query.setMaxResults(offset);
-        AuthorityDTO authorityDTO = new AuthorityDTO();
-        authorityDTO.setList(query.list());
+        List list = query.list();
         session.getTransaction().commit();
-        return authorityDTO;
+        return list;
     }
 
     @Override
@@ -163,7 +164,7 @@ public class AuthorityDaoImp implements AuthorityDao {
     }
 
     @Override
-    public AuthorityDTO searchAuthoritiesOfOwnerLimit(int ownerID, String data, int start, int offset) {
+    public List searchAuthoritiesOfOwnerLimit(int ownerID, String data, int start, int offset) {
         Session session = factory.openSession();
         session.beginTransaction();
         String hql = "from AuthorityEntity where (user.userName like :A or remark like :B)" +

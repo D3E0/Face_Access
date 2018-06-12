@@ -1,29 +1,76 @@
 package dto;
 
-import entity.AuthorityEntity;
-
-import java.util.List;
+import java.sql.Date;
 
 /**
  * Data Transfer Object 数据传输对象
  */
 public class AuthorityDTO {
-    List<AuthorityEntity> list;
-    Long count;
+    private int houseId;
+    private String userName;
+    private int authorityId;
+    private Date startDate;
+    private Date endDate;
+    private String remark;
 
-    public Long getCount() {
-        return count;
+
+    public AuthorityDTO(int houseId, String userName, int authorityId, Date startDate, Date endDate, String remark) {
+        this.houseId = houseId;
+        this.userName = userName;
+        this.authorityId = authorityId;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.remark = remark;
     }
 
-    public void setCount(Long count) {
-        this.count = count;
+    public AuthorityDTO() {
     }
 
-    public List<AuthorityEntity> getList() {
-        return list;
+    public int getHouseId() {
+        return houseId;
     }
 
-    public void setList(List<AuthorityEntity> list) {
-        this.list = list;
+    public void setHouseId(int houseId) {
+        this.houseId = houseId;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public int getAuthorityId() {
+        return authorityId;
+    }
+
+    public void setAuthorityId(int authorityId) {
+        this.authorityId = authorityId;
+    }
+
+    public Date getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
+    }
+
+    public Date getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
     }
 }
