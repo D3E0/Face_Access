@@ -2,6 +2,8 @@ package controller;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import dto.AuthorityDTO;
+import dto.AuthorityListDTO;
 import entity.AuthorityEntity;
 import entity.HouseEntity;
 import entity.UserEntity;
@@ -62,36 +64,21 @@ public class AuthorityController {
                                @RequestParam int page) {
         Integer userId = (Integer) session.getAttribute("userid");
         String additional = request.getParameter("data");
-        List<AuthorityEntity> list;
         logger.info(page + " " + limit);
+        AuthorityListDTO authorityListDTO;
         if (additional == null) {
-            list = userService.getAuthoritiesByOwnerLimit(userId, (page - 1) * limit, limit);
+            authorityListDTO = userService.getAuthoritiesByOwnerLimit(userId, (page - 1) * limit, limit);
         } else {
-            list = userService.searchAuthoritiesByOwnerLimit(userId, additional, (page - 1) * limit, limit);
+            authorityListDTO = userService.searchAuthoritiesByOwnerLimit(userId, additional, (page - 1) * limit, limit);
         }
         JSONArray array = new JSONArray();
 
-//        for (int i = start; i < Math.min(end, list.size()); i++) {
-//            AuthorityEntity entity = list.get(i);
-//            JSONObject object = new JSONObject();
-//            object.put("userId", entity.getUser().getUserId());
-//            object.put("userName", entity.getUser().getUserName());
-//            object.put("userTelephone", entity.getUser().getUserTelephone());
-//            object.put("startDate", entity.getStartDate().toString());
-//            object.put("endDate", entity.getEndDate().toString());
-//            object.put("houseId", entity.getHouse().getHouseId());
-//            object.put("authorityId", entity.getAuthorityId());
-//            object.put("remark", entity.getRemark());
-//            array.add(object);
-//        }
-        for (AuthorityEntity entity : list) {
+        for (AuthorityDTO entity : authorityListDTO.getList()) {
             JSONObject object = new JSONObject();
-            object.put("userId", entity.getUser().getUserId());
-            object.put("userName", entity.getUser().getUserName());
-            object.put("userTelephone", entity.getUser().getUserTelephone());
+            object.put("userName", entity.getUserName());
             object.put("startDate", entity.getStartDate().toString());
             object.put("endDate", entity.getEndDate().toString());
-            object.put("houseId", entity.getHouse().getHouseId());
+            object.put("houseId", entity.getHouseId());
             object.put("authorityId", entity.getAuthorityId());
             object.put("remark", entity.getRemark());
             array.add(object);
@@ -99,10 +86,9 @@ public class AuthorityController {
         JSONObject object = new JSONObject();
         object.put("code", 0);
         object.put("msg", "msg");
-        object.put("count", userService.getCountOfAuthoritiesByOwner(userId));
+        object.put("count", authorityListDTO.getCount());
         object.put("data", array);
         return object.toJSONString();
-
     }
 
     /**

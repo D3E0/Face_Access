@@ -4,6 +4,7 @@ package service;
 import dao.AuthorityDao;
 import dao.HouseDao;
 import dao.UserDao;
+import dto.AuthorityListDTO;
 import entity.AuthorityEntity;
 import entity.HouseEntity;
 import entity.UserEntity;
@@ -37,7 +38,6 @@ public class UserMangeServiceImp implements UserMangeService {
         this.userDao = userDao;
     }
 
-
     @Override
     public List<HouseEntity> getHousesByOwner(int userID) {
         return houseDao.getHouses(userID);
@@ -49,38 +49,13 @@ public class UserMangeServiceImp implements UserMangeService {
     }
 
     @Override
-    public List getAuthoritiesByOwner(int ownerID) {
-        List<HouseEntity> houseEntities = getHousesByOwner(ownerID);
-        List<AuthorityEntity> authorityEntities = new ArrayList<AuthorityEntity>();
-        for (HouseEntity houseEntity : houseEntities) {
-            authorityEntities.addAll(getAuthoritiesByHouse(houseEntity.getHouseId()));
-        }
-        return authorityEntities;
-    }
-
-    @Override
-    public List getAuthoritiesByOwnerLimit(int ownerID, int start, int offset) {
+    public AuthorityListDTO getAuthoritiesByOwnerLimit(int ownerID, int start, int offset) {
         return authorityDao.getAuthoritiesOfOwnerLimit(ownerID, start, offset);
     }
 
     @Override
-    public List searchAuthoritiesByOwner(int userID, String additional) {
-        List<HouseEntity> houseEntities = getHousesByOwner(userID);
-        List<AuthorityEntity> authorityEntities = new ArrayList<AuthorityEntity>();
-        for (HouseEntity houseEntity : houseEntities) {
-            authorityEntities.addAll(authorityDao.searchAuthoritiesOfHouse(houseEntity.getHouseId(), additional));
-        }
-        return authorityEntities;
-    }
-
-    @Override
-    public List searchAuthoritiesByOwnerLimit(int ownerID, String additional, int start, int offset) {
-        return (List<AuthorityEntity>) authorityDao.searchAuthoritiesOfOwnerLimit(ownerID, additional, start, offset);
-    }
-
-    @Override
-    public Long getCountOfAuthoritiesByOwner(int ownerID) {
-        return authorityDao.getCountOfAuthoritiesByOwner(ownerID);
+    public AuthorityListDTO searchAuthoritiesByOwnerLimit(int ownerID, String additional, int start, int offset) {
+        return authorityDao.searchAuthoritiesOfOwnerLimit(ownerID, additional, start, offset);
     }
 
     @Override

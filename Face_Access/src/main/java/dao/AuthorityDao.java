@@ -1,5 +1,6 @@
 package dao;
 
+import dto.AuthorityListDTO;
 import entity.AuthorityEntity;
 
 import java.sql.Date;
@@ -23,14 +24,10 @@ public interface AuthorityDao {
 
     List getAuthoritiesOfHouse(int houseID);
 
-    List getAuthoritiesOfOwnerLimit(int ownerID, int start, int offset);
+    AuthorityListDTO getAuthoritiesOfOwnerLimit(int ownerID, int start, int offset);
 
-    List searchAuthoritiesOfHouse(int houseID, String data);
-
-    List searchAuthoritiesOfOwnerLimit(int ownerID, String data, int start, int offset);
+    AuthorityListDTO searchAuthoritiesOfOwnerLimit(int ownerID, String data, int start, int offset);
 
     List getAuthorities();
-
-    Long getCountOfAuthoritiesByOwner(int ownerID);
 
 }

@@ -14,12 +14,12 @@ public class AuthorityDTO {
     private String remark;
 
 
-    public AuthorityDTO(int houseId, String userName, int authorityId, Date startDate, Date endDate, String remark) {
+    public AuthorityDTO(int houseId, String userName, int authorityId, Object startDate, Object endDate, String remark) {
         this.houseId = houseId;
         this.userName = userName;
         this.authorityId = authorityId;
-        this.startDate = startDate;
-        this.endDate = endDate;
+        this.startDate = (Date) startDate;
+        this.endDate = (Date) endDate;
         this.remark = remark;
     }
 

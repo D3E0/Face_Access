@@ -1,5 +1,6 @@
 package dao;
 
+import dto.AuthorityListDTO;
 import entity.AuthorityEntity;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -132,54 +133,72 @@ public class AuthorityDaoImp implements AuthorityDao {
     }
 
     @Override
-    public List getAuthoritiesOfOwnerLimit(int ownerID, int start, int offset) {
+    public AuthorityListDTO getAuthoritiesOfOwnerLimit(int ownerID, int start, int offset) {
         Session session = factory.openSession();
+        List list;
+        Long count = 0L;
+
         session.beginTransaction();
-        String hql = "select new dto.AuthorityDTO( house.houseId, user.userName,authorityId, startDate, endDate, remark) from AuthorityEntity where house.user.userId=:A";
+        String hql = "select new dto.AuthorityDTO( " +
+                "house.houseId, user.userName,authorityId, startDate, endDate, remark) " +
+                "from AuthorityEntity where house.user.userId=:A " +
+                "order by startDate";
+        String countHql = "select count(*) from AuthorityEntity " +
+                "where house.user.id = :D";
         Query query = session.createQuery(hql);
         query.setParameter("A", ownerID);
         query.setFirstResult(start);
         query.setMaxResults(offset);
-        List list = query.list();
+        list = query.list();
+
+        Query countQuery = session.createQuery(countHql);
+        countQuery.setParameter("D", ownerID);
+        count = (Long) countQuery.uniqueResult();
         session.getTransaction().commit();
-        return list;
+
+        AuthorityListDTO authorityListDTO = new AuthorityListDTO();
+        authorityListDTO.setList(list);
+        authorityListDTO.setCount(count);
+        return authorityListDTO;
     }
 
     @Override
-    public List searchAuthoritiesOfHouse(int houseID, String data) {
+    public AuthorityListDTO searchAuthoritiesOfOwnerLimit(int ownerID, String data, int start, int offset) {
         Session session = factory.openSession();
-        session.beginTransaction();
-//        String hql = "from AuthorityEntity where (user.userName like '%戴%' or remark like '%戴%')" +
-////                " and house.houseId = 1608 ";
-        String hql = "from AuthorityEntity where (user.userName like :A or remark like :B)" +
-                " and house.houseId = :C ";
-        Query query = session.createQuery(hql);
+        List list;
+        Long count = 0L;
+        String hql = "select new dto.AuthorityDTO( house.houseId, " +
+                "user.userName,authorityId, startDate, endDate, remark) " +
+                "from AuthorityEntity where " +
+                "(user.userName like :A or remark like :B)" +
+                " and house.user.userId= :C " +
+                "order by startDate";
+        String countHql = "select count(*) from AuthorityEntity where " +
+                "(user.userName like :D or remark like :E) " +
+                "and house.user.userId= :F";
 
-        query.setParameter("A", "%" + data + "%");
-        query.setParameter("B", "%" + data + "%");
-        query.setParameter("C", houseID);
-        List list = query.list();
-        session.getTransaction().commit();
-        return list;
-    }
-
-    @Override
-    public List searchAuthoritiesOfOwnerLimit(int ownerID, String data, int start, int offset) {
-        Session session = factory.openSession();
         session.beginTransaction();
-        String hql = "from AuthorityEntity where (user.userName like :A or remark like :B)" +
-                " and house.user.userId= :C ";
         Query query = session.createQuery(hql);
         query.setParameter("A", "%" + data + "%");
         query.setParameter("B", "%" + data + "%");
         query.setParameter("C", ownerID);
-        List list = query.list();
         query.setFirstResult(start);
         query.setMaxResults(offset);
-        session.getTransaction().commit();
-        return list;
-    }
+        list = query.list();
 
+        Query countQuery = session.createQuery(countHql);
+        countQuery.setParameter("D", "%" + data + "%");
+        countQuery.setParameter("E", "%" + data + "%");
+        countQuery.setParameter("F", ownerID);
+        count = (Long) countQuery.uniqueResult();
+        session.getTransaction().commit();
+
+        AuthorityListDTO authorityListDTO = new AuthorityListDTO();
+        authorityListDTO.setList(list);
+        authorityListDTO.setCount(count);
+
+        return authorityListDTO;
+    }
 
     @Override
     public List getAuthorities() {
@@ -190,13 +209,5 @@ public class AuthorityDaoImp implements AuthorityDao {
         return list;
     }
 
-    @Override
-    public Long getCountOfAuthoritiesByOwner(int ownerID) {
-        Session session = factory.openSession();
-        session.beginTransaction();
-        Query query = session.createQuery("select count(*) from AuthorityEntity where house.user.userId=:A");
-        query.setParameter("A", ownerID);
-        return (Long) query.uniqueResult();
-    }
 
 }
