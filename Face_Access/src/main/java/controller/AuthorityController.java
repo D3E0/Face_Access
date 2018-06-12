@@ -1,11 +1,10 @@
 package controller;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import dto.AuthorityDTO;
 import dto.AuthorityListDTO;
-import entity.AuthorityEntity;
-import entity.HouseEntity;
 import entity.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -83,6 +82,7 @@ public class AuthorityController {
             object.put("remark", entity.getRemark());
             array.add(object);
         }
+
         JSONObject object = new JSONObject();
         object.put("code", 0);
         object.put("msg", "msg");
@@ -108,15 +108,9 @@ public class AuthorityController {
      */
     @RequestMapping("/getAllUsername")
     @ResponseBody
-    public String searchUserProfile() {
-        List<UserEntity> list = userService.getUserList();
-        JSONArray array = new JSONArray();
-        for (UserEntity entity : list) {
-            JSONObject object = new JSONObject();
-            object.put("username", entity.getUserName());
-            array.add(object);
-        }
-        return array.toJSONString();
+    public String getAllUsername() {
+        List<String> list = userService.getUsernameList();
+        return JSON.toJSONString(list);
     }
 
     /**
@@ -135,7 +129,6 @@ public class AuthorityController {
         return object.toJSONString();
     }
 
-
     /**
      * 返回该业主的所有房间 ID
      *
@@ -145,14 +138,8 @@ public class AuthorityController {
     @RequestMapping("/getHouse")
     @ResponseBody
     public String getHouse(@RequestParam(value = "userId", defaultValue = "0") int id) {
-        List<HouseEntity> houseEntities = userService.getHousesByOwner(id);
-        JSONArray array = new JSONArray();
-        for (HouseEntity entity : houseEntities) {
-            JSONObject object = new JSONObject();
-            object.put("houseId", entity.getHouseId());
-            array.add(object);
-        }
-        return array.toJSONString();
+        List<Integer> houseEntities = userService.getHousesByOwner(id);
+        return JSON.toJSONString(houseEntities);
     }
 
     /**

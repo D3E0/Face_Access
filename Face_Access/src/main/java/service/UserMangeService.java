@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface UserMangeService {
 
-    public List<HouseEntity> getHousesByOwner(int userID);
+    public List<Integer> getHousesByOwner(int userID);
 
     public List getAuthoritiesByHouse(int houseID);
 
@@ -36,6 +36,6 @@ public interface UserMangeService {
 
     public UserEntity getUserByUsername(String username);
 
-    public List<UserEntity> getUserList();
+    public List<String> getUsernameList();
 
 }

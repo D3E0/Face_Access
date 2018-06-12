@@ -13,6 +13,8 @@ public interface UserDao {
 
     void updateUser(UserEntity user);
 
+    Long checkUser(String username);
+
     UserEntity verifyUser(String username, String password);
 
     UserEntity getUserById(int userID);
@@ -21,5 +23,5 @@ public interface UserDao {
 
     UserEntity getUserByTelephone(String telephone);
 
-    List<UserEntity> getUserList();
+    List getUsernameList();
 }

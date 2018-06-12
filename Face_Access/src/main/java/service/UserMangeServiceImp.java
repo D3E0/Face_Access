@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 import util.EncryptInfo;
 
 import java.sql.Date;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -39,8 +38,8 @@ public class UserMangeServiceImp implements UserMangeService {
     }
 
     @Override
-    public List<HouseEntity> getHousesByOwner(int userID) {
-        return houseDao.getHouses(userID);
+    public List<Integer> getHousesByOwner(int userID) {
+        return houseDao.getHouseIdByOwner(userID);
     }
 
     @Override
@@ -124,8 +123,8 @@ public class UserMangeServiceImp implements UserMangeService {
     }
 
     @Override
-    public List<UserEntity> getUserList() {
-        return userDao.getUserList();
+    public List<String> getUsernameList() {
+        return userDao.getUsernameList();
     }
 
 

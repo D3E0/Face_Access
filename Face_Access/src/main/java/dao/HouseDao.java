@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface HouseDao {
 
-    List<HouseEntity> getHouses(int userId);
+    List<Integer> getHouseIdByOwner(int ownerId);
 }

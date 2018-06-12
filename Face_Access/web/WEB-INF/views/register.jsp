@@ -170,7 +170,6 @@
                 layer.tips('请输入合法的手机号', elem, {
                     tips: [2, FAIL]
                 });
-                elem.focus();
             }
         });
 
@@ -181,6 +180,7 @@
                 layer.tips('请输入合法的手机号', telephone, {
                     tips: [2, '#d16d62']
                 });
+                telephone.focus();
             } else {
                 var COUNT = 10;
                 var timeCount = COUNT;

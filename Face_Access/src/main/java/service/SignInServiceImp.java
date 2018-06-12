@@ -19,11 +19,8 @@ public class SignInServiceImp implements SignInService {
 
     @Override
     public boolean verifyUsername(String username) {
-        UserEntity entity = userDao.getUserByName(username);
-        if (entity != null) {
-            return true;
-        }
-        return false;
+        Long cnt = userDao.checkUser(username);
+        return cnt == 0;
     }
 
     @Override
@@ -57,7 +54,6 @@ public class SignInServiceImp implements SignInService {
         entity.setUserName(username);
         entity.setUserPassword(EncryptInfo.MD5(password));
         entity.setUserTelephone(telephone);
-        int userID = userDao.addUser(entity);
-        return userID;
+        return userDao.addUser(entity);
     }
 }

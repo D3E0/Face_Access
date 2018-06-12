@@ -20,7 +20,6 @@ import java.util.logging.Logger;
 @DynamicUpdate
 public class UserDaoImp implements UserDao {
 
-
     private SessionFactory factory;
 
     private Logger logger = Logger.getLogger("dsd");
@@ -80,6 +79,17 @@ public class UserDaoImp implements UserDao {
     }
 
     @Override
+    public Long checkUser(String username) {
+        Session session = factory.openSession();
+        session.beginTransaction();
+        Query query = session.createQuery("select count(*) from UserEntity where userName=:A");
+        query.setParameter("A", username);
+        Long count = (Long) query.uniqueResult();
+        session.getTransaction().commit();
+        return count;
+    }
+
+    @Override
     public UserEntity verifyUser(String username, String password) {
         Session session = factory.openSession();
         session.beginTransaction();
@@ -91,6 +101,7 @@ public class UserDaoImp implements UserDao {
         if (list.size() > 0) {
             entity = (UserEntity) list.get(0);
         }
+        session.getTransaction().commit();
         return entity;
     }
 
@@ -107,13 +118,9 @@ public class UserDaoImp implements UserDao {
     public UserEntity getUserByName(String username) {
         Session session = factory.openSession();
         session.beginTransaction();
-        Query query = session.createQuery("from UserEntity  where userName = :username");
-        query.setParameter("username", username);
-        List list = query.list();
-        UserEntity entity = null;
-        if (list.size() > 0) {
-            entity = (UserEntity) list.get(0);
-        }
+        Query query = session.createQuery("select new UserEntity (userName, userId, userTelephone) from UserEntity  where userName = :A");
+        query.setParameter("A", username);
+        UserEntity entity = (UserEntity) query.getSingleResult();
         session.getTransaction().commit();
         return entity;
     }
@@ -134,11 +141,11 @@ public class UserDaoImp implements UserDao {
     }
 
     @Override
-    public List<UserEntity> getUserList() {
+    public List getUsernameList() {
         Session session = factory.openSession();
-        Transaction ts = session.beginTransaction();
-        List<UserEntity> userList = session.createQuery("from UserEntity").list();
-        ts.commit();
-        return userList;
+        session.beginTransaction();
+        List usernameList = session.createQuery("select userName from UserEntity").list();
+        session.getTransaction().commit();
+        return usernameList;
     }
 }

@@ -14,6 +14,16 @@ public class UserEntity {
     private String userPassword;
     private byte[] userFace;
 
+
+    public UserEntity() {
+    }
+
+    public UserEntity(String userName, int userId, String userTelephone) {
+        this.userName = userName;
+        this.userId = userId;
+        this.userTelephone = userTelephone;
+    }
+
     @Basic
     @Column(name = "userName")
     public String getUserName() {

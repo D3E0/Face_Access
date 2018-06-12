@@ -47,7 +47,7 @@ layui.use(['laydate', 'form', 'layer', 'jquery'], function () {
 
     $.getJSON('/getAllUsername', function (val) {
         $.each(val, function (i, n) {
-            $("<option>" + n.username + "</option>").appendTo($("#username"));
+            $("<option>" + n + "</option>").appendTo($("#username"));
         });
         //更新渲染
         form.render('select');
@@ -55,7 +55,7 @@ layui.use(['laydate', 'form', 'layer', 'jquery'], function () {
 
     $.getJSON('/getHouse', {userId: parent.id}, function (val) {
         $.each(val, function (i, n) {
-            $("<option>" + n.houseId + "</option>").appendTo($("#houseId"));
+            $("<option>" + n + "</option>").appendTo($("#houseId"));
         });
         //更新渲染
         form.render('select');

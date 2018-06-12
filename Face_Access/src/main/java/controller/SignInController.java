@@ -14,6 +14,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.logging.Logger;
 
+
+//TODO 第一次登陆后上传人脸图像
 @Controller
 public class SignInController {
 
@@ -133,7 +135,7 @@ public class SignInController {
     public String validateUsername(HttpServletRequest req) {
         String username = req.getParameter("username");
         JSONObject object = new JSONObject();
-        if (!signInService.verifyUsername(username)) {
+        if (signInService.verifyUsername(username)) {
             object.put("result", "success");
         } else {
             object.put("result", "fail");
