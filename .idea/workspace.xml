@@ -6,25 +6,8 @@
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="41bfe04b-17d4-4df4-afe3-318b1160aab6" name="Default" comment="fix small bug">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Face_Access/src/main/java/controller/HouseController.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Face_Access/src/main/java/service/HouseMangeService.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Face_Access/src/main/java/service/HouseMangeServiceImp.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Face_Access/web/WEB-INF/views/addhouse.jsp" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Face_Access/web/WEB-INF/views/houses.jsp" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Face_Access/web/static/js/houses.js" />
+    <list default="true" id="41bfe04b-17d4-4df4-afe3-318b1160aab6" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Face_Access/src/main/java/controller/DoorController.java" afterPath="$PROJECT_DIR$/Face_Access/src/main/java/controller/DoorController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Face_Access/src/main/java/dao/DoorDaoImp.java" afterPath="$PROJECT_DIR$/Face_Access/src/main/java/dao/DoorDaoImp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Face_Access/src/main/java/dao/HouseDao.java" afterPath="$PROJECT_DIR$/Face_Access/src/main/java/dao/HouseDao.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Face_Access/src/main/java/dao/HouseDaoImp.java" afterPath="$PROJECT_DIR$/Face_Access/src/main/java/dao/HouseDaoImp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Face_Access/src/main/java/dao/RecordDaoImp.java" afterPath="$PROJECT_DIR$/Face_Access/src/main/java/dao/RecordDaoImp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Face_Access/src/main/resources/hibernate.cfg.xml" afterPath="$PROJECT_DIR$/Face_Access/src/main/resources/hibernate.cfg.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Face_Access/web/WEB-INF/views/login.jsp" afterPath="$PROJECT_DIR$/Face_Access/web/WEB-INF/views/login.jsp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Face_Access/web/WEB-INF/views/signIn.jsp" afterPath="$PROJECT_DIR$/Face_Access/web/WEB-INF/views/signIn.jsp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Face_Access/web/WEB-INF/views/updatedoors.jsp" afterPath="$PROJECT_DIR$/Face_Access/web/WEB-INF/views/updatedoors.jsp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Face_Access/web/static/css/my.css" afterPath="$PROJECT_DIR$/Face_Access/web/static/css/my.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Face_Access/web/static/js/takepic.js" afterPath="$PROJECT_DIR$/Face_Access/web/static/js/takepic.js" />
     </list>
     <ignored path="$PROJECT_DIR$/Face_Access/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -736,7 +719,7 @@
       <workItem from="1528602233099" duration="933000" />
       <workItem from="1528605080530" duration="13143000" />
       <workItem from="1528675990888" duration="17684000" />
-      <workItem from="1528763494202" duration="1857000" />
+      <workItem from="1528763494202" duration="1887000" />
     </task>
     <task id="LOCAL-00001" summary="entity">
       <created>1528605411916</created>
@@ -759,11 +742,18 @@
       <option name="project" value="LOCAL" />
       <updated>1528618871196</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="fix small bug">
+      <created>1528765382445</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1528765382446</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="33045000" />
+    <option name="totallyTimeSpent" value="33075000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
@@ -913,6 +903,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="437">
           <caret line="19" column="25" lean-forward="true" selection-start-line="19" selection-start-column="25" selection-end-line="19" selection-end-column="25" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -942,6 +933,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="405">
           <caret line="93" column="0" lean-forward="true" selection-start-line="93" selection-start-column="0" selection-end-line="93" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1021,6 +1013,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="221">
           <caret line="25" column="37" lean-forward="true" selection-start-line="25" selection-start-column="37" selection-end-line="25" selection-end-column="37" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1028,6 +1021,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
