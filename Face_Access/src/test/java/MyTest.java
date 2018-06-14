@@ -1,5 +1,9 @@
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import dao.AuthorityDao;
+import dao.AuthorityDaoImp;
+import dto.AuthorityDTO;
+import dto.AuthorityListDTO;
 import entity.AuthorityEntity;
 import org.junit.Test;
 import util.EncryptInfo;
@@ -12,6 +16,17 @@ import java.util.Iterator;
 import java.util.List;
 
 public class MyTest {
+
+    @Test
+    public void testDataBase() {
+        AuthorityDao authorityDao = new AuthorityDaoImp();
+        AuthorityListDTO list = authorityDao.searchAuthoritiesOfOwnerLimit(1, "T", 0, 10);
+        System.out.println(list.getCount());
+        List<AuthorityDTO> authorities = list.getList();
+        for (AuthorityDTO authority : authorities) {
+            System.out.println(authority.getUserName());
+        }
+    }
 
     @Test
     public void testCode() {

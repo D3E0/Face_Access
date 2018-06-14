@@ -6,7 +6,6 @@
   To change this template use File | Settings | File Templates.
 --%>
 
-<%--TODO 分页功能--%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
@@ -32,7 +31,7 @@
                 <div class="layui-card-header">人员管理</div>
                 <div class="layui-card-body">
                     <div class="layui-input-inline">
-                        <input class="layui-input" name="search">
+                        <input class="layui-input" id="searchVal">
                     </div>
                     <button class="layui-btn" id="search">
                         <i class="layui-icon">&#xe615;</i> 搜索

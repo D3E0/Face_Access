@@ -31,9 +31,11 @@ layui.use(['laydate', 'form', 'layer', 'jquery'], function () {
                 parent.layer.close(index); //关闭自身
                 parent.layer.msg("添加成功");
                 //userTable 表格重载
-                parent.register.userTable.reload({
-                    url: '/users.json'
-                });
+                var siberDoc = parent.document.getElementById("frame").contentDocument;
+                $(".layui-laypage-btn", siberDoc)[0].click();
+                // parent.register.userTable.reload({
+                //     url: '/users.json'
+                // });
             } else {
                 layer.msg("添加失败");
             }
@@ -45,7 +47,7 @@ layui.use(['laydate', 'form', 'layer', 'jquery'], function () {
 
     $.getJSON('/getAllUsername', function (val) {
         $.each(val, function (i, n) {
-            $("<option>" + n.username + "</option>").appendTo($("#username"));
+            $("<option>" + n + "</option>").appendTo($("#username"));
         });
         //更新渲染
         form.render('select');
@@ -53,7 +55,7 @@ layui.use(['laydate', 'form', 'layer', 'jquery'], function () {
 
     $.getJSON('/getHouse', {userId: parent.id}, function (val) {
         $.each(val, function (i, n) {
-            $("<option>" + n.houseId + "</option>").appendTo($("#houseId"));
+            $("<option>" + n + "</option>").appendTo($("#houseId"));
         });
         //更新渲染
         form.render('select');

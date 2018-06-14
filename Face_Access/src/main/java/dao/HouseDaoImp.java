@@ -22,12 +22,12 @@ public class HouseDaoImp implements HouseDao {
     }
 
     @Override
-    public List<HouseEntity> getHouses(int userId) {
+    public List<Integer> getHouseIdByOwner(int ownerId) {
         Session session = factory.openSession();
         session.beginTransaction();
-        Query query = session.createQuery("from HouseEntity  where user.userId = :id");
-        query.setParameter("id", userId);
-        List<HouseEntity> list = query.list();
+        Query query = session.createQuery("select houseId from HouseEntity where user.userId = :id");
+        query.setParameter("id", ownerId);
+        List<Integer> list = query.list();
         session.getTransaction().commit();
         return list;
     }

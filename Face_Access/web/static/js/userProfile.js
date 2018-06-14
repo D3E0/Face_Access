@@ -43,7 +43,6 @@ layui.use(['laydate', 'form', 'layer', 'upload'], function () {
         });
     });
 
-    // TODO 加密
     form.on('submit(updatePassword)', function (data) {
         $("input[name = 'oldPassword']").val('');
         $("input[name = 'confirm']").val('');
@@ -84,6 +83,7 @@ layui.use(['laydate', 'form', 'layer', 'upload'], function () {
 
         var elem = $("#getCode");
         elem.attr('disabled', true);
+        elem.toggleClass("layui-btn-disabled", true);
 
         $.post('/getDigitVerifyCode', {}, function (data) {
             console.info(data);
@@ -100,6 +100,7 @@ layui.use(['laydate', 'form', 'layer', 'upload'], function () {
             clearInterval(id);
             elem.text("获取验证码");
             elem.attr('disabled', false);
+            elem.toggleClass("layui-btn-disabled", false);
             timeCount = COUNT;
         }, COUNT * 1000);
     });

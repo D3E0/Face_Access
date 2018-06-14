@@ -1,7 +1,7 @@
 package service;
 
 
-import entity.AuthorityEntity;
+import dto.AuthorityListDTO;
 import entity.HouseEntity;
 import entity.UserEntity;
 
@@ -10,11 +10,13 @@ import java.util.List;
 
 public interface UserMangeService {
 
-    public List<HouseEntity> getHousesByOwner(int userID);
+    public List<Integer> getHousesByOwner(int userID);
 
-    public List<AuthorityEntity> getAuthoritiesByHouse(int houseID);
+    public List getAuthoritiesByHouse(int houseID);
 
-    public List<AuthorityEntity> getAuthoritiesByOwner(int userID);
+    public AuthorityListDTO getAuthoritiesByOwnerLimit(int ownerID, int start, int offset);
+
+    public AuthorityListDTO searchAuthoritiesByOwnerLimit(int ownerID, String additional, int start, int offset);
 
     public void updateEndDate(int authorityID, Date endDate);
 
@@ -34,6 +36,6 @@ public interface UserMangeService {
 
     public UserEntity getUserByUsername(String username);
 
-    public List<UserEntity> getUserList();
+    public List<String> getUsernameList();
 
 }

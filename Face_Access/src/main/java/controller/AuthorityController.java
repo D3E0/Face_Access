@@ -3,7 +3,8 @@ package controller;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import entity.HouseEntity;
+import dto.AuthorityDTO;
+import dto.AuthorityListDTO;
 import entity.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,6 +17,7 @@ import util.DateParse;
 import util.EncryptInfo;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.sql.Date;
 import java.util.List;
 import java.util.logging.Logger;
@@ -40,6 +42,56 @@ public class AuthorityController {
     }
 
     /**
+     * 控制跳转，跳转到人员管理界面
+     *
+     * @return users.jsp
+     */
+    @RequestMapping("/users")
+    public String showUsers() {
+        return "users";
+    }
+
+    /**
+     * 返回包含请求 userID 下的人员信息以及相关授权信息
+     *
+     * @return JSON
+     */
+    @RequestMapping(value = "/Authorities", produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
+    public String showUserJson(HttpSession session, HttpServletRequest request,
+                               @RequestParam int limit,
+                               @RequestParam int page) {
+        Integer userId = (Integer) session.getAttribute("userid");
+        String additional = request.getParameter("data");
+        logger.info(page + " " + limit);
+        AuthorityListDTO authorityListDTO;
+        if (additional == null) {
+            authorityListDTO = userService.getAuthoritiesByOwnerLimit(userId, (page - 1) * limit, limit);
+        } else {
+            authorityListDTO = userService.searchAuthoritiesByOwnerLimit(userId, additional, (page - 1) * limit, limit);
+        }
+        JSONArray array = new JSONArray();
+
+        for (AuthorityDTO entity : authorityListDTO.getList()) {
+            JSONObject object = new JSONObject();
+            object.put("userName", entity.getUserName());
+            object.put("startDate", entity.getStartDate().toString());
+            object.put("endDate", entity.getEndDate().toString());
+            object.put("houseId", entity.getHouseId());
+            object.put("authorityId", entity.getAuthorityId());
+            object.put("remark", entity.getRemark());
+            array.add(object);
+        }
+
+        JSONObject object = new JSONObject();
+        object.put("code", 0);
+        object.put("msg", "msg");
+        object.put("count", authorityListDTO.getCount());
+        object.put("data", array);
+        return object.toJSONString();
+    }
+
+    /**
      * 控制跳转 添加人员权限界面
      *
      * @return addAuthority.jsp
@@ -56,15 +108,9 @@ public class AuthorityController {
      */
     @RequestMapping("/getAllUsername")
     @ResponseBody
-    public String searchUserProfile() {
-        List<UserEntity> list = userService.getUserList();
-        JSONArray array = new JSONArray();
-        for (UserEntity entity : list) {
-            JSONObject object = new JSONObject();
-            object.put("username", entity.getUserName());
-            array.add(object);
-        }
-        return JSON.toJSONString(array);
+    public String getAllUsername() {
+        List<String> list = userService.getUsernameList();
+        return JSON.toJSONString(list);
     }
 
     /**
@@ -80,9 +126,8 @@ public class AuthorityController {
         JSONObject object = new JSONObject();
         object.put("userTel", EncryptInfo.encryptTelephone(entity.getUserTelephone()));
         object.put("userId", entity.getUserId());
-        return JSON.toJSONString(object);
+        return object.toJSONString();
     }
-
 
     /**
      * 返回该业主的所有房间 ID
@@ -93,14 +138,8 @@ public class AuthorityController {
     @RequestMapping("/getHouse")
     @ResponseBody
     public String getHouse(@RequestParam(value = "userId", defaultValue = "0") int id) {
-        List<HouseEntity> houseEntities = userService.getHousesByOwner(id);
-        JSONArray array = new JSONArray();
-        for (HouseEntity entity : houseEntities) {
-            JSONObject object = new JSONObject();
-            object.put("houseId", entity.getHouseId());
-            array.add(object);
-        }
-        return JSON.toJSONString(array);
+        List<Integer> houseEntities = userService.getHousesByOwner(id);
+        return JSON.toJSONString(houseEntities);
     }
 
     /**
@@ -125,7 +164,7 @@ public class AuthorityController {
 
         JSONObject object = new JSONObject();
         object.put("result", "success");
-        return JSON.toJSONString(object);
+        return object.toJSONString();
     }
 
     /**
@@ -147,7 +186,7 @@ public class AuthorityController {
         userService.updateEndDate(authorityId, endDate);
         userService.updateRemark(authorityId, remark);
         object.put("result", "success");
-        return JSON.toJSONString(object);
+        return object.toJSONString();
     }
 
     /**
@@ -185,13 +224,13 @@ public class AuthorityController {
             authorityId = Integer.parseInt(request.getParameter("id"));
         } catch (NumberFormatException e) {
             e.printStackTrace();
-            return JSON.toJSONString(object);
+            return object.toJSONString();
         }
 
         userService.deleteAuthority(authorityId);
 
         object.put("result", "success");
-        return JSON.toJSONString(object);
+        return object.toJSONString();
     }
 
 

@@ -4,6 +4,7 @@ package service;
 import dao.AuthorityDao;
 import dao.HouseDao;
 import dao.UserDao;
+import dto.AuthorityListDTO;
 import entity.AuthorityEntity;
 import entity.HouseEntity;
 import entity.UserEntity;
@@ -12,7 +13,6 @@ import org.springframework.stereotype.Service;
 import util.EncryptInfo;
 
 import java.sql.Date;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -37,25 +37,24 @@ public class UserMangeServiceImp implements UserMangeService {
         this.userDao = userDao;
     }
 
-
     @Override
-    public List<HouseEntity> getHousesByOwner(int userID) {
-        return houseDao.getHouses(userID);
+    public List<Integer> getHousesByOwner(int userID) {
+        return houseDao.getHouseIdByOwner(userID);
     }
 
     @Override
-    public List<AuthorityEntity> getAuthoritiesByHouse(int houseID) {
+    public List getAuthoritiesByHouse(int houseID) {
         return authorityDao.getAuthoritiesOfHouse(houseID);
     }
 
     @Override
-    public List<AuthorityEntity> getAuthoritiesByOwner(int userID) {
-        List<HouseEntity> houseEntities = getHousesByOwner(userID);
-        List<AuthorityEntity> authorityEntities = new ArrayList<AuthorityEntity>();
-        for (HouseEntity houseEntity : houseEntities) {
-            authorityEntities.addAll(getAuthoritiesByHouse(houseEntity.getHouseId()));
-        }
-        return authorityEntities;
+    public AuthorityListDTO getAuthoritiesByOwnerLimit(int ownerID, int start, int offset) {
+        return authorityDao.getAuthoritiesOfOwnerLimit(ownerID, start, offset);
+    }
+
+    @Override
+    public AuthorityListDTO searchAuthoritiesByOwnerLimit(int ownerID, String additional, int start, int offset) {
+        return authorityDao.searchAuthoritiesOfOwnerLimit(ownerID, additional, start, offset);
     }
 
     @Override
@@ -124,8 +123,8 @@ public class UserMangeServiceImp implements UserMangeService {
     }
 
     @Override
-    public List<UserEntity> getUserList() {
-        return userDao.getUserList();
+    public List<String> getUsernameList() {
+        return userDao.getUsernameList();
     }
 
 

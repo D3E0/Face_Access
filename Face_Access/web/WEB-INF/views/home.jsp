@@ -5,7 +5,7 @@
   Time: 13:10
   To change this template use File | Settings | File Templates.
 --%>
-<%--TODO 从 Session 中获取 ID--%>
+
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
@@ -63,10 +63,10 @@
             <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
             <ul class="layui-nav layui-nav-tree" lay-filter="sidenav">
                 <li class="layui-nav-item  layui-this"><a href="/users" target="frame">人员管理</a></li>
-                <li class="layui-nav-item"><a href="/user?id=${userid}" target="frame">门禁管理</a></li>
+                <li class="layui-nav-item"><a href="/doors" target="frame">门禁管理</a></li>
                 <li class="layui-nav-item"><a href="/user?id=${userid+1}" target="frame">房间管理</a></li>
                 <li class="layui-nav-item"><a href="/user?id=${userid+2}" target="frame">可通行门列表</a></li>
-                <li class="layui-nav-item"><a href="/user?id=${userid+3}" target="frame">进出门记录查看</a></li>
+                <li class="layui-nav-item"><a href="/recordsview" target="frame">进出门记录查看</a></li>
                 <li class="layui-nav-item layui-nav-itemed">
                     <a href="javascript:">解决方案</a>
                     <dl class="layui-nav-child">
