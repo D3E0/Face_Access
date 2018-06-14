@@ -11,6 +11,8 @@ layui.use(['jquery', 'laypage', 'table', 'layer', 'element', 'laydate'], functio
             {field: 'houseId', title: 'ID', align: "center"}
             ,{field: 'userId', title: '业主ID', align: "center"}
             , {field: 'username', title: '业主名字', align: "center"}
+            , {field: 'doorId', title: '门的ID', align: "center"}
+            , {field: 'doorlocation', title: '门的位置', align: "center"}
             , {fixed: 'right', title: '操作', align: 'center', toolbar: '#toolBar'}
         ]],
         done:function(res, curr, count){
@@ -44,7 +46,7 @@ layui.use(['jquery', 'laypage', 'table', 'layer', 'element', 'laydate'], functio
         } else if (layEvent === 'edit') { //编辑;
             layer.open({
                 type: 2,
-                content: ['/updatedoorview?id=' + data.Id+ '&location=' + data.Location+ '&ip=' + data.Ip+ '&status=' + data.Status, 'no'],
+                content: ['/updatehouse?houseid=' + data.houseId+'&userid='+data.userId+'&doorid='+data.doorId, 'no'],
                 title: "修改信息",
                 shade: 0,
                 btn: ['确认', '取消'],
@@ -81,6 +83,7 @@ layui.use(['jquery', 'laypage', 'table', 'layer', 'element', 'laydate'], functio
                 var doorid = $("#doorid", doc).val();
                 var userid = $("#userid", doc).val();
                 var password = $("#password", doc).val();
+                var flag=null;
                 $.post("/addhouse",
                     {
                         "Content-Type:text/html;charset":"utf8",
@@ -90,8 +93,19 @@ layui.use(['jquery', 'laypage', 'table', 'layer', 'element', 'laydate'], functio
                         housepassword:password
                     },
                     function(data,status){
+                        flag=data;
                         layer.msg(data);
                     });
+                if(flag=='wd'){
+                    layer.msg("门的id不存在");
+                    return false;
+                }
+
+                if(flag=='wu'){
+                    layer.msg("用户的id不存在");
+                    return false;
+                }
+
                 layer.close(index); //如果设定了yes回调，需进行手工关闭
             }
         });

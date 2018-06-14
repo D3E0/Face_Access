@@ -33,7 +33,7 @@ public class DoorController {
             JSONObject object = new JSONObject();
             object.put("Id", entity.getDoorId());
             object.put("Location", entity.getDoorLocation());
-            object.put("Status", entity.getDoorStasue());
+            object.put("Status", entity.getDoorStatus());
             object.put("Ip", entity.getDoorIp());
             array.add(object);
         }
@@ -55,7 +55,7 @@ public class DoorController {
     public String updatedoor(@RequestParam (value = "id")String id, @RequestParam (value = "location")String location, @RequestParam (value = "ip")String ip, @RequestParam (value = "status")String status){
         DoorEntity doorEntity=new DoorEntity();
         doorEntity.setDoorId(Integer.parseInt(id));
-        doorEntity.setDoorStasue(status);
+        doorEntity.setDoorStatus(status);
         doorEntity.setDoorIp(ip);
         doorEntity.setDoorLocation(location);
         System.out.println(location);
@@ -76,7 +76,7 @@ public class DoorController {
         doorEntity.setDoorId(Integer.parseInt(id));
         doorEntity.setDoorLocation(location);
         doorEntity.setDoorIp(ip);
-        doorEntity.setDoorStasue(status);
+        doorEntity.setDoorStatus(status);
         return doorService.adddoor(doorEntity);
     }
 }

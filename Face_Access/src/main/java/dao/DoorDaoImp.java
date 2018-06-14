@@ -78,8 +78,8 @@ public class DoorDaoImp implements DoorDao {
             if (door.getDoorLocation()!=null){
                 doorEntity.setDoorLocation(door.getDoorLocation());
             }
-            if (door.getDoorStasue()!=null){
-                doorEntity.setDoorStasue(door.getDoorStasue());
+            if (door.getDoorStatus()!=null){
+                doorEntity.setDoorStatus(door.getDoorStatus());
             }
             session.update(doorEntity);
             tx.commit();

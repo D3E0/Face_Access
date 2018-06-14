@@ -104,4 +104,34 @@ public class HouseDaoImp implements HouseDao {
         }
         return back;
     }
+
+    @Override
+    public String updatehouse(HouseEntity house) {
+        String back="success";
+        Session session=factory.openSession();
+        Transaction tx = null;
+        try {
+            tx = session.beginTransaction();
+            HouseEntity houseEntity=session.get(HouseEntity.class,house.getHouseId());
+            if (house.getDoor()!=null){
+                houseEntity.setDoor(house.getDoor());
+            }
+            if (house.getUser()!=null){
+                houseEntity.setUser(house.getUser());
+            }
+            if (house.getHousePassword()!=null){
+                houseEntity.setHousePassword(house.getHousePassword());
+            }
+            session.update(houseEntity);
+            tx.commit();
+        }
+        catch (Exception e) {
+            if (tx!=null) tx.rollback();
+            e.printStackTrace();
+            back="fail";
+        }finally {
+            session.close();
+        }
+        return back;
+    }
 }

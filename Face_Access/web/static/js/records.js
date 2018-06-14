@@ -8,10 +8,10 @@ layui.use(['jquery', 'laypage', 'table', 'layer', 'element', 'laydate'], functio
         , url: '/recordsjson'
         , page: true
         , cols: [[
-            {field: 'Id', title: 'ID', align: "center"}
-            , {field: 'doorId', title: '门的id', align: "center"}
-            , {field: 'doorLocation', title: '门的位置', align: "center"}
-            , {field: 'userID', title: '用户id', align: "center"}
+            // {field: 'Id', title: 'ID', align: "center"}
+            // , {field: 'doorId', title: '门的id', align: "center"}
+             {field: 'doorLocation', title: '门的位置', align: "center"}
+            // , {field: 'userID', title: '用户id', align: "center"}
             , {field: 'userName', title: '用户名', align: "center"}
             , {field: 'openDate', title: '开门日期', align: "center"}
             , {field: 'openResult', title: '结果', align: "center"}

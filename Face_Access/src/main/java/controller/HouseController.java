@@ -4,8 +4,10 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import entity.DoorEntity;
 import entity.HouseEntity;
+import entity.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -14,6 +16,7 @@ import service.HouseMangeService;
 import service.UserMangeService;
 import util.EncryptInfo;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.util.List;
 
 @Controller
@@ -49,6 +52,8 @@ public class HouseController {
             object.put("houseId", entity.getHouseId());
             object.put("username", entity.getUser().getUserName());
             object.put("userId",entity.getUser().getUserId());
+            object.put("doorId",entity.getDoor().getDoorId());
+            object.put("doorlocation",entity.getDoor().getDoorLocation());
 //            object.put("Ip", entity.getDoorIp());
             array.add(object);
         }
@@ -68,10 +73,46 @@ public class HouseController {
     @ResponseBody
     public String addhouse(@RequestParam (value = "houseid")String houseid, @RequestParam (value = "userid")String userid, @RequestParam (value = "housepassword")String housepassword,@RequestParam (value = "doorid")String doorid){
         HouseEntity houseEntity = new HouseEntity();
+        DoorEntity doorEntity=doorService.getDoorEntity(Integer.parseInt(doorid));
+        if (doorEntity==null){
+            return "wd";
+        }
+        UserEntity userEntity=userService.getUserEntity(Integer.parseInt(userid));
+        if (userEntity==null){
+            return "wu";
+        }
         houseEntity.setHouseId(Integer.parseInt(houseid));
-        houseEntity.setDoor(doorService.getDoorEntity(Integer.parseInt(doorid)));
-        houseEntity.setUser(userService.getUserEntity(Integer.parseInt(userid)));
+        houseEntity.setDoor(doorEntity);
+        houseEntity.setUser(userEntity);
         houseEntity.setHousePassword(EncryptInfo.MD5(housepassword));
         return houseService.addhouse(houseEntity);
     }
+    @RequestMapping("/updatehouseview")
+    public String updatehouseview(@RequestParam (value = "houseid")String houseid,@RequestParam (value = "userid")String userid, @RequestParam (value = "housepassword")String housepassword, @RequestParam (value = "doorid")String doorid, Model model){
+        model.addAttribute("houseid",houseid);
+        model.addAttribute("userid",userid);
+        model.addAttribute("housepassword",housepassword);
+        model.addAttribute("doorid",doorid);
+        return "updatehouse";
+    }
+
+    @RequestMapping("/updatehouse")
+    @ResponseBody
+    public String updatehouse(@RequestParam (value = "houseid")String houseid,@RequestParam (value = "userid")String userid, @RequestParam (value = "housepassword")String housepassword,@RequestParam (value = "doorid")String doorid){
+        DoorEntity doorEntity=doorService.getDoorEntity(Integer.parseInt(doorid));
+        if (doorEntity==null){
+            return "wd";
+        }
+        UserEntity userEntity=userService.getUserEntity(Integer.parseInt(userid));
+        if (userEntity==null){
+            return "wu";
+        }
+        HouseEntity houseEntity=new HouseEntity();
+        houseEntity.setUser(userEntity);
+        houseEntity.setDoor(doorEntity);
+        houseEntity.setHouseId(Integer.parseInt(houseid));
+        houseEntity.setHousePassword(housepassword);
+        return houseService.updatehouse(houseEntity);
+    }
+
 }

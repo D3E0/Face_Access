@@ -14,6 +14,10 @@ public class UserEntity {
     private String userPassword;
     private byte[] userFace;
 
+    public UserEntity(){}
+    public UserEntity(String username){
+        userName=username;
+    }
     @Basic
     @Column(name = "userName")
     public String getUserName() {

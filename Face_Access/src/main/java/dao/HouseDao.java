@@ -10,4 +10,5 @@ public interface HouseDao {
     Long counthouse();
     String delhouse(int houseid);
     String addhouse(HouseEntity houseEntity);
+    String updatehouse(HouseEntity house);
 }

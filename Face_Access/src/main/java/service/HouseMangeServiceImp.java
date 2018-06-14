@@ -33,4 +33,9 @@ public class HouseMangeServiceImp implements HouseMangeService{
     public String addhouse(HouseEntity houseEntity) {
         return houseDao.addhouse(houseEntity);
     }
+
+    @Override
+    public String updatehouse(HouseEntity houseEntity) {
+        return houseDao.updatehouse(houseEntity);
+    }
 }

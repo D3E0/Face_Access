@@ -124,13 +124,6 @@ layui.use(['jquery', 'laypage', 'table', 'layer', 'element', 'laydate'], functio
                     function(data,status){
                          layer.msg(data);
                     });
-                // obj.add({
-                //     Id:id,
-                //     Location: location,
-                //     Ip:ip,
-                //     Status:status
-                // });
-                layer.msg('添加成功');
                 layer.close(index); //如果设定了yes回调，需进行手工关闭
             }
         });
