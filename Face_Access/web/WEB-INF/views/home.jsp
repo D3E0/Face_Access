@@ -64,9 +64,9 @@
             <ul class="layui-nav layui-nav-tree" lay-filter="sidenav">
                 <li class="layui-nav-item  layui-this"><a href="/users" target="frame">人员管理</a></li>
                 <li class="layui-nav-item"><a href="/doors" target="frame">门禁管理</a></li>
-                <li class="layui-nav-item"><a href="/user?id=${userid+1}" target="frame">房间管理</a></li>
+                <li class="layui-nav-item"><a href="/houses" target="frame">房间管理</a></li>
                 <li class="layui-nav-item"><a href="/user?id=${userid+2}" target="frame">可通行门列表</a></li>
-                <li class="layui-nav-item"><a href="/recordsview" target="frame">进出门记录查看</a></li>
+                <li class="layui-nav-item"><a href="/records" target="frame">进出门记录查看</a></li>
                 <li class="layui-nav-item layui-nav-itemed">
                     <a href="javascript:">解决方案</a>
                     <dl class="layui-nav-child">
