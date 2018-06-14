@@ -5,12 +5,12 @@ import entity.DoorEntity;
 import java.util.List;
 
 public interface DoorMangeService {
-    public DoorEntity getDoorEntity(int doorID);
+     DoorEntity getDoorEntity(int doorID);
 
-    public List<DoorEntity> getDoorList(int page,int limit);
+     List<DoorEntity> getDoorList(int page,int limit);
 
-    public String update(DoorEntity doorEntity);
-    public String delete(int id);
-    public String adddoor(DoorEntity doorEntity);
-    public Long countdoor();
+     String update(DoorEntity doorEntity);
+     String delete(int id);
+     String adddoor(DoorEntity doorEntity);
+     Long countdoor();
 }

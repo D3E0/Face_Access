@@ -2,6 +2,7 @@ package entity;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.Date;
 
 @Entity
 @Table(name = "open_record", schema = "my_data_base", catalog = "")
@@ -9,10 +10,19 @@ public class OpenRecordEntity {
     private int openId;
     private Integer userId;
     private Integer doorId;
-    private Timestamp openDate;
+    private Date openDate;
     private String openResult;
     private DoorEntity doorEntity;
     private UserEntity userEntity;
+    public OpenRecordEntity(){
+
+    }
+    public OpenRecordEntity(String username,String openResult,Date openDate,String doorlocation){
+        setUserEntity(new UserEntity(username));
+        setDoorEntity(new DoorEntity(doorlocation));
+        setOpenDate(openDate);
+        setOpenResult(openResult);
+    }
 
     @ManyToOne
     @JoinColumn(name = "doorId")
@@ -32,7 +42,6 @@ public class OpenRecordEntity {
     public void setUserEntity(UserEntity userEntity) {
         this.userEntity = userEntity;
     }
-
     @Id
     @Column(name = "openID")
     public int getOpenId() {
@@ -65,11 +74,11 @@ public class OpenRecordEntity {
 
     @Basic
     @Column(name = "openDate")
-    public Timestamp getOpenDate() {
+    public Date getOpenDate() {
         return openDate;
     }
 
-    public void setOpenDate(Timestamp openDate) {
+    public void setOpenDate(Date openDate) {
         this.openDate = openDate;
     }
 

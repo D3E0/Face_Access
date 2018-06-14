@@ -4,14 +4,15 @@ layui.use(['jquery', 'laypage', 'table', 'layer', 'element', 'laydate'], functio
         , element = layui.element;
     layer.load();
     table.render({
-        elem: '#doorTable'
-        , url: '/doorsjson'
+        elem: '#houseTable'
+        , url: '/housesjson'
         , page: true
         , cols: [[
-            {field: 'Id', title: 'ID', align: "center"}
-            , {field: 'Location', title: '位置', align: "center"}
-            , {field: 'Status', title: '状态', align: "center"}
-            , {field: 'Ip', title: 'ip地址', align: "center"}
+            {field: 'houseId', title: 'ID', align: "center"}
+            ,{field: 'userId', title: '业主ID', align: "center"}
+            , {field: 'username', title: '业主名字', align: "center"}
+            , {field: 'doorId', title: '门的ID', align: "center"}
+            , {field: 'doorlocation', title: '门的位置', align: "center"}
             , {fixed: 'right', title: '操作', align: 'center', toolbar: '#toolBar'}
         ]],
         done:function(res, curr, count){
@@ -19,7 +20,7 @@ layui.use(['jquery', 'laypage', 'table', 'layer', 'element', 'laydate'], functio
         }
     });
     //监听工具条 tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
-    table.on('tool(doorTable)', function (obj) {
+    table.on('tool(houseTable)', function (obj) {
         var data = obj.data; //获得当前行数据
         var layEvent = obj.event; //获得 lay-event 对应的值
         if (layEvent === 'del') { //删除
@@ -33,9 +34,9 @@ layui.use(['jquery', 'laypage', 'table', 'layer', 'element', 'laydate'], functio
                 , btn2: function () {
                     layer.msg("确认删除");
                     obj.del();
-                    $.post("/deldoor",
+                    $.post("/delhouse",
                         {
-                            id:data.Id
+                            houseid:data.houseId
                         },
                         function(data,status){
                             layer.msg(data);
@@ -45,7 +46,7 @@ layui.use(['jquery', 'laypage', 'table', 'layer', 'element', 'laydate'], functio
         } else if (layEvent === 'edit') { //编辑;
             layer.open({
                 type: 2,
-                content: ['/updatedoorview?id=' + data.Id+ '&location=' + data.Location+ '&ip=' + data.Ip+ '&status=' + data.Status, 'no'],
+                content: ['/updatehouse?houseid=' + data.houseId+'&userid='+data.userId+'&doorid='+data.doorId, 'no'],
                 title: "修改信息",
                 shade: 0,
                 btn: ['确认', '取消'],
@@ -56,30 +57,7 @@ layui.use(['jquery', 'laypage', 'table', 'layer', 'element', 'laydate'], functio
                 yes: function (index, layero) {
                     var test = $('#' + layero.find('iframe')[0]['name']).get(0);
                     var doc = test.contentDocument;
-                    var id = $("#id", doc).val();
-                    var location = $("#location", doc).val();
-                    var ip = $("#ip", doc).val();
-                    var status = $("#status", doc).val();
-                    if (!isValidIP(ip)) {
-                        layer.msg("请输入正确的ip地址");
-                        return false
-                    }
-                    $.post("/updatedoor",
-                        {
-                            "Content-Type:text/html;charset":"utf8",
-                            id:id,
-                            location:location,
-                            ip: ip,
-                            status:status
-                        },
-                        function(data,status){
-                            layer.msg(data);
-                        });
-                    obj.update({
-                        Location: location,
-                        Ip:ip,
-                        Status:status
-                    });
+
                     // layer.msg('修改成功'+ip);
                     layer.close(index); //如果设定了yes回调，需进行手工关闭
                 }
@@ -90,7 +68,7 @@ layui.use(['jquery', 'laypage', 'table', 'layer', 'element', 'laydate'], functio
     $("#add").click(function () {
         layer.open({
             type: 2,
-            content: ['/adddoorview', 'no'],
+            content: ['/addhouseview', 'no'],
             title: '添加门禁',
             btn: ['确认', '取消'],
             area: ['500', '580'],
@@ -102,42 +80,36 @@ layui.use(['jquery', 'laypage', 'table', 'layer', 'element', 'laydate'], functio
                 var test = $('#' + layero.find('iframe')[0]['name']).get(0);
                 var doc = test.contentDocument;
                 var id = $("#id", doc).val();
-                var location = $("#location", doc).val();
-                var ip = $("#ip", doc).val();
-                var status = $("#status", doc).val();
-                if (!isValidID(id)) {
-                    layer.msg("请输入一到四位的纯数字");
-                    return false;
-                }
-                if (!isValidIP(ip)) {
-                    layer.msg("请输入正确的ip地址");
-                    return false;
-                }
-                $.post("/adddoor",
+                var doorid = $("#doorid", doc).val();
+                var userid = $("#userid", doc).val();
+                var password = $("#password", doc).val();
+                var flag=null;
+                $.post("/addhouse",
                     {
                         "Content-Type:text/html;charset":"utf8",
-                        id:id,
-                        location:location,
-                        ip: ip,
-                        status:status
+                        houseid:id,
+                        doorid:doorid,
+                        userid: userid,
+                        housepassword:password
                     },
                     function(data,status){
-                         layer.msg(data);
+                        flag=data;
+                        layer.msg(data);
                     });
+                if(flag=='wd'){
+                    layer.msg("门的id不存在");
+                    return false;
+                }
+
+                if(flag=='wu'){
+                    layer.msg("用户的id不存在");
+                    return false;
+                }
+
                 layer.close(index); //如果设定了yes回调，需进行手工关闭
             }
         });
     })
 
 });
-function isValidIP(ip)
-{
-    var reg =  /^(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$/
-    return reg.test(ip);
-}
-function isValidID(id)
-{
-    var reg =  /^\d{1,4}$/;
-    return reg.test(id);
-}
 

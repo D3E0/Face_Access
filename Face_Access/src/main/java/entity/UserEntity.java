@@ -24,6 +24,9 @@ public class UserEntity {
         this.userTelephone = userTelephone;
     }
 
+    public UserEntity(String username){
+        userName=username;
+    }
     @Basic
     @Column(name = "userName")
     public String getUserName() {

@@ -9,7 +9,6 @@
 </head>
 <body>
 <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.11.1.js"></script>
-<%--<script src="${pageContext.request.contextPath}/static/resource/jquery.webcam.min.js"></script>--%>
 <script rel="script" src="${pageContext.request.contextPath}/static/layui/layui.js"></script>
 <div class="panel-lite">
     <div class="layui-tab">
@@ -36,7 +35,7 @@
                 </form>
             </div>
             <div class="layui-tab-item" onclick="startvideo()">
-                <video id="video" width="350" height="350" autoplay></video>
+                <video id="video" width="350" height="350" poster="/static/images/666.jpg"></video>
                 <canvas id="canvas" hidden width="350" height="350"></canvas>
                 <script type="text/javascript" src="${pageContext.request.contextPath}/static/js/takepic.js"></script>
                 <button class="layui-btn takepic" onclick="takepic()">点击触发</button>

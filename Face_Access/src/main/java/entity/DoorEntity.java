@@ -8,7 +8,11 @@ public class DoorEntity {
     private int doorId;
     private String doorLocation;
     private String doorIp;
-    private String doorStasue;
+    private String doorStatus;
+    public DoorEntity(){}
+    public DoorEntity(String doorLocation){
+        this.doorLocation=doorLocation;
+    }
 
     @Override
     public String toString() {
@@ -16,7 +20,7 @@ public class DoorEntity {
                 "doorId=" + doorId +
                 ", doorLocation='" + doorLocation + '\'' +
                 ", doorIp='" + doorIp + '\'' +
-                ", doorStasue='" + doorStasue + '\'' +
+                ", doorStasue='" + doorStatus + '\'' +
                 '}';
     }
 
@@ -51,13 +55,13 @@ public class DoorEntity {
     }
 
     @Basic
-    @Column(name = "doorStasue")
-    public String getDoorStasue() {
-        return doorStasue;
+    @Column(name = "doorStatus")
+    public String getDoorStatus() {
+        return doorStatus;
     }
 
-    public void setDoorStasue(String doorStasue) {
-        this.doorStasue = doorStasue;
+    public void setDoorStatus(String doorStatus) {
+        this.doorStatus = doorStatus;
     }
 
     @Override
@@ -70,7 +74,7 @@ public class DoorEntity {
         if (doorId != that.doorId) return false;
         if (doorLocation != null ? !doorLocation.equals(that.doorLocation) : that.doorLocation != null) return false;
         if (doorIp != null ? !doorIp.equals(that.doorIp) : that.doorIp != null) return false;
-        if (doorStasue != null ? !doorStasue.equals(that.doorStasue) : that.doorStasue != null) return false;
+        if (doorStatus != null ? !doorStatus.equals(that.doorStatus) : that.doorStatus != null) return false;
 
         return true;
     }
@@ -80,7 +84,7 @@ public class DoorEntity {
         int result = doorId;
         result = 31 * result + (doorLocation != null ? doorLocation.hashCode() : 0);
         result = 31 * result + (doorIp != null ? doorIp.hashCode() : 0);
-        result = 31 * result + (doorStasue != null ? doorStasue.hashCode() : 0);
+        result = 31 * result + (doorStatus != null ? doorStatus.hashCode() : 0);
         return result;
     }
 }

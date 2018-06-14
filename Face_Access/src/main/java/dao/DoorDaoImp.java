@@ -28,10 +28,9 @@ public class DoorDaoImp implements DoorDao {
         String back="success";
         Session session = factory.openSession();
         Transaction tx = null;
-        Integer doorId=null;
         try {
             tx = session.beginTransaction();
-            doorId = (Integer) session.save(doorEntity);
+            session.save(doorEntity);
             tx.commit();
         } catch (Exception e) {
             back="fail";
@@ -79,8 +78,8 @@ public class DoorDaoImp implements DoorDao {
             if (door.getDoorLocation()!=null){
                 doorEntity.setDoorLocation(door.getDoorLocation());
             }
-            if (door.getDoorStasue()!=null){
-                doorEntity.setDoorStasue(door.getDoorStasue());
+            if (door.getDoorStatus()!=null){
+                doorEntity.setDoorStatus(door.getDoorStatus());
             }
             session.update(doorEntity);
             tx.commit();

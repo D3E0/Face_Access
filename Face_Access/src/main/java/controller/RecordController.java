@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import service.RecordMangeService;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -20,7 +23,7 @@ public class RecordController {
         this.recordService = recordMangeService;
     }
 
-    @RequestMapping("/recordsview")
+    @RequestMapping("/records")
     public String showrecordview(){
         return "records";
     }
@@ -29,13 +32,14 @@ public class RecordController {
     public String recordsjson(@RequestParam (value = "page",defaultValue = "1")String page,@RequestParam (value = "limit",defaultValue = "10")String limit){
         List<OpenRecordEntity> list = recordService.getRecordlist(Integer.parseInt(page),Integer.parseInt(limit));
         JSONArray array = new JSONArray();
+        DateFormat dateFormat=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         for (OpenRecordEntity entity : list) {
             JSONObject object = new JSONObject();
-            object.put("Id", entity.getOpenId());
-            object.put("doorId", entity.getDoorEntity().getDoorId());
-            object.put("openDate", entity.getOpenDate());
+//            object.put("Id", entity.getOpenId());
+//            object.put("doorId", entity.getDoorEntity().getDoorId());
+            object.put("openDate",dateFormat.format(entity.getOpenDate()));
             object.put("openResult", entity.getOpenResult());
-            object.put("userID",entity.getUserEntity().getUserId());
+//            object.put("userID",entity.getUserEntity().getUserId());
             object.put("userName",entity.getUserEntity().getUserName());
             object.put("doorLocation", entity.getDoorEntity().getDoorLocation());
             array.add(object);
