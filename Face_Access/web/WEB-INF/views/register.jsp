@@ -24,7 +24,7 @@
 <div class="layui-card" style="width: 400px; margin: 0 auto">
     <div class="layui-card-header"></div>
     <div class="layui-card-body">
-        <div class="layui-form layui-form-pane">
+        <div class="layui-form ">
 
             <div class="layui-form-item">
                 <label class="layui-form-label">用户名</label>

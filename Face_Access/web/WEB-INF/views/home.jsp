@@ -46,11 +46,10 @@
             <li class="layui-nav-item">
                 <a>
                     <img src="${pageContext.request.contextPath}/static/images/logo.jpg" class="layui-nav-img">
-                    <%--D3E0--%>
                     ${username}
                 </a>
                 <dl class="layui-nav-child">
-                    <dd><a href="/user?id=${userid}" target="frame">基本资料</a></dd>
+                    <dd><a href="/user?id=${userid}" target="frame">个人资料</a></dd>
                     <dd><a href="javascript:">密码修改</a></dd>
                 </dl>
             </li>
@@ -62,17 +61,27 @@
         <div class="layui-side-scroll">
             <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
             <ul class="layui-nav layui-nav-tree" lay-filter="sidenav">
-                <li class="layui-nav-item  layui-this"><a href="/users" target="frame">人员管理</a></li>
-                <li class="layui-nav-item"><a href="/doors" target="frame">门禁管理</a></li>
-                <li class="layui-nav-item"><a href="/houses" target="frame">房间管理</a></li>
-                <li class="layui-nav-item"><a href="/user?id=${userid+2}" target="frame">可通行门列表</a></li>
-                <li class="layui-nav-item"><a href="/records" target="frame">进出门记录查看</a></li>
+                <%--<li class="layui-nav-item  layui-this"><a href="/users" target="frame">人员管理</a></li>--%>
+                <%--<li class="layui-nav-item"><a href="/access" target="frame">可通行门列表</a></li>--%>
+
+                <%--<li class="layui-nav-item"><a href="/doors" target="frame">门禁管理</a></li>--%>
+                <%--<li class="layui-nav-item"><a href="/houses" target="frame">房间管理</a></li>--%>
+                <%--<li class="layui-nav-item"><a href="/records" target="frame">进出门记录查看</a></li>--%>
+
                 <li class="layui-nav-item layui-nav-itemed">
-                    <a href="javascript:">解决方案</a>
+                    <a href="javascript:">Yu</a>
+                    <dl class="layui-nav-child ">
+                        <dd class="layui-this"><a href="/users" target="frame">人员管理</a></dd>
+                        <dd><a href="/access" target="frame">可通行门列表</a></dd>
+                    </dl>
+                </li>
+
+                <li class="layui-nav-item layui-nav-itemed">
+                    <a href="javascript:">Yan</a>
                     <dl class="layui-nav-child">
-                        <dd><a href="javascript:">列表一</a></dd>
-                        <dd><a href="javascript:">列表二</a></dd>
-                        <dd><a href="">超链接</a></dd>
+                        <dd><a href="/doors" target="frame">门禁管理</a></dd>
+                        <dd><a href="/houses" target="frame">房间管理</a></dd>
+                        <dd><a href="/records" target="frame">进出门记录查看</a></dd>
                     </dl>
                 </li>
             </ul>
@@ -82,15 +91,7 @@
     <div id="content">
         <iframe id="frame" name="frame" src="/users"></iframe>
     </div>
-    <%--<div class="layui-body">--%>
-    <%--<!-- 内容主体区域 -->--%>
-    <%--<iframe id="frame" name="frame" src="/users"></iframe>--%>
-    <%--</div>--%>
 
-    <%--<div class="layui-footer">--%>
-    <%--<!-- 底部固定区域 -->--%>
-    <%--© layui.com - 底部固定区域--%>
-    <%--</div>--%>
 </div>
 <div id="divPreview">
     <img id="updatePreview" style="width: 100%"/>
