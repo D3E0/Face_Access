@@ -1,80 +1,84 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width">
-    <title>JS Bin</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src='../js/jquery-3.3.1.js'></script>
+    <link rel="stylesheet" href="../layui/css/layui.css">
+    <script src="../layui/layui.js"></script>
+    <title>VersionB</title>
     <style>
-        * {
-            box-sizing: border-box;
-        }
-
-        div#test {
-            width: 100%;
-            height: 700px;
-            background: white;
-            padding: 100px 0;
-            margin: 100px auto;
-            border: 1px solid #ddd;
-
-            perspective: 1000px;
-        }
-
-        #banner {
-            margin: 0 auto;
-            background: #37D7B2;
-            transition: transform 0.1s;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.25);
-            text-align: center;
-            line-height: 300px;
-            font-size: 50px;
-            color: #fff;
-        }
-
         body {
-            background: white;
-            padding: 20px;
+            background: #f3f3f3;
         }
+
+        #right {
+            border: 1px solid #2D93CA;
+            height: 400px;
+        }
+
+        #box {
+            perspective: 1000px;
+            border: 2px solid #5FB878;
+            transform-style: preserve-3d;
+            transform: rotateX(0deg) rotateY(0deg);
+            height: 450px;
+        }
+
+        #img {
+            height: 300px;
+            -webkit-animation: myfirst 10s infinite linear; /* Safari 和 Chrome */
+        }
+
+        @-webkit-keyframes myfirst {
+            0% {
+                transform: rotateY(0deg) rotateX(0deg)
+            }
+            10% {
+                transform: rotateY(30deg) rotateX(0deg)
+            }
+            30% {
+                transform: rotateY(-30deg) rotateX(0deg)
+            }
+            60% {
+                transform: rotateY(0deg) rotateX(30deg)
+            }
+            90% {
+                transform: rotateY(0deg) rotateX(-30deg)
+            }
+            100% {
+                transform: rotateY(0deg) rotateX(0deg)
+            }
+        }
+
     </style>
 </head>
 <body>
-<script src="../js/jquery-3.3.1.js"></script>
-
-<div id="test">
-    <img id="banner" src="../images/666.jpg">
+<div class="layui-container" style="margin-top: 50px; border: 1px solid black; height: 500px;" id="fa">
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-md7">
+            <div id="box">
+                <img src="../images/画板%201.png" id="img">
+            </div>
+        </div>
+        <div class="layui-col-md5">
+            <div id="right"></div>
+        </div>
+    </div>
 </div>
 <script>
-    $('#test').on('mousemove', function (e) {
-
-        var offset = $('#test').offset()
-
-        var x = e.pageX - offset.left
-        var y = e.pageY - offset.top
-
-
-        var centerX = $('#test').outerWidth() / 2
-        var centerY = $('#test').outerHeight() / 2
-
-        var deltaX = x - centerX
-        var deltaY = y - centerY
-
-        var percentX = deltaX / centerX
-        var percentY = deltaY / centerY
-
-        var deg = 10
-
-
-        $('#banner').css({
-            transform: 'rotateX(' + deg * -percentY + 'deg)' +
-            ' rotateY(' + deg * percentX + 'deg)'
-        })
-    })
-
-    $('#test').on('mouseleave', function () {
-        $('#banner').css({
-            transform: ''
-        })
+    layui.use('element', function () {
+        var element = layui.element;
     })
 </script>
 </body>
 </html>
+
+<!--
+e.pageX是鼠标的X轴，this.offsetWidth/2是本身宽度的一半，
+this.offsetLeft距离它上一层（父级）距离左边框的距离，
+e.pageY是鼠标的Y轴，this.offsetHeight/2是本身高度的一半，
+this.offsetTop距离它上一层（父级）距离上边框的距离，
+-->
+

@@ -14,72 +14,125 @@
     <script src="${pageContext.request.contextPath}/static/layui/layui.js"></script>
     <style>
         body {
-            background-color: #eee;
             margin-top: 50px;
+        }
+
+        #box {
+            perspective: 1000px;
+            /*border: 2px solid #5FB878;*/
+            transform-style: preserve-3d;
+            transform: rotateX(0deg) rotateY(0deg);
+            margin-top: 100px; /*(250px-100px)*/
+        }
+
+        #img {
+            height: 300px;
+            -webkit-animation: myFirst 10s infinite linear; /* Safari 和 Chrome */
+        }
+
+        @-webkit-keyframes myFirst {
+            0% {
+                transform: rotateY(0deg) rotateX(0deg)
+            }
+            10% {
+                transform: rotateY(30deg) rotateX(0deg)
+            }
+            30% {
+                transform: rotateY(-30deg) rotateX(0deg)
+            }
+            60% {
+                transform: rotateY(0deg) rotateX(30deg)
+            }
+            90% {
+                transform: rotateY(0deg) rotateX(-30deg)
+            }
+            100% {
+                transform: rotateY(0deg) rotateX(0deg)
+            }
+        }
+
+        .content {
+            margin-top:20px;
+            width: 400px;
         }
     </style>
 
 </head>
 <body>
-<div class="layui-card" style="width: 400px; margin: 0 auto">
-    <div class="layui-card-header"></div>
-    <div class="layui-card-body">
-        <div class="layui-form ">
-
-            <div class="layui-form-item">
-                <label class="layui-form-label">用户名</label>
-                <div class="layui-input-block">
-                    <input type="text" name="username" lay-verify="required|username" class="layui-input"
-                           placeholder="请输入用户名">
-                </div>
+<div class="layui-container" style="margin-top: 50px; border: 1px solid black; height: 500px;">
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-md7">
+            <div id="box">
+                <img src="/static/images/画板%201.png" id="img">
             </div>
-
-            <div class="layui-form-item">
-                <label class="layui-form-label">手机号</label>
-                <div class="layui-input-block">
-                    <input type="text" name="telephone" lay-verify="required|phone"
-                           placeholder="请输入手机号" class="layui-input">
+        </div>
+        <div class="layui-col-md5">
+            <div class="content">
+                <div style="color: #009688; text-align: center; font-size: 24px; padding: 20px;">
+                    用户注册
                 </div>
-            </div>
+                <div class="layui-form layui-form-pane">
 
-
-            <div class="layui-form-item">
-                <div class="layui-inline">
-                    <label class="layui-form-label">验证码</label>
-                    <div class="layui-input-inline " style="width: 140px;">
-                        <input type="text" name="verifyCode" lay-verify="required"
-                               placeholder="验证码" class="layui-input">
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">用户名</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="username" lay-verify="required|username" class="layui-input"
+                                   placeholder="请输入用户名">
+                        </div>
                     </div>
 
-                    <div class="layui-input-inline" style="width: 50px">
-                        <button type="button" id="getCode"
-                                class="layui-btn layui-btn-primary">
-                            获取验证码
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">手机号</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="telephone" lay-verify="required|phone"
+                                   placeholder="请输入手机号" class="layui-input">
+                        </div>
+                    </div>
+
+
+                    <div class="layui-form-item">
+                        <div class="layui-inline">
+                            <label class="layui-form-label">验证码</label>
+                            <div class="layui-input-inline " style="width: 170px;">
+                                <input type="text" name="verifyCode" lay-verify="required"
+                                       placeholder="验证码" class="layui-input">
+                            </div>
+
+                            <div class="layui-input-inline" style="width:70px">
+                                <button type="button" id="getCode"
+                                        class="layui-btn layui-btn-primary">
+                                    获取验证码
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">密码</label>
+                        <div class="layui-input-block">
+                            <input type="password" name="password" lay-verify="required|password"
+                                   placeholder="请输入密码" class="layui-input">
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">确认密码</label>
+                        <div class="layui-input-block">
+                            <input type="password" name="confirm" lay-verify="required|password|check"
+                                   placeholder="确认密码" class="layui-input">
+                        </div>
+                    </div>
+
+                    <div class="layui-input-block">
+                        <a href="/signIn" style="color: #009688">已有账号，立即登陆</a>
+                    </div>
+
+                    <div class="layui-form-item">
+                        <button class="layui-btn layui-btn-fluid" id="submit"
+                                lay-submit lay-filter="submit">注册
                         </button>
                     </div>
                 </div>
-            </div>
-
-            <div class="layui-form-item">
-                <label class="layui-form-label">密码</label>
-                <div class="layui-input-block">
-                    <input type="password" name="password" lay-verify="required|password"
-                           placeholder="请输入密码" class="layui-input">
-                </div>
-            </div>
-
-            <div class="layui-form-item">
-                <label class="layui-form-label">确认密码</label>
-                <div class="layui-input-block">
-                    <input type="password" name="confirm" lay-verify="required|password|check"
-                           placeholder="确认密码" class="layui-input">
-                </div>
-            </div>
-
-            <div class="layui-form-item">
-                <button class="layui-btn layui-btn-fluid" id="submit"
-                        lay-submit lay-filter="submit">注册
-                </button>
             </div>
         </div>
     </div>
