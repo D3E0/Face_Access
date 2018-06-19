@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>旋转的立方体</title>
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        #box {
+            width: 300px;
+            height: 300px;
+            /*background-color: pink;*/
+            /*position: relative;*/
+            margin: 100px auto;
+            /*animation: run 10s linear alternate paused infinite;*/
+            -webkit-animation: run 2s linear; /* Safari 和 Chrome */
+            transform-style: preserve-3d;
+            /*perspective: 1000px;*/
+        }
+
+        @-webkit-keyframes run {
+            from {
+                transform: rotateX(0) rotateY(0);
+            }
+            to {
+                transform: rotateX(90deg) rotateY(0deg);
+            }
+        }
+
+        #box div {
+            width: 300px;
+            height: 300px;
+            position: absolute;
+            border: 1px black solid;
+            /*background-color: orange;*/
+            /*opacity: 0.5;*/
+        }
+
+        #box {
+            /*background: transparent;*/
+        }
+
+        /*前面*/
+        #box .div1 {
+            /*background-color: red;*/
+            transform: translateZ(150px);
+        }
+
+        /*后面*/
+        #box .div2 {
+            /*background-color: deepskyblue;*/
+            transform: translateZ(-150px);
+        }
+
+        /*上面*/
+        #box .div3 {
+            /*background-color: green;*/
+            transform: rotateX(90deg) translateZ(150px);
+        }
+
+        /*下面*/
+        #box .div4 {
+            /*background-color: plum;*/
+            transform: rotateX(90deg) translateZ(-150px);
+        }
+
+        /*左面*/
+        #box .div5 {
+            /*background-color: saddlebrown;*/
+            transform: rotateY(90deg) translateZ(150px);
+        }
+
+        /*右面*/
+        #box .div6 {
+            /*background-color: cyan;*/
+            transform: rotateY(90deg) translateZ(-150px);
+        }
+    </style>
+</head>
+<body>
+<div id="box">
+    <div class="div1">1</div>
+    <div class="div2">2</div>
+    <div class="div3">3</div>
+    <div class="div4">4</div>
+    <div class="div5">5</div>
+    <div class="div6">6</div>
+</div>
+<center>
+    <input type="button" name="" id="btn" value="开始"/>
+</center>
+<script type="text/javascript">
+    btn.onclick = function () {
+        if (this.value == "开始") {
+            this.value = "暂停"
+            box.style.animationPlayState = "running";
+        } else {
+            this.value = "开始"
+            box.style.animationPlayState = "paused";
+        }
+    }
+</script>
+</body>
+</html>

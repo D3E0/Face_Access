@@ -2,83 +2,89 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <script src='../js/jquery-3.3.1.js'></script>
-    <link rel="stylesheet" href="../layui/css/layui.css">
-    <script src="../layui/layui.js"></script>
-    <title>VersionB</title>
+    <title>Title</title>
     <style>
-        body {
-            background: #f3f3f3;
+        .stage {
+            perspective: 800px;
         }
 
-        #right {
-            border: 1px solid #2D93CA;
-            height: 400px;
-        }
-
-        #box {
-            perspective: 1000px;
-            border: 2px solid #5FB878;
+        .container {
+            width: 150px;
+            margin: 200px auto;
+            position: relative;
             transform-style: preserve-3d;
-            transform: rotateX(0deg) rotateY(0deg);
-            height: 450px;
+            height: 200px;
+            transition: 5s;
         }
 
-        #img {
-            height: 300px;
-            -webkit-animation: myfirst 10s infinite linear; /* Safari 和 Chrome */
+        .container .side {
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            border: 2px solid #0033FF;
         }
 
-        @-webkit-keyframes myfirst {
-            0% {
-                transform: rotateY(0deg) rotateX(0deg)
-            }
-            10% {
-                transform: rotateY(30deg) rotateX(0deg)
-            }
-            30% {
-                transform: rotateY(-30deg) rotateX(0deg)
-            }
-            60% {
-                transform: rotateY(0deg) rotateX(30deg)
-            }
-            90% {
-                transform: rotateY(0deg) rotateX(-30deg)
-            }
-            100% {
-                transform: rotateY(0deg) rotateX(0deg)
-            }
+        .left {
+            left: -152px;
+            transform: translateZ(-75px) rotateY(90deg);
+            transform-origin: right;
+            /*background: url(../images/photo5.jpg);*/
+            background-size: 100% 100%;
         }
 
+        .right {
+            left: 152px;
+            transform: translateZ(-75px) rotateY(-90deg);
+            transform-origin: left;
+            /*background: url(../images/photo4.jpg);*/
+            background-size: 100% 100%;
+        }
+
+        .top {
+            top: -152px;
+            transform: translateZ(-75px) rotateX(-90deg);
+            transform-origin: bottom;
+            /*background: url(../images/photo3.jpg);*/
+            background-size: 100% 100%;
+        }
+
+        .bottom {
+            top: 152px;
+            transform: translateZ(-75px) rotateX(90deg);
+            transform-origin: top;
+            /*background: url(../images/photo2.jpg);*/
+            background-size: 100% 100%;
+        }
+
+        .back {
+            transform: translateZ(-75px);
+            z-index: 1;
+            /*background: url(../images/photo2.jpg);*/
+            background-size: 100% 100%;
+        }
+
+        .front {
+            z-index: 2;
+            transform: translateZ(75px);
+            /*background: url(../images/photo.jpg);*/
+            background-size: 100% 100%;
+        }
+
+        .container:hover {
+            transform: translateZ(-75px) rotateY(360deg);
+        }
     </style>
 </head>
 <body>
-<div class="layui-container" style="margin-top: 50px; border: 1px solid black; height: 500px;" id="fa">
-    <div class="layui-row layui-col-space15">
-        <div class="layui-col-md7">
-            <div id="box">
-                <img src="../images/画板%201.png" id="img">
-            </div>
-        </div>
-        <div class="layui-col-md5">
-            <div id="right"></div>
-        </div>
+<div class="stage">
+    <div class="container">
+        <div class="side front"></div>
+        <div class="side back"></div>
+        <div class="side left"></div>
+        <div class="side right"></div>
+        <div class="side top"></div>
+        <div class="side bottom"></div>
     </div>
 </div>
-<script>
-    layui.use('element', function () {
-        var element = layui.element;
-    })
-</script>
 </body>
 </html>
-
-<!--
-e.pageX是鼠标的X轴，this.offsetWidth/2是本身宽度的一半，
-this.offsetLeft距离它上一层（父级）距离左边框的距离，
-e.pageY是鼠标的Y轴，this.offsetHeight/2是本身高度的一半，
-this.offsetTop距离它上一层（父级）距离上边框的距离，
--->
-
