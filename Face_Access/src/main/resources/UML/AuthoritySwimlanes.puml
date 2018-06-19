@@ -1,0 +1,22 @@
+@startuml
+|用户管理|
+start
+if (是否已登陆) then(yes)
+:;
+else(no)
+|登陆模块|
+  repeat
+   :登陆;
+   repeat while (用户名、密码是否正确?)
+   :登陆成功;
+   |用户管理|
+endif
+  if (是否为业主) then(yes)
+  :选择要添加的人员;
+  :输入失效时间;
+  :添加成功;
+  stop
+  else(no)
+   :重新登陆;
+stop
+@enduml

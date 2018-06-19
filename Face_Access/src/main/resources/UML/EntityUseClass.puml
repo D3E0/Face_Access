@@ -1,0 +1,51 @@
+@startuml
+
+class AuthorityEntity {
+    - int authorityId;
+    - Date startDate;
+    - Date endDate;
+     -UserEntity user;
+     -HouseEntity house;
+     -String remark;
+     +AuthorityEntity();
+     +AuthorityEntity(int userID, int houseID);
+ }
+
+ class DoorEntity {
+   - int doorId;
+       - String doorLocation;
+       - String doorIp;
+       - String doorStatus;
+
+      +DoorEntity();
+  }
+
+   class HouseEntity {
+       - int houseId;
+        - String housePassword;
+        - DoorEntity door;
+        - UserEntity user;
+        +HouseEntity();
+    }
+
+     class OpenRecordEntity {
+        - int openId;
+        - Integer userId;
+        - Integer doorId;
+        - Timestamp openDate;
+        - String openResult;
+        - DoorEntity doorEntity;
+        - UserEntity userEntity;
+         +OpenRecordEntity();
+      }
+
+      class UserEntity {
+          - String userName;
+          - int userId;
+          - String userTelephone;
+          - String userPassword;
+          - byte[] userFace;
+          + OpenRecordEntity();
+      }
+
+@enduml

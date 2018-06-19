@@ -1,0 +1,101 @@
+@startuml
+
+interface UserMangeService{
+    String showUserProfile();
+    void updateUserProfile();
+    String savePicture();
+    List getAuthorities();
+    int addAuthority();
+    void deleteAuthority();
+    void updateAuthority();
+}
+
+interface AuthorityDao{
+    List getAuthorities();
+    int addAuthority();
+    void deleteAuthority();
+    void updateAuthority();
+}
+
+interface UserDao{
+    int addUser();
+    void updateUser();
+    void deleteUser();
+    UserEntity verifyUser();
+    UserEntity getUserById();
+}
+
+interface HouseDao{
+      int addHouse();
+      void updateHouse();
+      void deleteHouse();
+}
+
+class UserController {
+     +String showUserProfile();
+     +void updateUserProfile();
+     +String savePicture();
+}
+
+class AuthorityController{
+   + List getAuthorities();
+    +int addAuthority();
+    +void deleteAuthority();
+    +void updateAuthority();
+}
+
+class signInController{
+    +verifyUser();
+    +addUser();
+    +verifyUsername();
+
+}
+
+'接口实现'
+UserMangeService <|-- UserMangeServiceImp: implement
+AuthorityDao <|-- AuthorityDaoImp: implement
+HouseDao <|-- HouseDaoImp: implement
+UserDao <|-- UserDaoImp: implement
+
+'依赖关系'
+AuthorityDao <.down. UserMangeServiceImp: Dependency
+HouseDao <.down. UserMangeServiceImp: Dependency
+UserDao <.down. UserMangeServiceImp: Dependency
+UserMangeService <.right. UserController: Dependency
+UserMangeService <.left. AuthorityController: Dependency
+UserMangeService <.down. signInController: Dependency
+
+class UserMangeServiceImp
+class AuthorityDaoImp
+class HouseDaoImp
+class UserDaoImp
+
+
+'接口实现'
+UserDaoImp *-- UserEntity: Composition
+AuthorityDaoImp *-- AuthorityEntity: Composition
+HouseDaoImp *-- HouseEntity: Composition
+
+
+class AuthorityEntity {
+    - int authorityId;
+    - Date startDate;
+    - Date endDate;
+     -UserEntity user;
+     -HouseEntity house;
+     -String remark;
+ }
+   class HouseEntity {
+       - int houseId;
+        - String housePassword;
+        - DoorEntity door;
+        - UserEntity user;
+    }
+      class UserEntity {
+          - String userName;
+          - int userId;
+          - String userTelephone;
+          - String userPassword;
+          - byte[] userFace;
+      }
+@enduml

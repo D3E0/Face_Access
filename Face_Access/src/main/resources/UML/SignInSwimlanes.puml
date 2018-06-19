@@ -1,0 +1,17 @@
+@startuml
+|登陆模块|
+start
+if (是否已注册) then(yes)
+   repeat
+   :登陆;
+   repeat while (用户名、密码是否正确?)
+   :进入系统;
+   stop
+else(no)
+|注册模块|
+  repeat
+   :注册;
+   repeat while (用户名是否已存在?)
+   :注册成功;
+stop
+@enduml
