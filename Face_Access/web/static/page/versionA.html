@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src='../js/jquery-3.3.1.js'></script>
+    <title>高仿锤子官网首页图片交互效果</title>
+    <style>
+        body {
+            padding: 0;
+            margin: 0;
+            background: #f3f3f3;
+        }
+
+        #box {
+            width: 100%;
+            height: 400px;
+            perspective: 1000px;
+            padding: 10px 0;
+        }
+
+        #picBox {
+            width: 400px;
+            height: 400px;
+            margin: 0 auto;
+            border: 1px solid black;
+            transform-style: preserve-3d;
+            /*cursor: pointer;*/
+            transform: rotateX(0deg) rotateY(0deg);
+        }
+
+        #img {
+            transition: all .3s linear;
+            transform: rotate(0deg);
+            border-radius: 10px;
+            margin: 0 auto;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<div id="box">
+    <div id="picBox">
+        <img src="../images/666.jpg" id="img">
+    </div>
+</div>
+
+<script>
+
+    var picBox = document.getElementById("picBox");
+    var img = document.getElementById("img");
+
+    picBox.addEventListener('mousemove', rotate, false);
+    picBox.addEventListener('mouseout', outBox, false);
+
+
+    function rotate(e) {
+        // e.pageX 鼠标指针的位置，相对于文档左边缘
+        // offsetWidth = border  + 元素内容宽度 + padding，元素外部宽度
+        // offsetLeft:获取指定对象左上角相对于其包含块左上角距离.
+        // baseX 相对于 图片中心偏移量 左负
+        var baseX = e.pageX - this.offsetWidth / 2 - this.offsetLeft,
+            baseY = e.pageY - this.offsetHeight / 2 - this.offsetTop;
+        // console.log(this.getBoundingClientRect());
+        img.style.transform = 'rotateX(' + baseY / (-40) + 'deg) rotateY(' + baseX / 80 + 'deg)';
+
+    }
+
+    function outBox() {
+        img.style.transform = 'rotateX(0deg) rotateY(0deg)';
+    }
+</script>
+</body>
+</html>
+
+<!--
+e.pageX是鼠标的X轴，this.offsetWidth/2是本身宽度的一半，
+this.offsetLeft距离它上一层（父级）距离左边框的距离，
+e.pageY是鼠标的Y轴，this.offsetHeight/2是本身高度的一半，
+this.offsetTop距离它上一层（父级）距离上边框的距离，
+-->
+

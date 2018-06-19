@@ -2,7 +2,6 @@ package service;
 
 
 import dto.AuthorityListDTO;
-import entity.HouseEntity;
 import entity.UserEntity;
 
 import java.sql.Date;
@@ -13,6 +12,10 @@ public interface UserMangeService {
     public List<Integer> getHousesByOwner(int userID);
 
     public List getAuthoritiesByHouse(int houseID);
+
+    public AuthorityListDTO getAuthoritiesOfUserLimit(int userID, int start, int offset);
+
+    public AuthorityListDTO searchAuthoritiesOfUserLimit(int userID, String additional, int start, int offset);
 
     public AuthorityListDTO getAuthoritiesByOwnerLimit(int ownerID, int start, int offset);
 

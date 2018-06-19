@@ -15,7 +15,7 @@
     <style>
 
         body {
-            background-color: #eee;
+            /*background-color: #eee;*/
             margin-top: 50px;
         }
 
@@ -26,95 +26,143 @@
             border-radius: 100%;
         }
 
+        #box {
+            perspective: 1000px;
+            /*border: 2px solid #5FB878;*/
+            transform-style: preserve-3d;
+            transform: rotateX(0deg) rotateY(0deg);
+            margin-top: 100px; /*(250px-100px)*/
+        }
+
+        #img {
+            height: 300px;
+            -webkit-animation: myFirst 10s infinite linear; /* Safari 和 Chrome */
+        }
+
+        @-webkit-keyframes myFirst {
+            0% {
+                transform: rotateY(0deg) rotateX(0deg)
+            }
+            10% {
+                transform: rotateY(30deg) rotateX(0deg)
+            }
+            30% {
+                transform: rotateY(-30deg) rotateX(0deg)
+            }
+            60% {
+                transform: rotateY(0deg) rotateX(30deg)
+            }
+            90% {
+                transform: rotateY(0deg) rotateX(-30deg)
+            }
+            100% {
+                transform: rotateY(0deg) rotateX(0deg)
+            }
+        }
+
+        .content {
+            margin-top: 50px;
+            width: 400px;
+        }
     </style>
 
 </head>
 <body>
-<div class="layui-card" style="width: 400px; margin: 0 auto">
-    <div class="layui-card-header"></div>
-    <div class="layui-card-body">
-        <div class="thumb">
-            <img class="thumb" src="/static/images/logo.jpg">
+<div class="layui-container" style="margin-top: 50px; border: 1px solid black; height: 500px;">
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-md7">
+            <div id="box">
+                <img src="/static/images/画板%201.png" id="img">
+            </div>
         </div>
-        <div style="color: #009688; text-align: center; font-size: 24px; padding: 20px;">
-            用户登录
-        </div>
-
-        <form id="signInByUsername" class="layui-form layui-form-pane">
-
-            <div class="layui-form-item">
-                <label class="layui-form-label">用户名</label>
-                <div class="layui-input-block">
-                    <input type="text" name="username" class="layui-input" id="username"
-                           lay-verify="required|username" placeholder="请输入用户名">
+        <div class="layui-col-md5">
+            <div class="content">
+                <div class="thumb">
+                    <img class="thumb" src="/static/images/logo.jpg">
                 </div>
-            </div>
-
-            <div class="layui-form-item">
-                <label class="layui-form-label">密码</label>
-                <div class="layui-input-block">
-                    <input type="password" name="password" class="layui-input"
-                           lay-verify="required" placeholder="请输入密码">
+                <div style="color: #009688; text-align: center; font-size: 24px; padding: 20px;">
+                    用户登录
                 </div>
-            </div>
 
-            <div class="layui-input-block">
-                <a href="javascript:" id="toPhone" style="color: #009688;margin-left: 30px">手机号登陆</a>
-                <a href="/register" style="color: #009688; margin-left: 60px">立即注册</a>
-            </div>
+                <form id="signInByUsername" class="layui-form layui-form-pane">
 
-            <div class="layui-form-item">
-                <div class="layui-input-block">
-                    <button class="layui-btn " lay-submit lay-filter="signInByUsername"
-                            style="width: 120px;">登陆
-                    </button>
-                    <button type="reset" class="layui-btn layui-btn-primary"
-                            style="width: 120px;">重置
-                    </button>
-                </div>
-            </div>
-        </form>
-
-        <form id="signInByTelephone" hidden class="layui-form layui-form-pane">
-            <div class="layui-form-item">
-                <label class="layui-form-label">手机号</label>
-                <div class="layui-input-block">
-                    <input type="text" name="telephone" lay-verify="required|phone"
-                           placeholder="请输入手机号" class="layui-input">
-                </div>
-            </div>
-
-            <div class="layui-form-item">
-                <div class="layui-inline">
-                    <label class="layui-form-label">验证码</label>
-                    <div class="layui-input-inline " style="width: 140px;">
-                        <input type="text" name="verifyCode" lay-verify="required"
-                               placeholder="验证码" class="layui-input">
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">用户名</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="username" class="layui-input" id="username"
+                                   lay-verify="required|username" placeholder="请输入用户名">
+                        </div>
                     </div>
 
-                    <div class="layui-input-inline" style="width: 50px">
-                        <button type="button" id="getCode"
-                                class="layui-btn layui-btn-primary">
-                            获取验证码
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">密码</label>
+                        <div class="layui-input-block">
+                            <input type="password" name="password" class="layui-input"
+                                   lay-verify="required" placeholder="请输入密码">
+                        </div>
+                    </div>
+
+                    <div class="layui-input-block">
+                        <a href="javascript:" id="toPhone" style="color: #009688;margin-left: 30px">手机号登陆</a>
+                        <a href="/register" style="color: #009688; margin-left: 60px">立即注册</a>
+                    </div>
+
+                    <div class="layui-form-item">
+                        <div class="layui-input-block">
+                            <button class="layui-btn " lay-submit lay-filter="signInByUsername"
+                                    style="width: 120px;">登陆
+                            </button>
+                            <button type="reset" class="layui-btn layui-btn-primary"
+                                    style="width: 120px;">重置
+                            </button>
+                        </div>
+                    </div>
+                </form>
+
+                <form id="signInByTelephone" hidden class="layui-form layui-form-pane">
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">手机号</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="telephone" lay-verify="required|phone"
+                                   placeholder="请输入手机号" class="layui-input">
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item">
+                        <div class="layui-inline">
+                            <label class="layui-form-label">验证码</label>
+                            <div class="layui-input-inline " style="width: 170px;">
+                                <input type="text" name="verifyCode" lay-verify="required"
+                                       placeholder="验证码" class="layui-input">
+                            </div>
+
+                            <div class="layui-input-inline" style="width: 50px">
+                                <button type="button" id="getCode"
+                                        class="layui-btn layui-btn-primary">
+                                    获取验证码
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="layui-input-block">
+                        <a href="javascript:" id="toUsername" style="color: #009688">账号密码登陆</a>
+                        <a href="/register" style="color: #009688; margin-left: 20px">立即注册</a>
+                    </div>
+
+                    <div class="layui-form-item">
+                        <button class="layui-btn layui-btn-fluid"
+                                lay-submit lay-filter="signInByTelephone">登陆
                         </button>
                     </div>
-                </div>
-            </div>
+                </form>
 
-            <div class="layui-input-block">
-                <a href="javascript:" id="toUsername" style="color: #009688">账号密码登陆</a>
-                <a href="/register" style="color: #009688; margin-left: 20px">立即注册</a>
-            </div>
 
-            <div class="layui-form-item">
-                <button class="layui-btn layui-btn-fluid"
-                        lay-submit lay-filter="signInByTelephone">登陆
-                </button>
             </div>
-        </form>
-
+        </div>
     </div>
 </div>
+
 <script>
     layui.use(['form', 'laydate', 'jquery', 'layer'], function () {
         var form = layui.form, $ = layui.jquery, layer = layui.layer;
@@ -202,6 +250,7 @@
 
             }
         });
+
     })
 </script>
 </body>

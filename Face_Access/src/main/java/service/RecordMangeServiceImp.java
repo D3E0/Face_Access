@@ -31,10 +31,6 @@ public class RecordMangeServiceImp implements RecordMangeService {
     @Override
     public List<OpenRecordEntity> getRecordlist(int page, int limit) {
         List<OpenRecordEntity> list=recordDao.getRecordList(page,limit);
-        for(OpenRecordEntity recordEntity:list){
-            recordEntity.setDoorEntity(doorDao.findDoor(recordEntity.getDoorId()));
-            recordEntity.setUserEntity(userDao.getUserById(recordEntity.getUserId()));
-        }
         return list;
     }
 

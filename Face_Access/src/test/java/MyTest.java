@@ -2,9 +2,12 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import dao.AuthorityDao;
 import dao.AuthorityDaoImp;
+import dao.UserDao;
+import dao.UserDaoImp;
 import dto.AuthorityDTO;
 import dto.AuthorityListDTO;
 import entity.AuthorityEntity;
+import entity.UserEntity;
 import org.junit.Test;
 import util.EncryptInfo;
 
@@ -16,6 +19,18 @@ import java.util.Iterator;
 import java.util.List;
 
 public class MyTest {
+
+    @Test
+    public void testSQL() {
+        UserDao userDao = new UserDaoImp();
+        UserEntity entity = userDao.verifyUser("1", "2");
+        if (entity == null) {
+            System.out.println("null");
+        } else {
+            System.out.println("not null");
+        }
+    }
+
 
     @Test
     public void testDataBase() {

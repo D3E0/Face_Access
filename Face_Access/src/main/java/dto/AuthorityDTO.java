@@ -23,6 +23,13 @@ public class AuthorityDTO {
         this.remark = remark;
     }
 
+    public AuthorityDTO(int houseId, String userName, Object startDate, Object endDate) {
+        this.houseId = houseId;
+        this.userName = userName;
+        this.startDate = (Date) startDate;
+        this.endDate = (Date) endDate;
+    }
+
     public AuthorityDTO() {
     }
 

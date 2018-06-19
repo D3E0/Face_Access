@@ -101,22 +101,6 @@ public class AuthorityDaoImp implements AuthorityDao {
     }
 
     /**
-     * 某一用户的权限列表
-     *
-     * @param userID
-     * @return
-     */
-    @Override
-    public List getAuthoritiesOfUser(int userID) {
-        Session session = factory.openSession();
-        session.beginTransaction();
-        Query query = session.createQuery("from AuthorityEntity where user.userId =" + userID);
-        List list = query.list();
-        session.getTransaction().commit();
-        return list;
-    }
-
-    /**
      * 该房间下所有人员
      *
      * @param houseID
@@ -130,6 +114,77 @@ public class AuthorityDaoImp implements AuthorityDao {
         List list = query.list();
         session.getTransaction().commit();
         return list;
+    }
+
+    /**
+     * 某一用户的权限列表
+     *
+     * @param userID
+     * @return
+     */
+    @Override
+    public AuthorityListDTO getAuthoritiesOfUserLimit(int userID, int start, int offset) {
+        Session session = factory.openSession();
+        List list;
+        Long count = 0L;
+
+        session.beginTransaction();
+        String hql = "select new dto.AuthorityDTO( " +
+                "house.houseId, user.userName, startDate, endDate) " +
+                "from AuthorityEntity where user.userId=:A " +
+                "order by startDate";
+        String countHql = "select count(*) from AuthorityEntity " +
+                "where user.userId = :D";
+        Query query = session.createQuery(hql);
+        query.setParameter("A", userID);
+        query.setFirstResult(start);
+        query.setMaxResults(offset);
+        list = query.list();
+
+        Query countQuery = session.createQuery(countHql);
+        countQuery.setParameter("D", userID);
+        count = (Long) countQuery.uniqueResult();
+        session.getTransaction().commit();
+
+        AuthorityListDTO authorityListDTO = new AuthorityListDTO();
+        authorityListDTO.setList(list);
+        authorityListDTO.setCount(count);
+
+        return authorityListDTO;
+    }
+
+    @Override
+    public AuthorityListDTO searchAuthoritiesOfUserLimit(int userID, String data, int start, int offset) {
+        Session session = factory.openSession();
+        List list;
+        Long count = 0L;
+        String hql = "select new dto.AuthorityDTO( house.houseId, " +
+                "user.userName, startDate, endDate) " +
+                "from AuthorityEntity where " +
+                "user.userName like :A and user.userId= :C " +
+                "order by startDate";
+        String countHql = "select count(*) from AuthorityEntity where " +
+                "user.userName like :D and user.userId= :F";
+
+        session.beginTransaction();
+        Query query = session.createQuery(hql);
+        query.setParameter("A", "%" + data + "%");
+        query.setParameter("C", userID);
+        query.setFirstResult(start);
+        query.setMaxResults(offset);
+        list = query.list();
+
+        Query countQuery = session.createQuery(countHql);
+        countQuery.setParameter("D", "%" + data + "%");
+        countQuery.setParameter("F", userID);
+        count = (Long) countQuery.uniqueResult();
+        session.getTransaction().commit();
+
+        AuthorityListDTO authorityListDTO = new AuthorityListDTO();
+        authorityListDTO.setList(list);
+        authorityListDTO.setCount(count);
+
+        return authorityListDTO;
     }
 
     @Override

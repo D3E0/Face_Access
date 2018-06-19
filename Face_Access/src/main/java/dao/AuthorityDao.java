@@ -20,9 +20,11 @@ public interface AuthorityDao {
 
     AuthorityEntity getAuthority(int userID, int houseID);
 
-    List getAuthoritiesOfUser(int userID);
-
     List getAuthoritiesOfHouse(int houseID);
+
+    AuthorityListDTO getAuthoritiesOfUserLimit(int userID, int start, int offset);
+
+    AuthorityListDTO searchAuthoritiesOfUserLimit(int userID, String data, int start, int offset);
 
     AuthorityListDTO getAuthoritiesOfOwnerLimit(int ownerID, int start, int offset);
 

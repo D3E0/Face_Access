@@ -28,7 +28,7 @@
 
         <div class="layui-col-md12">
             <div class="layui-card">
-                <div class="layui-card-header">人员管理</div>
+                <div class="layui-card-header">人员管理——业主</div>
                 <div class="layui-card-body">
                     <div class="layui-input-inline">
                         <input class="layui-input" id="searchVal">

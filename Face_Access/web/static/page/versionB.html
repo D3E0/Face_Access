@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .stage {
+            perspective: 800px;
+        }
+
+        .container {
+            width: 150px;
+            margin: 200px auto;
+            position: relative;
+            transform-style: preserve-3d;
+            height: 200px;
+            transition: 5s;
+        }
+
+        .container .side {
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            border: 2px solid #0033FF;
+        }
+
+        .left {
+            left: -152px;
+            transform: translateZ(-75px) rotateY(90deg);
+            transform-origin: right;
+            /*background: url(../images/photo5.jpg);*/
+            background-size: 100% 100%;
+        }
+
+        .right {
+            left: 152px;
+            transform: translateZ(-75px) rotateY(-90deg);
+            transform-origin: left;
+            /*background: url(../images/photo4.jpg);*/
+            background-size: 100% 100%;
+        }
+
+        .top {
+            top: -152px;
+            transform: translateZ(-75px) rotateX(-90deg);
+            transform-origin: bottom;
+            /*background: url(../images/photo3.jpg);*/
+            background-size: 100% 100%;
+        }
+
+        .bottom {
+            top: 152px;
+            transform: translateZ(-75px) rotateX(90deg);
+            transform-origin: top;
+            /*background: url(../images/photo2.jpg);*/
+            background-size: 100% 100%;
+        }
+
+        .back {
+            transform: translateZ(-75px);
+            z-index: 1;
+            /*background: url(../images/photo2.jpg);*/
+            background-size: 100% 100%;
+        }
+
+        .front {
+            z-index: 2;
+            transform: translateZ(75px);
+            /*background: url(../images/photo.jpg);*/
+            background-size: 100% 100%;
+        }
+
+        .container:hover {
+            transform: translateZ(-75px) rotateY(360deg);
+        }
+    </style>
+</head>
+<body>
+<div class="stage">
+    <div class="container">
+        <div class="side front"></div>
+        <div class="side back"></div>
+        <div class="side left"></div>
+        <div class="side right"></div>
+        <div class="side top"></div>
+        <div class="side bottom"></div>
+    </div>
+</div>
+</body>
+</html>

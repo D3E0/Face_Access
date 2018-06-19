@@ -15,35 +15,30 @@
 </head>
 <body>
 <div class="father">
-    <form class="layui-form layui-form-pane son" action="/adddoor">
+    <form class="layui-form layui-form-pane son" action="">
         <div class="layui-form-item">
-            <label class="layui-form-label">门禁ID</label>
+            <label class="layui-form-label">房间ID</label>
             <div class="layui-input-inline">
                 <input type="text" id="id" class="layui-input" autocomplete="false">
             </div>
         </div>
         <div class="layui-form-item">
-            <label class="layui-form-label">ip地址</label>
+            <label class="layui-form-label">用户id</label>
             <div class="layui-input-inline">
-                <input type="text" id="ip" class="layui-input" autocomplete="false">
+                <input type="text" id="userid" class="layui-input" autocomplete="false">
             </div>
         </div>
 
         <div class="layui-form-item">
-            <label class="layui-form-label">具体位置</label>
+            <label class="layui-form-label">doorid</label>
             <div class="layui-input-inline">
-                <input type="text" id="location" class="layui-input" autocomplete="false">
+                <input type="text" id="doorid" class="layui-input" autocomplete="false">
             </div>
         </div>
-
         <div class="layui-form-item">
-            <label class="layui-form-label">状态</label>
+            <label class="layui-form-label">房间密码</label>
             <div class="layui-input-inline">
-                <select id="status" lay-verify="">
-                    <option value="">请选择状态</option>
-                    <option value="ok">正常</option>
-                    <option value="not ok">维护</option>
-                </select>
+                <input type="password" id="password" class="layui-input" autocomplete="false">
             </div>
         </div>
 
