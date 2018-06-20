@@ -53,7 +53,7 @@ public class UserMangeServiceImp implements UserMangeService {
 
     @Override
     public AuthorityListDTO searchAuthoritiesOfUserLimit(int userID, String additional, int start, int offset) {
-        return searchAuthoritiesOfUserLimit(userID, additional, start, offset);
+        return authorityDao.searchAuthoritiesOfUserLimit(userID, additional, start, offset);
     }
 
     @Override

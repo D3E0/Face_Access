@@ -12,6 +12,7 @@ interface UserMangeService{
 
 interface AuthorityDao{
     List getAuthorities();
+    List getAuthoritiesByHouse();
     int addAuthority();
     void deleteAuthority();
     void updateAuthority();
@@ -29,26 +30,28 @@ interface HouseDao{
       int addHouse();
       void updateHouse();
       void deleteHouse();
+      List getHousesByOwner();
 }
 
 class UserController {
-     +String showUserProfile();
+     +String getUserProfile();
      +void updateUserProfile();
      +String savePicture();
+     +List getAllUsername();
 }
 
 class AuthorityController{
-   + List getAuthorities();
+    +List getAuthorities();
     +int addAuthority();
     +void deleteAuthority();
     +void updateAuthority();
 }
 
 class signInController{
-    +verifyUser();
-    +addUser();
-    +verifyUsername();
-
+    +String verifyUser();
+    +String addUser();
+    +String verifyUsername();
+    +String ProcessSignIn()
 }
 
 '接口实现'

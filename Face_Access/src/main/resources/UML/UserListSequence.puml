@@ -1,0 +1,32 @@
+@startuml
+
+actor 业主 as foo1
+boundary AuthorityController as foo2
+control UserMangeService as foo3
+collections AuthorityDao as foo4
+database Database as foo5
+
+foo1 -> foo2:getUsers()
+activate foo2
+foo2 -> foo3:getAuthoritiesByOwner()
+activate foo3
+foo3 -> foo4:getHousesByOwner()
+activate foo4
+        foo4 -> foo5:getHousesByOwner()
+        activate foo5
+        foo4 <-- foo5:List
+        deactivate foo5
+foo3 -> foo4:getAuthoritiesByHouse()
+        foo4 -> foo5:getAuthoritiesByHouse()
+        activate foo5
+        foo4 <-- foo5:List
+        deactivate foo5
+foo3 <-- foo4:'List'
+deactivate foo4
+foo2 <-- foo3:'List'
+deactivate foo3
+
+foo1 <-- foo2:Data
+deactivate foo2
+
+@enduml

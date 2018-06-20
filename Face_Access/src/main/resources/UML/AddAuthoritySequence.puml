@@ -1,0 +1,78 @@
+@startuml
+
+actor 业主 as foo1
+boundary AuthorityController as foo2
+control UserMangeService as foo3
+collections AuthorityDao as foo4
+database Database as foo5
+
+foo1 -> foo2:getAllUsername()
+activate foo2
+     foo2 -> foo3:getUsernameList()
+     activate foo3
+        foo3 -> foo4:getUsernameList()
+        activate foo4
+                foo4 -> foo5
+                activate foo5
+                foo4 <-- foo5
+                deactivate foo5
+        foo3 <-- foo4:List
+        deactivate foo4
+    foo2 <-- foo3:List
+    deactivate foo3
+foo1 <-- foo2:'Data'
+deactivate foo2
+
+foo1 -> foo2:getUserProfile()
+activate foo2
+     foo2 -> foo3:getUserByUsername()
+     activate foo3
+        foo3 -> foo4:getUserByUsername()
+        activate foo4
+                foo4 -> foo5
+                activate foo5
+                foo4 <-- foo5
+                deactivate foo5
+        foo3 <-- foo4:UserEntity
+        deactivate foo4
+    foo2 <-- foo3:UserEntity
+    deactivate foo3
+foo1 <-- foo2:'Data'
+deactivate foo2
+
+foo1 -> foo2:getHouses()
+activate foo2
+     foo2 -> foo3:getHousesByOwner()
+     activate foo3
+        foo3 -> foo4:getHousesByOwner()
+        activate foo4
+                foo4 -> foo5
+                activate foo5
+                foo4 <-- foo5
+                deactivate foo5
+        foo3 <-- foo4:List
+        deactivate foo4
+    foo2 <-- foo3:List
+    deactivate foo3
+foo1 <-- foo2:'Data'
+deactivate foo2
+
+foo1 -> foo2:processAddAuthority()
+activate foo2
+     foo2 -> foo3:addAuthority()
+     activate foo3
+        foo3 -> foo4:addAuthority()
+        activate foo4
+                foo4 -> foo5
+                activate foo5
+                foo4 <-- foo5
+                deactivate foo5
+        foo3 <-- foo4:Long
+        deactivate foo4
+    foo2 <-- foo3:Boolean
+    deactivate foo3
+foo1 <-- foo2:"status_code"
+deactivate foo2
+
+
+@enduml
