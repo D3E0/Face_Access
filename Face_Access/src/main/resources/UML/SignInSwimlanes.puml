@@ -1,6 +1,7 @@
 @startuml
 |登陆模块|
 start
+:用户登陆;
 if (是否已注册) then(yes)
    repeat
    :登陆;
@@ -11,7 +12,7 @@ else(no)
 |注册模块|
   repeat
    :注册;
-   repeat while (用户名是否已存在?)
+   repeat while (用户名是否合法?)
    :注册成功;
 stop
 @enduml

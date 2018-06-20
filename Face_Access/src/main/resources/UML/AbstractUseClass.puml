@@ -1,4 +1,4 @@
-@startuml
+ @startuml
 
 class 门{
     +添加()
