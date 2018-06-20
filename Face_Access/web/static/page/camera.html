@@ -11,10 +11,37 @@
         video {
             border: 1px solid #008699;
         }
+
+        #line {
+            width: 100%;
+            height: 20px;
+            position: absolute;
+            top: 10%;
+            z-index: 200;
+        }
+
+        @keyframes line {
+            0% {
+                transform: translateY(0px);
+            }
+            25% {
+                transform: translateY(270px);
+            }
+            50% {
+                transform: translateY(0px);
+            }
+            75% {
+                transform: translateY(270px);
+            }
+            100% {
+                transform: translateY(0px);
+            }
+        }
     </style>
 </head>
 <body>
-<div style="width: 400px;">
+<div style="width: 400px; position: relative">
+    <img src="../images/line.png" id="line">
     <video id="video" width="400" height="360"></video>
     <button id="start" class="layui-btn layui-btn-fluid ">开始登陆</button>
     <canvas id="canvas" hidden width="400" height="360"></canvas>
@@ -23,12 +50,11 @@
     var video = document.getElementById('video');
     var canvas = document.getElementById('canvas');
     var context = canvas.getContext('2d');
+    var line = document.getElementById('line');
     var index;
 
-    layui.use(['element', 'laydate', 'jquery', 'layer'], function () {
-        var element = layui.element, laydate = layui.laydate
-            , $ = layui.jquery, layer = layui.layer;
-
+    layui.use(['jquery', 'layer'], function () {
+        var $ = layui.jquery, layer = layui.layer;
 
         document.getElementById('start').addEventListener('click', function (ev) {
             startStreamedVideo();
@@ -42,20 +68,21 @@
             console.log(stream);
             video.srcObject = stream;
             video.play();
-            setTimeout(capture, 500);
+            line.style.animation = 'line 5s linear';
+            setTimeout(capture, 1000);
             index = layer.load(1);
         }
 
         function capture() {
             context.drawImage(video, 0, 0, 400, 360);
             var data = canvas.toDataURL("image/jpeg");
-            // console.info(data);
             $.post('/checkpic', {img: data}, function (obj) {
                 layer.close(index);
                 stopStreamedVideo();
                 var dataObj = eval("(" + obj + ")");
                 var score = dataObj.result.user_list[0].score;
                 console.info(score);
+                line.style.animation = 'none';
                 if (score > 80) {
                     layer.msg("登陆成功");
                 } else {
@@ -112,19 +139,3 @@
 </script>
 </body>
 </html>
-
-<!--// document.getElementById('capture').addEventListener('click', function () {-->
-<!--//     if (STATUSENUM.ON == status) {-->
-<!--//         context.drawImage(video, 0, 0, 400, 370);-->
-<!--//         // var data = canvas.toDataURL("image/png");-->
-<!--//         video.pause();-->
-<!--//         status = STATUSENUM.DONE;-->
-<!--//         this.innerHTML = "重新捕捉";-->
-<!--//         console.info("重新捕捉");-->
-<!--//     } else if (STATUSENUM.DONE == status) {-->
-<!--//         video.play();-->
-<!--//         status = STATUSENUM.ON;-->
-<!--//         this.innerHTML = "捕捉图像";-->
-<!--//         console.info("捕捉图像");-->
-<!--//     }-->
-<!--// });-->
