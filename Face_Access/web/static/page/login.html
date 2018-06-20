@@ -34,6 +34,10 @@
             border: 1px solid #2D93CA;
         }
 
+        .front {
+            transform: perspective(1200px) rotateX(0deg);
+        }
+
         .back {
             transform: perspective(1200px) rotateX(0deg) rotateY(180deg);
         }
@@ -46,8 +50,12 @@
             transform: perspective(1200px) rotateX(-90deg);
         }
 
-        .front {
-            transform: perspective(1200px) rotateX(0deg);
+        .left {
+            transform: perspective(1200px) rotateY(-90deg);
+        }
+
+        .right {
+            transform: perspective(1200px) rotateY(90deg);
         }
 
         @keyframes top {
@@ -114,13 +122,51 @@
 
 </head>
 <body>
-<button id="show" onclick="f();">show</button>
+
+<button onclick="shang();">上一个</button>
+<button onclick="xia();">下一个</button>
+
 <div class="scene">
     <div class="cube">
-        <div class="side back">
+        <div class="side front" id="Front">
+            <form id="signInByUsername" class="layui-form layui-form-pane">
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">用户名</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="username" class="layui-input" id="username"
+                               lay-verify="required|username" placeholder="请输入用户名">
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">密码</label>
+                    <div class="layui-input-block">
+                        <input type="password" name="password" class="layui-input"
+                               lay-verify="required" placeholder="请输入密码">
+                    </div>
+                </div>
+
+                <div class="layui-input-block">
+                    <a href="javascript:" id="toPhone" style="color: #009688;margin-left: 30px">手机号登陆</a>
+                    <a href="/register" style="color: #009688; margin-left: 60px">立即注册</a>
+                </div>
+
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <button class="layui-btn " lay-submit lay-filter="signInByUsername"
+                                style="width: 120px;">登陆
+                        </button>
+                        <button type="reset" class="layui-btn layui-btn-primary"
+                                style="width: 120px;">重置
+                        </button>
+                    </div>
+                </div>
+            </form>
         </div>
-        <div class="side top">
-        </div>
+        <div class="side back"></div>
+
+        <div class="side top"></div>
         <div class="side bottom" id="Bottom">
             <form id="signInByTelephone" class="layui-form layui-form-pane">
                 <div class="layui-form-item">
@@ -160,54 +206,37 @@
                 </div>
             </form>
         </div>
-        <div class="side front" id="Front">
-            <form id="signInByUsername" class="layui-form layui-form-pane">
 
-                <div class="layui-form-item">
-                    <label class="layui-form-label">用户名</label>
-                    <div class="layui-input-block">
-                        <input type="text" name="username" class="layui-input" id="username"
-                               lay-verify="required|username" placeholder="请输入用户名">
-                    </div>
-                </div>
-
-                <div class="layui-form-item">
-                    <label class="layui-form-label">密码</label>
-                    <div class="layui-input-block">
-                        <input type="password" name="password" class="layui-input"
-                               lay-verify="required" placeholder="请输入密码">
-                    </div>
-                </div>
-
-                <div class="layui-input-block">
-                    <a href="javascript:" id="toPhone" style="color: #009688;margin-left: 30px">手机号登陆</a>
-                    <a href="/register" style="color: #009688; margin-left: 60px">立即注册</a>
-                </div>
-
-                <div class="layui-form-item">
-                    <div class="layui-input-block">
-                        <button class="layui-btn " lay-submit lay-filter="signInByUsername"
-                                style="width: 120px;">登陆
-                        </button>
-                        <button type="reset" class="layui-btn layui-btn-primary"
-                                style="width: 120px;">重置
-                        </button>
-                    </div>
-                </div>
-            </form>
+        <div class="side left" id="Left">
         </div>
+        <div class="side right" id="Right">
+        </div>
+
+
     </div>
 </div>
 </body>
 
 <script>
-    var bottom = document.getElementById("Bottom");
-    var front = document.getElementById("Front");
-
     var $bottom = $("#Bottom");
     var $front = $("#Front");
-
+    var statue = {
+        bottom: -90,
+        front: 0,
+        top: 90
+    };
     var flag = true;
+
+    function xia() {
+        //top -= 90
+        $bottom.transition({
+            transform: "perspective(1200px) rotateX(0deg)"
+        }, 1000, 'linear');
+
+        $front.transition({
+            transform: "perspective(1200px) rotateX(90deg)"
+        }, 1000, 'linear');
+    }
 
     function f() {
 
@@ -230,6 +259,7 @@
         }
         flag = !flag;
     }
+
 </script>
 </html>
 
