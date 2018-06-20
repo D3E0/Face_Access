@@ -7,6 +7,7 @@
     <script src="../layui/layui.js"></script>
     <script src="../js/jquery-3.3.1.js"></script>
     <script src="../js/jquery.transit.min.js"></script>
+    <script src="../js/capture.js"></script>
     <style>
 
         .scene {
@@ -50,81 +51,24 @@
             transform: perspective(1200px) rotateX(-90deg);
         }
 
-        .left {
-            transform: perspective(1200px) rotateY(-90deg);
+        .navi {
+            text-align: center;
+            padding: 10px;
         }
 
-        .right {
-            transform: perspective(1200px) rotateY(90deg);
+        .navi a {
+            color: #009688;
+            margin-right: 20px
         }
 
-        @keyframes top {
-            0% {
-                transform: perspective(1200px) rotateX(90deg);
-            }
-            15% {
-                transform: perspective(1200px) rotateX(180deg);
-            }
-            25% {
-                transform: perspective(1200px) rotateX(180deg);
-            }
-            40% {
-                transform: perspective(1200px) rotateX(270deg);
-            }
-            50% {
-                transform: perspective(1200px) rotateX(270deg);
-            }
-            65% {
-                transform: perspective(1200px) rotateX(360deg);
-            }
-            75% {
-                transform: perspective(1200px) rotateX(360deg);
-            }
-            90% {
-                transform: perspective(1200px) rotateX(450deg);
-            }
-            100% {
-                transform: perspective(1200px) rotateX(450deg);
-            }
-        }
-
-        @keyframes back {
-            0% {
-                transform: perspective(1200px) rotateX(0deg) rotateY(180deg) rotateZ(180deg);
-            }
-            15% {
-                transform: perspective(1200px) rotateX(90deg) rotateY(180deg) rotateZ(180deg);
-            }
-            25% {
-                transform: perspective(1200px) rotateX(90deg) rotateY(180deg) rotateZ(180deg);
-            }
-            40% {
-                transform: perspective(1200px) rotateX(180deg) rotateY(180deg) rotateZ(180deg);
-            }
-            50% {
-                transform: perspective(1200px) rotateX(180deg) rotateY(180deg) rotateZ(180deg);
-            }
-            65% {
-                transform: perspective(1200px) rotateX(270deg) rotateY(180deg) rotateZ(180deg);
-            }
-            75% {
-                transform: perspective(1200px) rotateX(270deg) rotateY(180deg) rotateZ(180deg);
-            }
-            90% {
-                transform: perspective(1200px) rotateX(360deg) rotateY(180deg) rotateZ(180deg);
-            }
-            100% {
-                transform: perspective(1200px) rotateX(360deg) rotateY(180deg) rotateZ(180deg);
-            }
-        }
 
     </style>
 
 </head>
 <body>
 
-<button onclick="shang();">上一个</button>
-<button onclick="xia();">下一个</button>
+<button onclick="myTransition(-1, 1000);">向下转</button>
+<button onclick="myTransition(1, 1000);">向上转</button>
 
 <div class="scene">
     <div class="cube">
@@ -147,9 +91,10 @@
                     </div>
                 </div>
 
-                <div class="layui-input-block">
-                    <a href="javascript:" id="toPhone" style="color: #009688;margin-left: 30px">手机号登陆</a>
-                    <a href="/register" style="color: #009688; margin-left: 60px">立即注册</a>
+                <div class="navi" style="margin-top: -10px; padding-bottom: 15px; margin-left: 90px">
+                    <a href="javascript:">手机号登陆</a>
+                    <a href="javascript:">人脸登陆</a>
+                    <a href="/register">立即注册</a>
                 </div>
 
                 <div class="layui-form-item">
@@ -164,9 +109,18 @@
                 </div>
             </form>
         </div>
-        <div class="side back"></div>
+        <div class="side back" id="Back"></div>
 
-        <div class="side top"></div>
+        <div class="side top" id="Top" style="padding: 0">
+            <video id="video" width=100% height="300" style="border: 1px solid #5FB878"></video>
+            <div class="navi">
+                <a href="javascript:">手机号登陆</a>
+                <a href="javascript:">账号密码登陆</a>
+                <a href="/register">立即注册</a>
+            </div>
+            <button id="start" class="layui-btn layui-btn-fluid ">开始登陆</button>
+        </div>
+
         <div class="side bottom" id="Bottom">
             <form id="signInByTelephone" class="layui-form layui-form-pane">
                 <div class="layui-form-item">
@@ -194,9 +148,10 @@
                     </div>
                 </div>
 
-                <div class="layui-input-block">
-                    <a href="javascript:" id="toUsername" style="color: #009688">账号密码登陆</a>
-                    <a href="/register" style="color: #009688; margin-left: 20px">立即注册</a>
+                <div class="navi" style="margin-top: -10px; padding-bottom: 15px">
+                    <a href="javascript:">账号密码</a>
+                    <a href="javascript:">人脸登陆</a>
+                    <a href="/register">立即注册</a>
                 </div>
 
                 <div class="layui-form-item">
@@ -207,60 +162,48 @@
             </form>
         </div>
 
-        <div class="side left" id="Left">
-        </div>
-        <div class="side right" id="Right">
-        </div>
-
-
     </div>
 </div>
-</body>
 
+<canvas id="canvas" hidden width="400" height="360"></canvas>
 <script>
     var $bottom = $("#Bottom");
     var $front = $("#Front");
-    var statue = {
-        bottom: -90,
-        front: 0,
-        top: 90
-    };
-    var flag = true;
+    var $top = $("#Top");
+    var $back = $("#Back");
+    var myStatus = {top: 90, front: 0, bottom: -90, back: 0};
 
-    function xia() {
-        //top -= 90
+    /**
+     *
+     * @param direction  动画方向，向上转 1；向下转 -1
+     * @param speed 动画速度
+     */
+    function myTransition(direction, speed) {
+
+        for (i in myStatus) {
+            myStatus[i] += 90 * direction;
+        }
+
         $bottom.transition({
-            transform: "perspective(1200px) rotateX(0deg)"
-        }, 1000, 'linear');
+            transform: "perspective(1200px) rotateX(" + myStatus.bottom + "deg)"
+        }, speed, 'linear');
 
         $front.transition({
-            transform: "perspective(1200px) rotateX(90deg)"
-        }, 1000, 'linear');
+            transform: "perspective(1200px) rotateX(" + myStatus.front + "deg)"
+        }, speed, 'linear');
+
+        $top.transition({
+            transform: "perspective(1200px) rotateX(" + myStatus.top + "deg)"
+        }, speed, 'linear');
+
+        $back.transition({
+            transform: "perspective(1200px) rotateX(" + myStatus.back + "deg) rotateY(180deg) rotateZ(180deg) "
+        }, speed, 'linear');
     }
 
-    function f() {
-
-        if (flag) {
-            $bottom.transition({
-                transform: "perspective(1200px) rotateX(0deg)"
-            }, 1000, 'linear');
-
-            $front.transition({
-                transform: "perspective(1200px) rotateX(90deg)"
-            }, 1000, 'linear');
-        } else {
-            $bottom.transition({
-                transform: "perspective(1200px) rotateX(-90deg)"
-            }, 1000, 'linear');
-
-            $front.transition({
-                transform: "perspective(1200px) rotateX(0deg)"
-            }, 1000, 'linear');
-        }
-        flag = !flag;
-    }
-
+    // myTransition(-1, 1)
 </script>
+</body>
 </html>
 
 <!--jQuery animate(变换 CSS) transit(CSS3 实现)-->

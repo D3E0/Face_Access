@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>正方体B</title>
+    <link rel="stylesheet" href="../layui/css/layui.css">
+    <script src="../layui/layui.js"></script>
+    <script src="../js/jquery-3.3.1.js"></script>
+    <script src="../js/jquery.transit.min.js"></script>
+    <style>
+
+        .scene {
+            width: 300px;
+            height: 300px;
+            margin: 75px auto 0;
+        }
+
+        .cube {
+            position: relative;
+            width: 300px;
+            height: 300px;
+            transform: perspective(1200px) translateZ(-150px);
+        }
+
+        .side {
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            box-sizing: border-box;
+            background: #fff;
+            padding: 120px 0;
+            transform-origin: 50% 50% -150px;
+            backface-visibility: hidden; /*定义当元素不面向屏幕时是否可见。*/
+            border: 1px solid #2D93CA;
+        }
+
+        .front {
+            transform: perspective(1200px) rotateX(0deg);
+        }
+
+        .back {
+            transform: perspective(1200px) rotateX(0deg) rotateY(180deg);
+        }
+
+        .top {
+            transform: perspective(1200px) rotateX(90deg);
+        }
+
+        .bottom {
+            transform: perspective(1200px) rotateX(-90deg);
+        }
+
+        .left {
+            transform: perspective(1200px) rotateY(-90deg);
+        }
+
+        .right {
+            transform: perspective(1200px) rotateY(90deg);
+        }
+
+    </style>
+
+</head>
+<body>
+
+<button onclick="myTransition(-1, 1000);">向下转</button>
+<button onclick="myTransition(1, 1000);">向上转</button>
+
+<div class="scene">
+    <div class="cube">
+
+        <div class="side front" id="Front">front</div>
+        <div class="side back" id="Back">back</div>
+
+        <div class="side top" id="Top">top</div>
+        <div class="side bottom" id="Bottom">bottom</div>
+
+        <div class="side left" id="Left"></div>
+        <div class="side right" id="Right"></div>
+
+    </div>
+</div>
+</body>
+
+<script>
+    var $bottom = $("#Bottom");
+    var $front = $("#Front");
+    var $top = $("#Top");
+    var $back = $("#Back");
+    var myStatus = {top: 90, front: 0, bottom: -90, back: 0};
+
+
+    function f() {
+        myTransition(1, 500);
+        myTransition(1, 500)
+    }
+
+    /**
+     *
+     * @param direction  动画方向，向上转 1；向下转 -1
+     * @param speed 动画次数
+     */
+    function myTransition(direction, speed) {
+        // console.info(direction + " " + count);
+
+        for (i in myStatus) {
+            myStatus[i] += 90 * direction;
+        }
+
+        $bottom.transition({
+            transform: "perspective(1200px) rotateX(" + myStatus.bottom + "deg)"
+        }, speed, 'linear');
+
+        $front.transition({
+            transform: "perspective(1200px) rotateX(" + myStatus.front + "deg)"
+        }, speed, 'linear');
+
+        $top.transition({
+            transform: "perspective(1200px) rotateX(" + myStatus.top + "deg)"
+        }, speed, 'linear');
+
+        $back.transition({
+            transform: "perspective(1200px) rotateX(" + myStatus.back + "deg) rotateY(180deg) rotateZ(180deg) "
+        }, speed, 'linear');
+    }
+</script>
+</html>
+
+<!--jQuery animate(变换 CSS) transit(CSS3 实现)-->
+
+<!--css3 animation(keyframe) transition-->
