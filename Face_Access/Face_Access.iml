@@ -22,7 +22,7 @@
       <configuration>
         <datasource-map>
           <unit-entry name="factory" value="25262242-68ed-4954-af05-07e9657658f4" />
-          <unit-entry name="hibernate.cfg.xml" />
+          <unit-entry name="hibernate.cfg.xml" value="170fa5e5-4059-4655-8852-474c23ff6ade" />
         </datasource-map>
         <naming-strategy-map>
           <unit-entry name="factory" />

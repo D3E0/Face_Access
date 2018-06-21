@@ -29,8 +29,12 @@ public class RecordController {
     }
     @RequestMapping(value="recordsjson", produces = "text/html; charset=utf-8")
     @ResponseBody
-    public String recordsjson(@RequestParam (value = "page",defaultValue = "1")String page,@RequestParam (value = "limit",defaultValue = "10")String limit){
-        List<OpenRecordEntity> list = recordService.getRecordlist(Integer.parseInt(page),Integer.parseInt(limit));
+    public String recordsjson(@RequestParam (value = "page",defaultValue = "1")String page,@RequestParam (value = "limit",defaultValue = "10")String limit,@RequestParam (value = "keyword",defaultValue = "")String keyword){
+        List<OpenRecordEntity> list=null;
+        if (keyword.equals(""))
+            list = recordService.getRecordlist(Integer.parseInt(page),Integer.parseInt(limit));
+        else
+            list=recordService.getRecordListForSearch(Integer.parseInt(page),Integer.parseInt(limit),keyword);
         JSONArray array = new JSONArray();
         DateFormat dateFormat=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         for (OpenRecordEntity entity : list) {

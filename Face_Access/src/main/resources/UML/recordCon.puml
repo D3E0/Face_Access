@@ -1,0 +1,26 @@
+@startuml
+
+class RecordController {
++list()
+}
+
+class RecordService{
++list()
+}
+
+class RecordDao{
++getPage()
+}
+
+class RecordInfo{
+-openid
+-opendate
+-openresult
+-doorid
+-userid
+}
+
+RecordController->RecordInfo:record
+RecordController-->RecordService
+RecordService-->RecordDao
+@enduml

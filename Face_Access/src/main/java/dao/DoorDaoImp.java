@@ -114,7 +114,7 @@ public class DoorDaoImp implements DoorDao {
     }
 
     @Override
-    public List<DoorEntity> getdoorList(int page, int limit) {
+    public List<DoorEntity> getDoorList(int page, int limit) {
         int start=(page-1)*limit;
         System.out.println(page);
         System.out.println(limit);
@@ -139,6 +139,32 @@ public class DoorDaoImp implements DoorDao {
         return doorList;
     }
 
+    @Override
+    public List<DoorEntity> getDoorListForSearch(int page, int limit,String keyword) {
+        int start=(page-1)*limit;
+        System.out.println(page);
+        System.out.println(limit);
+        int count=limit;
+        Session session=factory.openSession();
+        Transaction tx = null;
+        List<DoorEntity> doorList=null;
+        try {
+            tx = session.beginTransaction();
+            Query query = session.createQuery("from DoorEntity where doorLocation like :A");
+            query.setParameter("A","%"+keyword+"%");
+            query.setFirstResult(start);
+            query.setMaxResults(limit);
+            doorList=query.list();
+            tx.commit();
+        }
+        catch (Exception e) {
+            if (tx!=null) tx.rollback();
+            e.printStackTrace();
+        }finally {
+            session.close();
+        }
+        return doorList;
+    }
     @Override
     public Long countDoor() {
         Session session=factory.openSession();

@@ -1,0 +1,31 @@
+@startuml
+actor 业主
+boundary RecordController
+control RecordService
+collections RecordDao
+database record
+业主->RecordController:signin()
+activate 业主
+activate RecordController
+RecordController->业主:records.jsp
+deactivate RecordController
+deactivate 业主
+业主->RecordController:showerecords()
+activate 业主
+activate RecordController
+RecordController->RecordService:getRecordslist()
+activate RecordService
+RecordService->RecordDao:getRecordslist()
+activate RecordDao
+RecordDao->record
+activate record
+record->RecordDao
+deactivate record
+RecordDao->RecordService:list
+deactivate RecordDao
+RecordService->RecordController:list
+deactivate RecordService
+RecordController->业主
+deactivate RecordController
+deactivate 业主
+@enduml

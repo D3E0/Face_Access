@@ -1,0 +1,31 @@
+@startuml
+actor 业主
+boundary DoorController
+control DoorService
+collections DoorDao
+database door
+业主->DoorController:signin()
+activate 业主
+activate DoorController
+DoorController->业主:doors.jsp
+deactivate 业主
+deactivate DoorController
+业主->DoorController:updatedoor()
+activate 业主
+activate DoorController
+DoorController->DoorService:updatedoor()
+activate DoorService
+DoorService->DoorDao:updatedoor()
+activate DoorDao
+DoorDao->door:
+activate door
+door->DoorDao:
+deactivate door
+DoorDao->DoorService:String
+deactivate DoorDao
+DoorService->DoorController:String
+deactivate DoorService
+DoorController->业主:String
+deactivate DoorController
+deactivate 业主
+@enduml

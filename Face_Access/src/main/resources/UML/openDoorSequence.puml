@@ -1,0 +1,28 @@
+@startuml
+actor 用户
+actor 门
+boundary openController
+control openService
+collections faceDao
+database face
+用户-> 门: 靠近门禁
+activate 门
+门->openController:uploadpic()
+activate openController
+openController->openService:open()
+activate openService
+openService->faceDao:searchFace()
+activate faceDao
+faceDao->face:searchFace()
+activate face
+face->faceDao:result
+deactivate face
+faceDao->openService:result
+deactivate faceDao
+openService->openController:resultcode
+deactivate openService
+openController->门:开门信号
+deactivate openController
+门->用户:进入
+deactivate 门
+@enduml

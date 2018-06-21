@@ -16,7 +16,11 @@ public class HouseMangeServiceImp implements HouseMangeService{
 
     @Override
     public List<HouseEntity> gethouselist(int page, int limit) {
-        return houseDao.getHouses(page,limit);
+        return houseDao.getHouseList(page,limit);
+    }
+    @Override
+    public List<HouseEntity> getHouseListForSearch(int page, int limit,String keyword) {
+        return houseDao.getHouseListForSearch(page,limit,keyword);
     }
 
     @Override
@@ -35,7 +39,12 @@ public class HouseMangeServiceImp implements HouseMangeService{
     }
 
     @Override
-    public String updatehouse(HouseEntity houseEntity) {
-        return houseDao.updatehouse(houseEntity);
+    public String updatehousepwd(int houseid,String oldpwd,String newpwd) {
+        return houseDao.updatehousepwd( houseid, oldpwd, newpwd);
+    }
+
+    @Override
+    public HouseEntity gethouse(int houseid) {
+        return houseDao.getHouse(houseid);
     }
 }

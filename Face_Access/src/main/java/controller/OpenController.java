@@ -1,10 +1,13 @@
 package controller;
 
+import dao.FaceDao;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import service.FaceMangeService;
 import util.Base64Util;
 import util.Face;
 import util.FileUtil;
@@ -17,6 +20,12 @@ import java.net.URLEncoder;
 
 @Controller
 public class OpenController {
+    private FaceMangeService faceMangeService;
+    @Autowired
+    public void setFaceMangeService(FaceMangeService faceMangeService) {
+        this.faceMangeService = faceMangeService;
+    }
+
     @RequestMapping("/open")
     @ResponseBody
     public String open(HttpServletRequest request, @RequestParam(value = "img")MultipartFile img, @RequestParam(value = "doorid")String doorid) throws IOException {
@@ -35,7 +44,7 @@ public class OpenController {
             byte[] imgData = FileUtil.readFileByBytes(file.getPath());
             String imgStr = Base64Util.encode(imgData);
             String imgParam = URLEncoder.encode(imgStr, "UTF-8");
-            Face.search(imgParam);
+            faceMangeService.searchface(imgParam);
             return "success";
         } else {
             return "error";

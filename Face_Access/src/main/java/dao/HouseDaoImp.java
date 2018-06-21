@@ -33,13 +33,28 @@ public class HouseDaoImp implements HouseDao {
         return list;
     }
     @Override
-    public List<HouseEntity> getHouses(int page, int limit) {
+    public List<HouseEntity> getHouseList(int page, int limit) {
         int start=(page-1)*limit;
         Session session = factory.openSession();
         session.beginTransaction();
-        Query query = session.createQuery("from HouseEntity");
+        Query query = session.createQuery("select new HouseEntity(houseId,housePassword,door.doorLocation,user.userName) from HouseEntity");
         query.setFirstResult(start);
         query.setMaxResults(limit);
+        List<HouseEntity> list = query.list();
+        session.getTransaction().commit();
+        return list;
+    }
+
+    @Override
+    public List<HouseEntity> getHouseListForSearch(int page, int limit, String keyword) {
+        int start=(page-1)*limit;
+        Session session = factory.openSession();
+        session.beginTransaction();
+        Query query = session.createQuery("select new HouseEntity(houseId,housePassword,door.doorLocation,user.userName) from HouseEntity where door.doorLocation like :A or user.userName like :B ");
+        query.setFirstResult(start);
+        query.setMaxResults(limit);
+        query.setParameter("A","%"+keyword+"%");
+        query.setParameter("B","%"+keyword+"%");
         List<HouseEntity> list = query.list();
         session.getTransaction().commit();
         return list;
@@ -106,21 +121,15 @@ public class HouseDaoImp implements HouseDao {
     }
 
     @Override
-    public String updatehouse(HouseEntity house) {
+    public String updatehousepwd(int houseid,String oldpwd,String newpwd) {
         String back="success";
         Session session=factory.openSession();
         Transaction tx = null;
         try {
             tx = session.beginTransaction();
-            HouseEntity houseEntity=session.get(HouseEntity.class,house.getHouseId());
-            if (house.getDoor()!=null){
-                houseEntity.setDoor(house.getDoor());
-            }
-            if (house.getUser()!=null){
-                houseEntity.setUser(house.getUser());
-            }
-            if (house.getHousePassword()!=null){
-                houseEntity.setHousePassword(house.getHousePassword());
+            HouseEntity houseEntity=session.get(HouseEntity.class,houseid);
+            if (oldpwd!=null&& houseEntity.getHousePassword().equals(oldpwd)&&newpwd!=null){
+                houseEntity.setHousePassword(newpwd);
             }
             session.update(houseEntity);
             tx.commit();
@@ -133,5 +142,24 @@ public class HouseDaoImp implements HouseDao {
             session.close();
         }
         return back;
+    }
+
+    @Override
+    public HouseEntity getHouse(int houseid) {
+        Session session=factory.openSession();
+        HouseEntity houseEntity=null;
+        Transaction tx = null;
+        try {
+            tx = session.beginTransaction();
+            houseEntity=session.get(HouseEntity.class,houseid);
+            tx.commit();
+        }
+        catch (Exception e) {
+            if (tx!=null) tx.rollback();
+            e.printStackTrace();
+        }finally {
+            session.close();
+        }
+        return houseEntity;
     }
 }

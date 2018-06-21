@@ -174,7 +174,7 @@ public class AuthorityDaoImp implements AuthorityDao {
                 " and house.user.userId= :C " +
                 "order by startDate";
         String countHql = "select count(*) from AuthorityEntity where " +
-                "(user.userName like :D or remark like :E) " +
+                "(user.userName like :D or remark like :E)" +
                 "and house.user.userId= :F";
 
         session.beginTransaction();

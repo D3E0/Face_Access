@@ -16,23 +16,17 @@
 <body>
 <div class="father">
     <form class="layui-form layui-form-pane son" action="">
-        <input type="text" id="houseid" hidden value="${id}">
+        <input type="text" id="houseid" hidden value="${houseid}">
         <div class="layui-form-item">
-            <label class="layui-form-label">业主id</label>
+            <label class="layui-form-label">旧密码</label>
             <div class="layui-input-inline">
-                <input type="text" id="userid" class="layui-input" value="${userid}" autocomplete="false">
+                <input type="password" id="oldPassword" class="layui-input" autocomplete="false">
             </div>
         </div>
         <div class="layui-form-item">
-            <label class="layui-form-label">门的id</label>
+            <label class="layui-form-label">新密码</label>
             <div class="layui-input-inline">
-                <input type="text" id="doorid" class="layui-input" value="${doorid}" autocomplete="false">
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">业主id</label>
-            <div class="layui-input-inline">
-                <input type="text" id="housepassword" class="layui-input" value="${housepassword}" autocomplete="false">
+                <input type="password" id="newPassword" class="layui-input" autocomplete="false">
             </div>
         </div>
     </form>

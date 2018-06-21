@@ -9,7 +9,17 @@ public class HouseEntity {
     private String housePassword;
     private DoorEntity door;
     private UserEntity user;
-
+    public HouseEntity(){}
+    public HouseEntity(int houseId,String housePassword,String doorlocation,String username){
+        UserEntity userEntity=new UserEntity();
+        DoorEntity doorEntity=new DoorEntity();
+        userEntity.setUserName(username);
+        doorEntity.setDoorLocation(doorlocation);
+        this.door=doorEntity;
+        this.houseId=houseId;
+        this.housePassword=housePassword;
+        this.user=userEntity;
+    }
     @JoinColumn(name = "userID")
     @ManyToOne()
     public UserEntity getUser() {
