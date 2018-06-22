@@ -5,7 +5,7 @@ actor :所有人员: as User
 
 left to right direction
 
- rectangle 人脸门禁系统 {
+ rectangle 物业用例图 {
     Manager --> (进入系统)
     Manager --> (门禁管理)
     (门禁管理) --> Door
@@ -15,9 +15,7 @@ Manager --> (Open)
 
    Manager --> (人员管理)
    (人员管理) --> User
-
      Manager --> (进出门记录查看)
   }
-
 
 @enduml

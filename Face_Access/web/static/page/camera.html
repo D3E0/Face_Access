@@ -14,7 +14,8 @@
     </style>
 </head>
 <body>
-<div style="width: 400px;">
+<div style="width: 400px;position:relative;">
+    <img src="../images/face.png" width="400" height="360" style="position: absolute">
     <video id="video" width="400" height="360"></video>
     <button id="start" class="layui-btn layui-btn-fluid ">开始登陆</button>
     <canvas id="canvas" hidden width="400" height="360"></canvas>
@@ -28,7 +29,6 @@
     layui.use(['element', 'laydate', 'jquery', 'layer'], function () {
         var element = layui.element, laydate = layui.laydate
             , $ = layui.jquery, layer = layui.layer;
-
 
         document.getElementById('start').addEventListener('click', function (ev) {
             startStreamedVideo();

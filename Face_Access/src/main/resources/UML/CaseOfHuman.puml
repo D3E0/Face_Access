@@ -4,7 +4,7 @@ actor :门: as Door
 
 left to right direction
 
- rectangle 人脸门禁系统 {
+ rectangle 普通用户用例图 {
     Human --> (进入系统)
     Human --> (Open)
     (Open) --> Door

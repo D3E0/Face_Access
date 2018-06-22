@@ -1,5 +1,5 @@
 @startuml
-
+title: 业主添加权限时序图
 actor 业主 as foo1
 boundary AuthorityController as foo2
 control UserMangeService as foo3

@@ -1,5 +1,5 @@
 @startuml
-
+title: 用户登陆时序图
 actor 用户 as foo1
 boundary SignInController as foo2
 control SignInService as foo3

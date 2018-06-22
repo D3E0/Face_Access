@@ -61,14 +61,12 @@
             margin-right: 20px
         }
 
-
     </style>
-
 </head>
 <body>
 
-<button onclick="myTransition(-1, 1000);">向下转</button>
-<button onclick="myTransition(1, 1000);">向上转</button>
+<!--<button onclick="myTransition(-1, 1000);">向下转</button>-->
+<!--<button onclick="myTransition(1, 1000);">向上转</button>-->
 
 <div class="scene">
     <div class="cube">
@@ -92,8 +90,8 @@
                 </div>
 
                 <div class="navi" style="margin-top: -10px; padding-bottom: 15px; margin-left: 90px">
-                    <a href="javascript:">手机号登陆</a>
-                    <a href="javascript:">人脸登陆</a>
+                    <a href="javascript:myTransition(1, 500)">手机号登陆</a>
+                    <a href="javascript:myTransition(-1, 500)">人脸登陆</a>
                     <a href="/register">立即注册</a>
                 </div>
 
@@ -112,10 +110,10 @@
         <div class="side back" id="Back"></div>
 
         <div class="side top" id="Top" style="padding: 0">
-            <video id="video" width=100% height="300" style="border: 1px solid #5FB878"></video>
+            <video id="video" width=100% height="300"></video>
             <div class="navi">
-                <a href="javascript:">手机号登陆</a>
-                <a href="javascript:">账号密码登陆</a>
+                <a href="javascript:myTransition(1, 300);myTransition(1, 300)">手机号登陆</a>
+                <a href="javascript:myTransition(1, 500)">账号密码登陆</a>
                 <a href="/register">立即注册</a>
             </div>
             <button id="start" class="layui-btn layui-btn-fluid ">开始登陆</button>
@@ -149,8 +147,8 @@
                 </div>
 
                 <div class="navi" style="margin-top: -10px; padding-bottom: 15px">
-                    <a href="javascript:">账号密码</a>
-                    <a href="javascript:">人脸登陆</a>
+                    <a href="javascript:myTransition(-1, 300);myTransition(-1, 300)">人脸登陆</a>
+                    <a href="javascript:myTransition(-1, 500)">账号密码登陆</a>
                     <a href="/register">立即注册</a>
                 </div>
 
