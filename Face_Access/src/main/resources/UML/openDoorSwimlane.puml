@@ -1,0 +1,18 @@
+@startuml
+|门|
+start
+:图像采集;
+|人脸比对模块|
+:人脸检测;
+if(是否有人脸)then(yes)
+    :人脸比对;
+    if(验证是否为合法用户)then(yes)
+    |门|
+    :开门;
+    else(no)
+    endif
+else(no)
+endif
+|人脸比对模块|
+stop
+@enduml

@@ -1,0 +1,21 @@
+@startuml
+|登陆模块|
+|物业|
+start
+if (是否已登陆) then(no)
+|登陆模块|
+  repeat
+   :登陆;
+   repeat while (用户名、密码是否正确?)
+   :登陆成功;
+else(yes)
+|物业|
+endif
+|物业|
+:选择日期和地点;
+|记录|
+:查询记录;
+|物业|
+:查看记录;
+stop
+@enduml

@@ -5,7 +5,7 @@ actor :普通用户: as Human
 
 left to right direction
 
- rectangle 人脸门禁系统 {
+ rectangle 业主用例图 {
     User --> (进入系统)
 
     User --> (普通用户管理)
@@ -18,6 +18,4 @@ left to right direction
 
     User --> (进出门记录查看)
   }
-
-
 @enduml

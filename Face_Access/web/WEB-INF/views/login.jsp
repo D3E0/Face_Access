@@ -30,7 +30,8 @@
                     <div class="form-group">
                         <input type="password" required="required" class="form-control"/>
                         <label class="form-label">密　码</label>
-                    </div><a href="#">忘记密码?</a>
+                    </div>
+                    <a href="#">忘记密码?</a>
                     <button class="floating-btn" type="submit"><i class="icon-arrow"></i></button>
                 </form>
             </div>
@@ -45,7 +46,7 @@
 </div>
 <script>
     //注意：选项卡 依赖 element 模块，否则无法进行功能性操作
-    layui.use('element', function(){
+    layui.use('element', function () {
         var element = layui.element;
         //…
     });

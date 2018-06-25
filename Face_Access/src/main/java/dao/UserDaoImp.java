@@ -5,8 +5,10 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.boot.MetadataSources;
+import org.hibernate.boot.registry.StandardServiceRegistry;
+import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.query.Query;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -24,12 +26,14 @@ public class UserDaoImp implements UserDao {
 
     private Logger logger = Logger.getLogger("dsd");
 
-    @Autowired
-    public void setFactory(SessionFactory factory) {
-        this.factory = factory;
-    }
-
+//    @Autowired
+//    public void setFactory(SessionFactory factory) {
+//        this.factory = factory;
+//    }
+//
     public UserDaoImp() {
+        StandardServiceRegistry registry = new StandardServiceRegistryBuilder().configure().build();
+        factory = new MetadataSources(registry).buildMetadata().buildSessionFactory();
     }
 
     @Override
@@ -96,6 +100,10 @@ public class UserDaoImp implements UserDao {
         Query query = session.createQuery("from UserEntity where userName=:name and userPassword=:word");
         query.setParameter("name", username);
         query.setParameter("word", password);
+//        password = "'or 1=1#";
+//        username = "'or”='";
+//        logger.info(username + " " + password);
+//        Query query = session.createQuery("from UserEntity where userName=" + username + " and userPassword=" + password);
         UserEntity entity = null;
         List list = query.list();
         if (list.size() > 0) {

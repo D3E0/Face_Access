@@ -5,78 +5,205 @@
     <title>Login</title>
     <link rel="stylesheet" href="../layui/css/layui.css">
     <script src="../layui/layui.js"></script>
+    <script src="../js/jquery-3.3.1.js"></script>
+    <script src="../js/jquery.transit.min.js"></script>
+    <script src="../js/capture.js"></script>
     <style>
 
-        body {
-            background-color: #eee;
-        }
-
-        .father {
-            background-color: white;
-            padding: 20px;
+        .scene {
+            width: 400px;
             height: 400px;
-            width: 350px;
-            /*center*/
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%);
-            /*shadow*/
-            box-shadow: 0 9px 30px -6px rgba(0, 0, 0, .2), 0 18px 20px -10px rgba(0, 0, 0, .04), 0 18px 20px -10px rgba(0, 0, 0, .04), 0 10px 20px -10px rgba(0, 0, 0, .04);
-            border: 1px solid #dadada;
-            border-radius: 10px;
+            margin: 75px auto 0;
         }
 
-        .son {
-            position: absolute;
-            top: 50%;
-            transform: translate(0%, -50%);
-            margin-left: 20px;
+        .cube {
+            position: relative;
+            width: 400px;
+            height: 400px;
+            transform: perspective(1200px) translateZ(-200px);
         }
+
+        .side {
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            box-sizing: border-box;
+            background: #fff;
+            padding: 120px 0;
+            transform-origin: 50% 50% -200px;
+            backface-visibility: hidden; /*定义当元素不面向屏幕时是否可见。*/
+            border: 1px solid #2D93CA;
+        }
+
+        .front {
+            transform: perspective(1200px) rotateX(0deg);
+        }
+
+        .back {
+            transform: perspective(1200px) rotateX(0deg) rotateY(180deg);
+        }
+
+        .top {
+            transform: perspective(1200px) rotateX(90deg);
+        }
+
+        .bottom {
+            transform: perspective(1200px) rotateX(-90deg);
+        }
+
+        .navi {
+            text-align: center;
+            padding: 10px;
+        }
+
+        .navi a {
+            color: #009688;
+            margin-right: 20px
+        }
+
     </style>
-
 </head>
 <body>
-<div class="father">
-    <form class="layui-form layui-form-pane son">
 
-        <div class="layui-form-item">
-            <label class="layui-form-label" for="userid">账号</label>
-            <div class="layui-input-inline">
-                <input type="text" name="userid" id="userid" class="layui-input">
+<!--<button onclick="myTransition(-1, 1000);">向下转</button>-->
+<!--<button onclick="myTransition(1, 1000);">向上转</button>-->
+
+<div class="scene">
+    <div class="cube">
+        <div class="side front" id="Front">
+            <form id="signInByUsername" class="layui-form layui-form-pane">
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">用户名</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="username" class="layui-input" id="username"
+                               lay-verify="required|username" placeholder="请输入用户名">
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">密码</label>
+                    <div class="layui-input-block">
+                        <input type="password" name="password" class="layui-input"
+                               lay-verify="required" placeholder="请输入密码">
+                    </div>
+                </div>
+
+                <div class="navi" style="margin-top: -10px; padding-bottom: 15px; margin-left: 90px">
+                    <a href="javascript:myTransition(1, 500)">手机号登陆</a>
+                    <a href="javascript:myTransition(-1, 500)">人脸登陆</a>
+                    <a href="/register">立即注册</a>
+                </div>
+
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <button class="layui-btn " lay-submit lay-filter="signInByUsername"
+                                style="width: 120px;">登陆
+                        </button>
+                        <button type="reset" class="layui-btn layui-btn-primary"
+                                style="width: 120px;">重置
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="side back" id="Back"></div>
+
+        <div class="side top" id="Top" style="padding: 0">
+            <video id="video" width=100% height="300"></video>
+            <div class="navi">
+                <a href="javascript:myTransition(1, 300);myTransition(1, 300)">手机号登陆</a>
+                <a href="javascript:myTransition(1, 500)">账号密码登陆</a>
+                <a href="/register">立即注册</a>
             </div>
+            <button id="start" class="layui-btn layui-btn-fluid ">开始登陆</button>
         </div>
 
-        <div class="layui-form-item">
-            <label class="layui-form-label" for="password">密码</label>
-            <div class="layui-input-inline">
-                <input type="password" name="password" id="password" class="layui-input">
-            </div>
+        <div class="side bottom" id="Bottom">
+            <form id="signInByTelephone" class="layui-form layui-form-pane">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">手机号</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="telephone" lay-verify="required|phone"
+                               placeholder="请输入手机号" class="layui-input">
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">验证码</label>
+                        <div class="layui-input-inline " style="width: 170px;">
+                            <input type="text" name="verifyCode" lay-verify="required"
+                                   placeholder="验证码" class="layui-input">
+                        </div>
+
+                        <div class="layui-input-inline" style="width: 50px">
+                            <button type="button" id="getCode"
+                                    class="layui-btn layui-btn-primary">
+                                获取验证码
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="navi" style="margin-top: -10px; padding-bottom: 15px">
+                    <a href="javascript:myTransition(-1, 300);myTransition(-1, 300)">人脸登陆</a>
+                    <a href="javascript:myTransition(-1, 500)">账号密码登陆</a>
+                    <a href="/register">立即注册</a>
+                </div>
+
+                <div class="layui-form-item">
+                    <button class="layui-btn layui-btn-fluid"
+                            lay-submit lay-filter="signInByTelephone">登陆
+                    </button>
+                </div>
+            </form>
         </div>
 
-        <div class="layui-form-item">
-            <div class="layui-input-block">
-                <button class="layui-btn" lay-submit lay-filter="submit">登陆</button>
-                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
-            </div>
-        </div>
-
-    </form>
+    </div>
 </div>
+
+<canvas id="canvas" hidden width="400" height="360"></canvas>
 <script>
-    layui.use(['form', 'laydate', 'jquery', 'layer'], function () {
-        var form = layui.form, $ = layui.jquery, layer = layui.layer;
-        form.on('submit(submit)', function (data) {
-            $.post('/processlogin', data.field, function (val) {
-                var dataObj = eval("(" + val + ")");
-                if (dataObj.result === 'success') {
-                    console.info("success");
-                    window.location.href = '/home';
-                }
-            });
-            return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
-        });
-    })
+    var $bottom = $("#Bottom");
+    var $front = $("#Front");
+    var $top = $("#Top");
+    var $back = $("#Back");
+    var myStatus = {top: 90, front: 0, bottom: -90, back: 0};
+
+    /**
+     *
+     * @param direction  动画方向，向上转 1；向下转 -1
+     * @param speed 动画速度
+     */
+    function myTransition(direction, speed) {
+
+        for (i in myStatus) {
+            myStatus[i] += 90 * direction;
+        }
+
+        $bottom.transition({
+            transform: "perspective(1200px) rotateX(" + myStatus.bottom + "deg)"
+        }, speed, 'linear');
+
+        $front.transition({
+            transform: "perspective(1200px) rotateX(" + myStatus.front + "deg)"
+        }, speed, 'linear');
+
+        $top.transition({
+            transform: "perspective(1200px) rotateX(" + myStatus.top + "deg)"
+        }, speed, 'linear');
+
+        $back.transition({
+            transform: "perspective(1200px) rotateX(" + myStatus.back + "deg) rotateY(180deg) rotateZ(180deg) "
+        }, speed, 'linear');
+    }
+
+    // myTransition(-1, 1)
 </script>
 </body>
 </html>
+
+<!--jQuery animate(变换 CSS) transit(CSS3 实现)-->
+
+<!--css3 animation(keyframe) transition-->

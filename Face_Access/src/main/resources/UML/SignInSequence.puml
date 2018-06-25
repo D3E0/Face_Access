@@ -1,0 +1,34 @@
+@startuml
+title: 用户登陆时序图
+actor 用户 as foo1
+boundary SignInController as foo2
+control SignInService as foo3
+collections UserDao as foo4
+database Database as foo5
+
+foo1 -> foo2:signIn()
+activate foo2
+foo2 --> foo1:"signIn.jsp"
+deactivate foo2
+
+foo1 -> foo2:ProcessSignIn()
+activate foo2
+    foo2 -> foo3:verifyUser()
+    activate foo3
+        foo3 -> foo4:verifyUser()
+        activate foo4
+                foo4 -> foo5
+                activate foo5
+                foo4 <-- foo5:'Long'
+                deactivate foo5
+        foo3 <-- foo4:'Boolean'
+        deactivate foo4
+    foo2 <-- foo3:'Boolean'
+    deactivate foo3
+foo1 <-- foo2:"status_code"
+deactivate foo2
+
+
+
+
+@enduml

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>3D正方体</title>
+    <script src="../js/jquery-3.3.1.js"></script>
+    <script src="../js/jquery.transit.min.js"></script>
+    <style>
+        .scene {
+            width: 300px;
+            height: 300px;
+            margin: 75px auto 0;
+            perspective: 1200px;
+        }
+
+        .cube {
+            position: relative;
+            width: 300px;
+            height: 300px;
+            transform-style: preserve-3d;
+            /*transform: rotateX(20deg) rotateY(45deg);*/
+        }
+
+        .side {
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            box-sizing: border-box;
+            border: 5px solid #9aa;
+            background-color: rgba(32, 170, 151, 0.5);
+            padding: 120px 0;
+            font: 50px/1 'Trebuchet MS', sans-serif;
+            color: #fff;
+            text-transform: uppercase;
+            text-align: center;
+        }
+
+        .front {
+            transform: translateZ(150px);
+        }
+
+        .back {
+            transform: translateZ(-150px);
+        }
+
+        .top {
+            transform: translateY(-150px) rotateX(90deg);
+        }
+
+        .bottom {
+            transform: translateY(150px) rotateX(90deg);
+        }
+
+        .left {
+            transform: translateX(-150px) rotateY(-90deg);
+        }
+
+        .right {
+            transform: translateX(150px) rotateY(90deg);
+        }
+
+        .top, .bottom {
+            background-color: rgba(105, 136, 190, 0.5)
+        }
+
+        .left, .right {
+            background-color: #5FB878;
+            opacity: 0.5;
+        }
+
+    </style>
+</head>
+<body>
+<button onclick="xia();">向下转</button>
+<button onclick="shang();">向上转</button>
+<div class="scene">
+    <div class="cube">
+        <div class="side back" id="Back">BACK</div>
+        <div class="side right">RIGHT</div>
+        <div class="side left">LEFT</div>
+        <div class="side top" id="Top">TOP</div>
+        <div class="side bottom" id="Bottom">BOTTOM</div>
+        <div class="side front" id="Front">FRONT</div>
+    </div>
+</div>
+
+<script>
+    var $bottom = $("#Bottom");
+    var $front = $("#Front");
+    var $top = $("#Top");
+    var $top = $("#Back");
+    var myStatus = {top: -90, front: 0, bottom: 90, back: 0};
+
+    // x -= 90
+    function xia() {
+
+        for (i in myStatus) {
+            // console.info(myStatus[i]);
+            myStatus[i] -= 90;
+        }
+
+        $front.transition({
+            transform: " rotateX(" + myStatus.front + "deg)"
+        }, 1000, 'linear');
+
+        $bottom.transition({
+            transform: "rotateX(" + myStatus.bottom + "deg)"
+        }, 1000, 'linear');
+
+        $top.transition({
+            transform: " rotateX(" + myStatus.top + "deg)"
+        }, 1000, 'linear');
+
+    }
+
+    function shang() {
+
+    }
+
+</script>
+</body>
+</html>

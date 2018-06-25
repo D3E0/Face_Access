@@ -6,7 +6,6 @@ import dao.HouseDao;
 import dao.UserDao;
 import dto.AuthorityListDTO;
 import entity.AuthorityEntity;
-import entity.HouseEntity;
 import entity.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -45,6 +44,16 @@ public class UserMangeServiceImp implements UserMangeService {
     @Override
     public List getAuthoritiesByHouse(int houseID) {
         return authorityDao.getAuthoritiesOfHouse(houseID);
+    }
+
+    @Override
+    public AuthorityListDTO getAuthoritiesOfUserLimit(int userID, int start, int offset) {
+        return authorityDao.getAuthoritiesOfUserLimit(userID, start, offset);
+    }
+
+    @Override
+    public AuthorityListDTO searchAuthoritiesOfUserLimit(int userID, String additional, int start, int offset) {
+        return authorityDao.searchAuthoritiesOfUserLimit(userID, additional, start, offset);
     }
 
     @Override

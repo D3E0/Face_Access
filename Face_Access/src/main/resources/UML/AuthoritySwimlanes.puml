@@ -1,0 +1,28 @@
+@startuml
+title: 用户添加权限泳道图
+|用户模块|
+
+|添加用户|
+start
+if (是否已登陆) then(yes)
+:;
+else(no)
+|登陆模块|
+  repeat
+   :登陆;
+   repeat while (用户名、密码是否正确?)
+   :登陆成功;
+   |添加用户|
+endif
+  if (是否为业主) then(yes)
+   |用户模块|
+  :用户列表中选择用户;
+    |添加用户|
+  :输入失效时间;
+  :添加成功;
+  stop
+   |添加用户|
+  else(no)
+   :违法操作;
+stop
+@enduml
