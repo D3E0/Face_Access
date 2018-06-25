@@ -13,6 +13,7 @@ public interface RecordDao {
 
     OpenRecordEntity findRecord(int openid);
 
-    List<OpenRecordEntity> getRecordList(int start, int end);
+    List<OpenRecordEntity> getRecordList(int page, int limit);
+    List<OpenRecordEntity> getRecordListForSearch(int page, int limit,String keyword);
     Long countRecord();
 }

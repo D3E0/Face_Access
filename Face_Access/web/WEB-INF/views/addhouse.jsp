@@ -19,7 +19,7 @@
         <div class="layui-form-item">
             <label class="layui-form-label">房间ID</label>
             <div class="layui-input-inline">
-                <input type="text" id="id" class="layui-input" autocomplete="false">
+                <input type="text" id="houseid" class="layui-input" autocomplete="false">
             </div>
         </div>
         <div class="layui-form-item">

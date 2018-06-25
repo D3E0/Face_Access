@@ -1,0 +1,37 @@
+@startuml
+
+class HouseController {
++List()
++AddHouse()
++DelHouse()
++UpdateHouse()
++CountDoor()
+}
+
+class HouseService{
++List()
++AddHouse()
++DelHouse()
++UpdateHouse()
++CountHouse()
+}
+
+class HouseDao{
++insert()
++update()
++delete()
++getPage()
++getById()
++CountHouse()
+}
+
+class HouseInfo{
+-houseid
+-userid
+-doorid
+-houseid
+}
+HouseService <-- HouseController:dServ
+HouseInfo<- HouseController:door
+HouseDao<- HouseService:dDao
+@enduml

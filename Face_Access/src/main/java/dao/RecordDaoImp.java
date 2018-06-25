@@ -81,6 +81,30 @@ public class RecordDaoImp implements RecordDao {
     }
 
     @Override
+    public List<OpenRecordEntity> getRecordListForSearch(int page, int limit, String keyword) {
+        int start=(page-1)*limit+1;
+        int count=limit;
+        Session session=factory.openSession();
+        Transaction tx = null;
+        List<OpenRecordEntity> recordList=null;
+        try {
+            tx = session.beginTransaction();
+            Query query=session.createQuery("select new OpenRecordEntity(userEntity.userName,openResult,openDate,doorEntity.doorLocation) from OpenRecordEntity where openId between "+start+" and "+(start+count-1)+" and (doorEntity.doorLocation like :A or userEntity.userName like :B)");
+            query.setParameter("A","%"+keyword+"%");
+            query.setParameter("B","%"+keyword+"%");
+            recordList=query.list();
+            tx.commit();
+        }
+        catch (Exception e) {
+            if (tx!=null) tx.rollback();
+            e.printStackTrace();
+        }finally {
+            session.close();
+        }
+        return recordList;
+    }
+
+    @Override
     public Long countRecord() {
         Session session=factory.openSession();
         Transaction tx = null;

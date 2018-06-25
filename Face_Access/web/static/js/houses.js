@@ -1,18 +1,19 @@
-layui.use(['jquery', 'laypage', 'table', 'layer', 'element', 'laydate'], function () {
+layui.use(['jquery', 'laypage', 'table', 'layer', 'element'], function () {
     var $ = layui.$, laypage = layui.laypage
         , table = layui.table, layer = layui.layer
         , element = layui.element;
     layer.load();
-    table.render({
+    var tableIns=table.render({
         elem: '#houseTable'
         , url: '/housesjson'
         , page: true
         , cols: [[
-            {field: 'houseId', title: 'ID', align: "center"}
-            ,{field: 'userId', title: '业主ID', align: "center"}
+            {field: 'houseId', title: '房间号', align: "center"}
+            // ,{field: 'userId', title: '业主ID', align: "center"}
             , {field: 'username', title: '业主名字', align: "center"}
-            , {field: 'doorId', title: '门的ID', align: "center"}
+            // , {field: 'doorId', title: '门号', align: "center"}
             , {field: 'doorlocation', title: '门的位置', align: "center"}
+
             , {fixed: 'right', title: '操作', align: 'center', toolbar: '#toolBar'}
         ]],
         done:function(res, curr, count){
@@ -39,14 +40,14 @@ layui.use(['jquery', 'laypage', 'table', 'layer', 'element', 'laydate'], functio
                             houseid:data.houseId
                         },
                         function(data,status){
-                            layer.msg(data);
+                            // layer.msg(data);
                         });
                 }
             });
         } else if (layEvent === 'edit') { //编辑;
             layer.open({
                 type: 2,
-                content: ['/updatehouse?houseid=' + data.houseId+'&userid='+data.userId+'&doorid='+data.doorId, 'no'],
+                content: ['/updatehouseview?houseid=' + data.houseId+'&userid='+data.userId+'&doorid='+data.doorId, 'no'],
                 title: "修改信息",
                 shade: 0,
                 btn: ['确认', '取消'],
@@ -57,9 +58,22 @@ layui.use(['jquery', 'laypage', 'table', 'layer', 'element', 'laydate'], functio
                 yes: function (index, layero) {
                     var test = $('#' + layero.find('iframe')[0]['name']).get(0);
                     var doc = test.contentDocument;
-
+                    var oldPassword = $("#oldPassword", doc).val();
+                    var newPassword = $("#newPassword", doc).val();
+                    $.post("/updatehouse",
+                        {
+                            "Content-Type:text/html;charset":"utf8",
+                            oldPassword:oldPassword,
+                            newPassword:newPassword
+                        },
+                        function(data,status){
+                            if(data=='fail'){
+                                layer.msg("密码错误");
+                                return false;
+                            }
+                            layer.close(index); //如果设定了yes回调，需进行手工关闭
+                        });
                     // layer.msg('修改成功'+ip);
-                    layer.close(index); //如果设定了yes回调，需进行手工关闭
                 }
             })
         }
@@ -79,11 +93,26 @@ layui.use(['jquery', 'laypage', 'table', 'layer', 'element', 'laydate'], functio
             yes: function (index, layero) {
                 var test = $('#' + layero.find('iframe')[0]['name']).get(0);
                 var doc = test.contentDocument;
-                var id = $("#id", doc).val();
+                var id = $("#houseid", doc).val();
                 var doorid = $("#doorid", doc).val();
                 var userid = $("#userid", doc).val();
                 var password = $("#password", doc).val();
-                var flag=null;
+                if (!isValidID(id)) {
+                    layer.msg("请输入正确的房间号");
+                    return false
+                }
+                if (!isValidID(doorid)) {
+                    layer.msg("请输入正确的房间号");
+                    return false
+                }
+                if (!isValidID(userid)) {
+                    layer.msg("请输入正确的用户账号");
+                    return false
+                }
+                // if (!isValidpwd(password)) {
+                //     layer.msg("密码必须为6-18位字母、数字、特殊符号的");
+                //     return false
+                // }
                 $.post("/addhouse",
                     {
                         "Content-Type:text/html;charset":"utf8",
@@ -93,23 +122,60 @@ layui.use(['jquery', 'laypage', 'table', 'layer', 'element', 'laydate'], functio
                         housepassword:password
                     },
                     function(data,status){
-                        flag=data;
-                        layer.msg(data);
+                        if(data=='wronguid'){
+                            layer.msg("用户的id不存在");
+                            return false;
+                        }
+                        if(data=='wrongdid'){
+                            layer.msg("门号不存在");
+                            return false;
+                        }
+                        if(data=='fail'){
+                            layer.msg("房间号已存在");
+                            return false;
+                        }
+                        layer.close(index); //如果设定了yes回调，需进行手工关闭
                     });
-                if(flag=='wd'){
-                    layer.msg("门的id不存在");
-                    return false;
-                }
-
-                if(flag=='wu'){
-                    layer.msg("用户的id不存在");
-                    return false;
-                }
-
-                layer.close(index); //如果设定了yes回调，需进行手工关闭
             }
         });
-    })
-
+    });
+    $("#searchbtn").click(function () {
+        var txt=$("#searchtxt").val();
+        tableIns.reload({
+            where: { //设定异步数据接口的额外参数，任意设
+                keyword:txt
+            }
+            ,page: {
+                curr: 1 //重新从第 1 页开始
+            }
+        });
+    });
+    var lastTime;
+    $("#searchtxt").keyup(function (event) {
+        lastTime = event.timeStamp;
+        setTimeout(function(){
+            if(lastTime - event.timeStamp == 0){
+                var txt=$("#searchtxt").val();
+                tableIns.reload({
+                    where: { //设定异步数据接口的额外参数，任意设
+                        keyword:txt
+                    }
+                    ,page: {
+                        curr: 1 //重新从第 1 页开始
+                    }
+                });
+            }
+        },100);
+    });
 });
+function isValidID(id)
+{
+    var reg =  /^\d{1,5}$/;
+    return reg.test(id);
+}
+function isValidpwd(id)
+{
+    var reg =  /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[~!@#$%^&*()_+`\-={}:";'<>?,.\/]).{6,18}$/;
+    return reg.test(id);
+}
 

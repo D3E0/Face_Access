@@ -1,0 +1,38 @@
+@startuml
+
+
+class DoorController {
++List()
++AddDoor()
++DelDoor()
++UpdateDoor()
++CountDoor()
+}
+
+class DoorService{
++List()
++AddDoor()
++DelDoor()
++UpdateDoor()
++CountDoor()
+}
+
+class DoorDao{
++insert()
++update()
++delete()
++getPage()
++getById()
++CountDoor()
+}
+
+class DoorInfo{
+-doorid
+-doorlocation
+-doorip
+-doorstatus
+}
+DoorService <-- DoorController:dServ
+DoorInfo<- DoorController:door
+DoorDao<- DoorService:dDao
+@enduml

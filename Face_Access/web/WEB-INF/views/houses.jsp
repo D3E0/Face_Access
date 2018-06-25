@@ -16,7 +16,7 @@
     <meta http-equiv="Pragma" content="no-cache">
     <style>
         .content {
-            background-color: white;
+            background-color: #eee;
             margin: 15px;
             border-radius: 2px;
             box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .05);
@@ -25,15 +25,32 @@
         body {
             background-color: #eee;
         }
+        #search{
+            float: right;
+            -webkit-border-radius: 5px;
+            -moz-border-radius: 5px;
+            border-radius: 5px;
+            display: inline-block;
+            background: white;
+            padding: 0;
+        }
+        #searchtxt{
+            border: none;
+            height: 38px;
+        }
+        #searchbtn{
+            margin: auto;
+        }
     </style>
 </head>
 <body class="layui-layout-body">
 <div class="content">
     <button class="layui-btn" id="add">添加房间</button>
+    <div id="search" ><input type="text" id="searchtxt" size="25px"  placeholder="根据房间主人或者位置搜索"><button id="searchbtn" class="layui-btn">搜索</button></div>
     <div id="houseTable" lay-filter="houseTable"></div>
 </div>
 <script type="text/html" id="toolBar">
-    <a class="layui-btn layui-btn-sm" lay-event="edit">更改业主</a>
+    <a class="layui-btn layui-btn-sm" lay-event="edit">修改信息</a>
     <a class="layui-btn layui-btn-danger layui-btn-sm" lay-event="del">删除</a>
 </script>
 

@@ -13,6 +13,7 @@ public interface DoorDao {
 
     DoorEntity findDoor(int doorID);
 
-    List<DoorEntity> getdoorList(int page, int limit);
+    List<DoorEntity> getDoorList(int page, int limit);
+    List<DoorEntity> getDoorListForSearch(int page, int limit,String keyword);
     Long countDoor();
 }

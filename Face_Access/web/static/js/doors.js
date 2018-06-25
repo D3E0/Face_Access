@@ -3,12 +3,12 @@ layui.use(['jquery', 'laypage', 'table', 'layer', 'element', 'laydate'], functio
         , table = layui.table, layer = layui.layer
         , element = layui.element;
     layer.load();
-    table.render({
+    var tableIns=table.render({
         elem: '#doorTable'
         , url: '/doorsjson'
         , page: true
         , cols: [[
-            {field: 'Id', title: 'ID', align: "center"}
+            {field: 'Id', title: '门号', align: "center"}
             , {field: 'Location', title: '位置', align: "center"}
             , {field: 'Status', title: '状态', align: "center"}
             , {field: 'Ip', title: 'ip地址', align: "center"}
@@ -60,6 +60,10 @@ layui.use(['jquery', 'laypage', 'table', 'layer', 'element', 'laydate'], functio
                     var location = $("#location", doc).val();
                     var ip = $("#ip", doc).val();
                     var status = $("#status", doc).val();
+                    if (!isValidID(id)) {
+                        layer.msg("请输入正确的id");
+                        return false
+                    }
                     if (!isValidIP(ip)) {
                         layer.msg("请输入正确的ip地址");
                         return false
@@ -106,7 +110,7 @@ layui.use(['jquery', 'laypage', 'table', 'layer', 'element', 'laydate'], functio
                 var ip = $("#ip", doc).val();
                 var status = $("#status", doc).val();
                 if (!isValidID(id)) {
-                    layer.msg("请输入一到四位的纯数字");
+                    layer.msg("请输入正确的id");
                     return false;
                 }
                 if (!isValidIP(ip)) {
@@ -127,7 +131,35 @@ layui.use(['jquery', 'laypage', 'table', 'layer', 'element', 'laydate'], functio
                 layer.close(index); //如果设定了yes回调，需进行手工关闭
             }
         });
-    })
+    });
+    $("#searchbtn").click(function () {
+        var txt=$("#searchtxt").val();
+        tableIns.reload({
+            where: { //设定异步数据接口的额外参数，任意设
+                keyword:txt
+            }
+            ,page: {
+                curr: 1 //重新从第 1 页开始
+            }
+        });
+    });
+    var lastTime;
+    $("#searchtxt").keyup(function (event) {
+        lastTime = event.timeStamp;
+        setTimeout(function(){
+            if(lastTime - event.timeStamp == 0){
+                var txt=$("#searchtxt").val();
+                tableIns.reload({
+                    where: { //设定异步数据接口的额外参数，任意设
+                        keyword:txt
+                    }
+                    ,page: {
+                        curr: 1 //重新从第 1 页开始
+                    }
+                });
+            }
+        },100);
+    });
 
 });
 function isValidIP(ip)
@@ -137,7 +169,7 @@ function isValidIP(ip)
 }
 function isValidID(id)
 {
-    var reg =  /^\d{1,4}$/;
+    var reg =  /^\d{1,5}$/;
     return reg.test(id);
 }
 

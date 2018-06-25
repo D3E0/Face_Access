@@ -44,15 +44,19 @@ public class HouseController {
     }
     @RequestMapping(value="housesjson", produces = "text/html; charset=utf-8")
     @ResponseBody
-    public String gethouses(@RequestParam(value = "page",defaultValue = "1")String page, @RequestParam(value = "limit",defaultValue = "10")String limit){
-        List<HouseEntity> list = houseService.gethouselist(Integer.parseInt(page),Integer.parseInt(limit));//Integer.parseInt(page),Integer.parseInt(limit)
+    public String gethouses(@RequestParam(value = "page",defaultValue = "1")String page, @RequestParam(value = "limit",defaultValue = "10")String limit,@RequestParam (value = "keyword",defaultValue = "")String keyword){
+        List<HouseEntity> list =null;
+        if (keyword.equals(""))
+        list= houseService.gethouselist(Integer.parseInt(page),Integer.parseInt(limit));//Integer.parseInt(page),Integer.parseInt(limit)
+        else
+            list=houseService.getHouseListForSearch(Integer.parseInt(page),Integer.parseInt(limit),keyword);
         JSONArray array = new JSONArray();
         for (HouseEntity entity : list) {
             JSONObject object = new JSONObject();
             object.put("houseId", entity.getHouseId());
             object.put("username", entity.getUser().getUserName());
-            object.put("userId",entity.getUser().getUserId());
-            object.put("doorId",entity.getDoor().getDoorId());
+//            object.put("userId",entity.getUser().getUserId());
+//            object.put("doorId",entity.getDoor().getDoorId());
             object.put("doorlocation",entity.getDoor().getDoorLocation());
 //            object.put("Ip", entity.getDoorIp());
             array.add(object);
@@ -60,7 +64,7 @@ public class HouseController {
         String ans="{\"code\":0,\"msg\":\"\",\"count\":"+houseService.counthouses()+",\"data\":" + array + "}";
         return ans;
     }
-    @RequestMapping("/delhouses")
+    @RequestMapping("/delhouse")
     @ResponseBody
     public String delhouse(@RequestParam(value = "houseid") String houseid){
         return houseService.delhouse(Integer.parseInt(houseid));
@@ -73,46 +77,34 @@ public class HouseController {
     @ResponseBody
     public String addhouse(@RequestParam (value = "houseid")String houseid, @RequestParam (value = "userid")String userid, @RequestParam (value = "housepassword")String housepassword,@RequestParam (value = "doorid")String doorid){
         HouseEntity houseEntity = new HouseEntity();
-        DoorEntity doorEntity=doorService.getDoorEntity(Integer.parseInt(doorid));
-        if (doorEntity==null){
-            return "wd";
-        }
         UserEntity userEntity=userService.getUserEntity(Integer.parseInt(userid));
         if (userEntity==null){
-            return "wu";
+            return "wronguid";
+        }
+        DoorEntity doorEntity=doorService.getDoorEntity(Integer.parseInt(doorid));
+        if (doorEntity==null){
+            return "wrongdid";
         }
         houseEntity.setHouseId(Integer.parseInt(houseid));
         houseEntity.setDoor(doorEntity);
         houseEntity.setUser(userEntity);
+        if (housepassword!=null)
         houseEntity.setHousePassword(EncryptInfo.MD5(housepassword));
         return houseService.addhouse(houseEntity);
     }
     @RequestMapping("/updatehouseview")
-    public String updatehouseview(@RequestParam (value = "houseid")String houseid,@RequestParam (value = "userid")String userid, @RequestParam (value = "housepassword")String housepassword, @RequestParam (value = "doorid")String doorid, Model model){
+    public String updatehouseview(@RequestParam (value = "houseid")String houseid,@RequestParam (value = "userid")String userid, @RequestParam (value = "doorid")String doorid, Model model){
         model.addAttribute("houseid",houseid);
-        model.addAttribute("userid",userid);
-        model.addAttribute("housepassword",housepassword);
-        model.addAttribute("doorid",doorid);
         return "updatehouse";
     }
 
     @RequestMapping("/updatehouse")
     @ResponseBody
-    public String updatehouse(@RequestParam (value = "houseid")String houseid,@RequestParam (value = "userid")String userid, @RequestParam (value = "housepassword")String housepassword,@RequestParam (value = "doorid")String doorid){
-        DoorEntity doorEntity=doorService.getDoorEntity(Integer.parseInt(doorid));
-        if (doorEntity==null){
-            return "wd";
-        }
-        UserEntity userEntity=userService.getUserEntity(Integer.parseInt(userid));
-        if (userEntity==null){
-            return "wu";
-        }
-        HouseEntity houseEntity=new HouseEntity();
-        houseEntity.setUser(userEntity);
-        houseEntity.setDoor(doorEntity);
-        houseEntity.setHouseId(Integer.parseInt(houseid));
-        houseEntity.setHousePassword(housepassword);
-        return houseService.updatehouse(houseEntity);
+    public String updatehouse(@RequestParam (value = "oldPassword")String oldPassword,@RequestParam (value = "newPassword")String newPassword,@RequestParam (value = "houseid")String houseid){
+        if (newPassword.length()<=18&&newPassword.length()>=6)
+            return houseService.updatehousepwd(Integer.parseInt(houseid),oldPassword,newPassword);
+        else
+            return "fail";
     }
 
 }

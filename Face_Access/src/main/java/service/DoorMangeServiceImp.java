@@ -30,7 +30,11 @@ public class DoorMangeServiceImp implements DoorMangeService {
 
     @Override
     public List<DoorEntity> getDoorList(int page, int limit) {
-        return doorDao.getdoorList(page,limit);
+        return doorDao.getDoorList(page,limit);
+    }
+    @Override
+    public List<DoorEntity> getDoorListForSearch(int page, int limit,String keyword) {
+        return doorDao.getDoorListForSearch(page,limit,keyword);
     }
 
     @Override

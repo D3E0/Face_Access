@@ -36,7 +36,7 @@
                 </form>
             </div>
             <div class="layui-tab-item" onclick="startvideo()">
-                <video id="video" width="350" height="350" poster="/static/images/666.jpg"></video>
+                <video id="video" width="350" height="350" poster="/static/images/face.png"></video>
                 <canvas id="canvas" hidden width="350" height="350"></canvas>
                 <script type="text/javascript" src="${pageContext.request.contextPath}/static/js/takepic.js"></script>
                 <button class="layui-btn takepic" onclick="takepic()">点击触发</button>

@@ -111,7 +111,7 @@ layui.use(['jquery', 'laypage', 'table', 'layer', 'element', 'laydate'], functio
                 curr: 1 //重新从第 1 页开始
             }
         });
-    })
+    });
 
 });
 

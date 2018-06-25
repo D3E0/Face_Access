@@ -1,22 +1,14 @@
 @startuml
-actor :业主: as User
+actor :普通用户: as User
 actor :门: as Door
-actor :普通用户: as Human
 
 left to right direction
 
- rectangle 业主用例图 {
+ rectangle 人脸门禁系统 {
     User --> (进入系统)
-
-    User --> (普通用户管理)
-    (普通用户管理) --> Human
-
-    User --> (开门)
-    (开门) --> Door
-
+    User --> (Open)
+    (Open) --> Door
     User --> (修改资料)
-
-    User --> (进出门记录查看)
   }
 
 @enduml

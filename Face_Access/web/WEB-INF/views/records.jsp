@@ -16,7 +16,7 @@
     <meta http-equiv="Pragma" content="no-cache">
     <style>
         .content {
-            background-color: white;
+            background-color: #eee;
             margin: 15px;
             border-radius: 2px;
             box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .05);
@@ -25,14 +25,30 @@
         body {
             background-color: #eee;
         }
+        #search{
+            -webkit-border-radius: 5px;
+            -moz-border-radius: 5px;
+            border-radius: 5px;
+            display: inline-block;
+            background: white;
+            padding: 0;
+        }
+        #searchtxt{
+            border: none;
+            height: 38px;
+        }
+        #searchbtn{
+            margin: auto;
+        }
     </style>
 </head>
 <body class="layui-layout-body">
-<div class="content">
+<div class="content" align="right">
+    <div id="search" ><input type="text" id="searchtxt" size="25px"  placeholder="根据位置或用户名搜索"><button id="searchbtn" class="layui-btn">搜索</button></div>
     <div id="recordTable" lay-filter="recordTable"></div>
 </div>
 <script type="text/html" id="toolBar">
-    <a class="layui-btn layui-btn-sm" lay-event="show">查看</a>
+    <a class="layui-btn layui-btn-sm" lay-event="showpic">查看开门照片</a>
 </script>
 
 </body>

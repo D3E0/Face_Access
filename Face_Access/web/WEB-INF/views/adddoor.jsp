@@ -15,11 +15,11 @@
 </head>
 <body>
 <div class="father">
-    <form class="layui-form layui-form-pane son" action="/adddoor">
+    <form class="layui-form layui-form-pane son" action="">
         <div class="layui-form-item">
             <label class="layui-form-label">门禁ID</label>
             <div class="layui-input-inline">
-                <input type="text" id="id" class="layui-input" autocomplete="false">
+                <input type="text" id="houseid" class="layui-input" autocomplete="false">
             </div>
         </div>
         <div class="layui-form-item">

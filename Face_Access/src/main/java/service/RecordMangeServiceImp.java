@@ -39,4 +39,9 @@ public class RecordMangeServiceImp implements RecordMangeService {
         return recordDao.countRecord();
     }
 
+    @Override
+    public List<OpenRecordEntity> getRecordListForSearch(int page, int limit, String keyword) {
+        return recordDao.getRecordListForSearch(page,limit,keyword);
+    }
+
 }
