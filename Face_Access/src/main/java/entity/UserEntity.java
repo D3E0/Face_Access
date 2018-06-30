@@ -12,7 +12,6 @@ public class UserEntity {
     private int userId;
     private String userTelephone;
     private String userPassword;
-    private byte[] userFace;
 
 
     public UserEntity() {
@@ -69,15 +68,6 @@ public class UserEntity {
         this.userTelephone = userTelephone;
     }
 
-    @Basic
-    @Column(name = "userFace")
-    public byte[] getUserFace() {
-        return userFace;
-    }
-
-    public void setUserFace(byte[] userFace) {
-        this.userFace = userFace;
-    }
 
     @Override
     public String toString() {
@@ -86,7 +76,6 @@ public class UserEntity {
                 ", userId=" + userId +
                 ", userTelephone='" + userTelephone + '\'' +
                 ", userPassword='" + userPassword + '\'' +
-                ", userFace=" + Arrays.toString(userFace) +
                 '}';
     }
 
@@ -101,8 +90,6 @@ public class UserEntity {
         if (userName != null ? !userName.equals(that.userName) : that.userName != null) return false;
         if (userTelephone != null ? !userTelephone.equals(that.userTelephone) : that.userTelephone != null)
             return false;
-        if (!Arrays.equals(userFace, that.userFace)) return false;
-
         return true;
     }
 
@@ -111,7 +98,6 @@ public class UserEntity {
         int result = userName != null ? userName.hashCode() : 0;
         result = 31 * result + userId;
         result = 31 * result + (userTelephone != null ? userTelephone.hashCode() : 0);
-        result = 31 * result + Arrays.hashCode(userFace);
         return result;
     }
 }

@@ -29,7 +29,7 @@ public interface UserMangeService {
 
     public int updateTelephone(int userId, String telephone);
 
-    public int updateUserFace(int userId, byte[] face);
+    public Boolean updateUserFace(int userId, String face);
 
     public void addAuthority(int houseID, int userID, Date startDate, Date endDate, String remark);
 

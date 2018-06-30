@@ -6,13 +6,18 @@ layui.use(['laydate', 'form', 'layer', 'upload'], function () {
     upload.render({
         elem: '#image' //绑定元素
         , url: '/upload' //上传接口
+        , data: {userId: parent.id}
         , done: function (res) {
             //上传完毕回调
-            layer.msg("success");
+            if (res.msg === "success") {
+                layer.msg("修改成功");
+            } else {
+                layer.msg("似乎失败了呢，再试一次吧", {icon: 5});
+            }
         }
         , error: function () {
             //请求异常回调
-            layer.msg("error");
+            layer.msg("请求异常回调，再试一次吧", {icon: 5});
         }
         , field: 'image'
         , accept: 'images'
@@ -25,6 +30,7 @@ layui.use(['laydate', 'form', 'layer', 'upload'], function () {
                 $('#updatePreview', topDoc).attr('src', result);
                 $("#demo1").attr('src', result);
             });
+            console.info(parent.id);
         }
     });
 

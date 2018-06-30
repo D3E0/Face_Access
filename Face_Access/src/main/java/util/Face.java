@@ -20,12 +20,12 @@ public class Face {
         String url = "https://aip.baidubce.com/rest/2.0/face/v2/identify";
         try {
             // 本地文件路径
-            String filePath = "C:\\Users\\yan\\Desktop\\666.jpg";
+            String filePath = "C:\\Users\\ACM-PC\\Desktop\\666.jpg";
             byte[] imgData = FileUtil.readFileByBytes(filePath);
             String imgStr = Base64Util.encode(imgData);
             String imgParam = URLEncoder.encode(imgStr, "UTF-8");
 
-            String filePath2 = "C:\\Users\\yan\\Desktop\\2333.jpg";
+            String filePath2 = "C:\\Users\\ACM-PC\\Desktop\\2333.jpg";
             byte[] imgData2 = FileUtil.readFileByBytes(filePath2);
             String imgStr2 = Base64Util.encode(imgData2);
             String imgParam2 = URLEncoder.encode(imgStr2, "UTF-8");
@@ -66,6 +66,7 @@ public class Face {
         }
         return null;
     }
+
     public static String getAuth() {
         // 官网获取的 API Key 更新为你注册的
         String clientId = API_KEY;

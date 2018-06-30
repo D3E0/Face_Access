@@ -7,6 +7,7 @@ import dao.UserDao;
 import dto.AuthorityListDTO;
 import entity.AuthorityEntity;
 import entity.UserEntity;
+import manager.FaceManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import util.EncryptInfo;
@@ -20,6 +21,12 @@ public class UserMangeServiceImp implements UserMangeService {
     private AuthorityDao authorityDao;
     private UserDao userDao;
     private HouseDao houseDao;
+    private FaceManager faceManager;
+
+    @Autowired
+    public void setFaceManager(FaceManager faceManager) {
+        this.faceManager = faceManager;
+    }
 
     @Autowired
     public void setHouseDao(HouseDao houseDao) {
@@ -99,12 +106,8 @@ public class UserMangeServiceImp implements UserMangeService {
     }
 
     @Override
-    public int updateUserFace(int userId, byte[] face) {
-        UserEntity entity = new UserEntity();
-        entity.setUserFace(face);
-        entity.setUserId(userId);
-        userDao.updateUser(entity);
-        return 0;
+    public Boolean updateUserFace(int userId, String face) {
+        return faceManager.updateFace(userId + "", face);
     }
 
     @Override

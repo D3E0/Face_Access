@@ -8,9 +8,14 @@ import dto.AuthorityDTO;
 import dto.AuthorityListDTO;
 import entity.AuthorityEntity;
 import entity.UserEntity;
+import manager.FaceManager;
+import manager.FaceManagerImp;
 import org.junit.Test;
+import util.Base64Util;
 import util.EncryptInfo;
+import util.FileUtil;
 
+import java.io.IOException;
 import java.sql.Date;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -19,6 +24,25 @@ import java.util.Iterator;
 import java.util.List;
 
 public class MyTest {
+
+    @Test
+    public void testFace() throws IOException {
+        String filePath = "C:\\Users\\ACM-PC\\Desktop\\666.jpg";
+        byte[] imgData = FileUtil.readFileByBytes(filePath);
+        String imgStr = Base64Util.encode(imgData);
+        FaceManager faceManager = new FaceManagerImp();
+// faceManager.updateFace("61101", imgStr);
+//        System.out.println(str);
+//        JSONObject object = JSON.parseObject(str);
+//        System.out.println(object.get("error_msg"));
+//        String str = faceManager.searchface(imgStr);
+
+//        System.out.println("------" + str);
+//        System.out.println();
+//        jsonObject.get()
+
+//        Face.identify();
+    }
 
     @Test
     public void testSQL() {

@@ -2,20 +2,30 @@ package service;
 
 import dao.UserDao;
 import entity.UserEntity;
+import manager.FaceManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import util.EncryptInfo;
+
+import java.util.logging.Logger;
 
 @Service
 public class SignInServiceImp implements SignInService {
 
     private UserDao userDao;
+    private FaceManager faceManager;
+
+    Logger logger = Logger.getLogger("dsad");
 
     @Autowired
     public void setUserDao(UserDao userDao) {
         this.userDao = userDao;
     }
 
+    @Autowired
+    public void setFaceManager(FaceManager faceManager) {
+        this.faceManager = faceManager;
+    }
 
     @Override
     public boolean verifyUsername(String username) {
@@ -31,6 +41,11 @@ public class SignInServiceImp implements SignInService {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public Boolean verifyUserByFace(String img) {
+        return faceManager.searchFace(img);
     }
 
     @Override
