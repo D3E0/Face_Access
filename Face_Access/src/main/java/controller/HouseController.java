@@ -100,11 +100,22 @@ public class HouseController {
 
     @RequestMapping("/updatehouse")
     @ResponseBody
-    public String updatehouse(@RequestParam (value = "oldPassword")String oldPassword,@RequestParam (value = "newPassword")String newPassword,@RequestParam (value = "houseid")String houseid){
-        if (newPassword.length()<=18&&newPassword.length()>=6)
-            return houseService.updatehousepwd(Integer.parseInt(houseid),oldPassword,newPassword);
-        else
-            return "fail";
+    public String updatehouse(@RequestParam (value = "houseid")String houseid, @RequestParam (value = "userid")String userid, @RequestParam (value = "housepassword")String housepassword,@RequestParam (value = "doorid")String doorid){
+        HouseEntity houseEntity = new HouseEntity();
+        UserEntity userEntity=userService.getUserEntity(Integer.parseInt(userid));
+        if (userEntity==null){
+            return "wronguid";
+        }
+        DoorEntity doorEntity=doorService.getDoorEntity(Integer.parseInt(doorid));
+        if (doorEntity==null){
+            return "wrongdid";
+        }
+        houseEntity.setHouseId(Integer.parseInt(houseid));
+        houseEntity.setDoor(doorEntity);
+        houseEntity.setUser(userEntity);
+        if (housepassword!=null)
+            houseEntity.setHousePassword(EncryptInfo.MD5(housepassword));
+        return houseService.updatehousepwd(houseEntity);
     }
 
 }

@@ -39,8 +39,8 @@ public class HouseMangeServiceImp implements HouseMangeService{
     }
 
     @Override
-    public String updatehousepwd(int houseid,String oldpwd,String newpwd) {
-        return houseDao.updatehousepwd( houseid, oldpwd, newpwd);
+    public String updatehousepwd(HouseEntity house) {
+        return houseDao.updatehouse( house);
     }
 
     @Override

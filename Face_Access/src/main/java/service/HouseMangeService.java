@@ -10,6 +10,6 @@ public interface HouseMangeService {
      Long counthouses();
      String delhouse(int houseid);
      String addhouse(HouseEntity houseEntity);
-     String updatehousepwd(int houseid,String oldpwd,String newpwd);
+     String updatehousepwd(HouseEntity house);
      HouseEntity gethouse(int houseid);
 }

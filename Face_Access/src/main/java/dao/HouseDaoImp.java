@@ -121,16 +121,17 @@ public class HouseDaoImp implements HouseDao {
     }
 
     @Override
-    public String updatehousepwd(int houseid,String oldpwd,String newpwd) {
+    public String updatehouse(HouseEntity house) {
         String back="success";
         Session session=factory.openSession();
         Transaction tx = null;
         try {
             tx = session.beginTransaction();
-            HouseEntity houseEntity=session.get(HouseEntity.class,houseid);
-            if (oldpwd!=null&& houseEntity.getHousePassword().equals(oldpwd)&&newpwd!=null){
-                houseEntity.setHousePassword(newpwd);
-            }
+            HouseEntity houseEntity=session.get(HouseEntity.class,house.getHouseId());
+            if (house.getHousePassword()!=null)
+                houseEntity.setHousePassword(house.getHousePassword());
+            houseEntity.setDoor(house.getDoor());
+            houseEntity.setUser(house.getUser());
             session.update(houseEntity);
             tx.commit();
         }

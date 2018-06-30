@@ -12,6 +12,6 @@ public interface HouseDao {
     Long counthouse();
     String delhouse(int houseid);
     String addhouse(HouseEntity houseEntity);
-    String updatehousepwd(int houseid,String oldpwd,String newpwd);
+    String updatehouse(HouseEntity houseEntity);
     HouseEntity getHouse(int houseid);
 }

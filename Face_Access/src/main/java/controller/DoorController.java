@@ -62,7 +62,6 @@ public class DoorController {
         doorEntity.setDoorStatus(status);
         doorEntity.setDoorIp(ip);
         doorEntity.setDoorLocation(location);
-        System.out.println(location);
         return  doorService.update(doorEntity);
     }
     @RequestMapping("/deldoor")

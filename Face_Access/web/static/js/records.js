@@ -1,5 +1,5 @@
 layui.use(['jquery', 'laypage', 'table', 'layer', 'element', 'laydate'], function () {
-    var $ = layui.$, laypage = layui.laypage
+    var $ = layui.$
         , table = layui.table, layer = layui.layer
         , element = layui.element;
     layer.load();
@@ -7,6 +7,8 @@ layui.use(['jquery', 'laypage', 'table', 'layer', 'element', 'laydate'], functio
         elem: '#recordTable'
         , url: '/recordsjson'
         , page: true
+        ,limit:5
+        ,limits:[5, 10, 20, 30, 40, 50]
         , cols: [[
             // {field: 'Id', title: 'ID', align: "center"}
             // , {field: 'doorId', title: '门的id', align: "center"}
@@ -20,9 +22,6 @@ layui.use(['jquery', 'laypage', 'table', 'layer', 'element', 'laydate'], functio
         done:function(res, curr, count){
             layer.closeAll('loading');
         }
-    });
-    laypage.render({
-        limit:10
     });
     //监听工具条 tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
     table.on('tool(recordTable)', function (obj) {

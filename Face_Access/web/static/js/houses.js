@@ -58,13 +58,17 @@ layui.use(['jquery', 'laypage', 'table', 'layer', 'element'], function () {
                 yes: function (index, layero) {
                     var test = $('#' + layero.find('iframe')[0]['name']).get(0);
                     var doc = test.contentDocument;
-                    var oldPassword = $("#oldPassword", doc).val();
-                    var newPassword = $("#newPassword", doc).val();
+                    var id = $("#houseid", doc).val();
+                    var doorid = $("#doorid", doc).val();
+                    var userid = $("#userid", doc).val();
+                    var password = $("#password", doc).val();
                     $.post("/updatehouse",
                         {
                             "Content-Type:text/html;charset":"utf8",
-                            oldPassword:oldPassword,
-                            newPassword:newPassword
+                            houseid:id,
+                            doorid:doorid,
+                            userid: userid,
+                            housepassword:password
                         },
                         function(data,status){
                             if(data=='fail'){

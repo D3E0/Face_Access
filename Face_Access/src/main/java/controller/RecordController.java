@@ -29,7 +29,7 @@ public class RecordController {
     }
     @RequestMapping(value="recordsjson", produces = "text/html; charset=utf-8")
     @ResponseBody
-    public String recordsjson(@RequestParam (value = "page",defaultValue = "1")String page,@RequestParam (value = "limit",defaultValue = "10")String limit,@RequestParam (value = "keyword",defaultValue = "")String keyword){
+    public String recordsjson(@RequestParam (value = "page",defaultValue = "1")String page,@RequestParam (value = "limit",defaultValue = "5")String limit,@RequestParam (value = "keyword",defaultValue = "")String keyword){
         List<OpenRecordEntity> list=null;
         if (keyword.equals(""))
             list = recordService.getRecordlist(Integer.parseInt(page),Integer.parseInt(limit));
