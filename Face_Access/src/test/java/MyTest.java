@@ -1,16 +1,20 @@
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import dao.AuthorityDao;
-import dao.AuthorityDaoImp;
-import dao.UserDao;
-import dao.UserDaoImp;
+import dao.*;
 import dto.AuthorityDTO;
 import dto.AuthorityListDTO;
 import entity.AuthorityEntity;
 import entity.UserEntity;
 import org.junit.Test;
+import service.FaceMangeService;
+import service.FaceMangeServiceImp;
+import util.Base64Util;
 import util.EncryptInfo;
+import util.Face;
+import util.FileUtil;
 
+import java.io.IOException;
+import java.net.URLEncoder;
 import java.sql.Date;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -65,8 +69,40 @@ public class MyTest {
         object.put("result", "success");
         System.out.println(JSON.toJSONString(object));
     }
+    @Test
+    public void testFace() throws IOException {
+        String filePath = "C:\\Users\\11835\\Desktop\\666.jpg";
+        byte[] imgData = FileUtil.readFileByBytes(filePath);
+        String imgStr = Base64Util.encode(imgData);
+//        String imgParam = URLEncoder.encode(imgStr, "UTF-8");
+        Face.search(imgStr);
+    }
+    @Test
+    public void addFace() throws IOException {
+        FaceDaoImp faceDao=new FaceDaoImp();
+        byte[] imgData = new byte[0];
+        for (int i=1001;i<=4000;i++){
+            String filePath = "C:\\Users\\11835\\Documents\\Tencent Files\\1183503933\\FileRecv\\原始人脸 - 副本\\"+i+".jpg";
+           try {
+               imgData = FileUtil.readFileByBytes(filePath);
+           }catch (Exception e){
 
+           }
+            String imgStr = Base64Util.encode(imgData);
+//        String imgParam = URLEncoder.encode(imgStr, "UTF-8");
+            faceDao.addface(i+"",imgStr);
 
+        }
+    }
+    @Test
+    public void addFace1() throws IOException {
+        FaceDaoImp faceDao=new FaceDaoImp();
+            String filePath = "C:\\Users\\11835\\Desktop\\"+666+".jpg";
+            byte[] imgData = FileUtil.readFileByBytes(filePath);
+            String imgStr = Base64Util.encode(imgData);
+//        String imgParam = URLEncoder.encode(imgStr, "UTF-8");
+        faceDao.addface("1",imgStr);
+    }
     @Test
     public void testHibernate() {
 //        AuthorityDao authorityDao = new AuthorityDaoImp();

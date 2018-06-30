@@ -14,6 +14,7 @@ public class FaceMangeServiceImp implements FaceMangeService{
 
     @Override
     public String addface(String userid, String img) {
+        System.out.println(faceDao);
         return faceDao.addface(userid,img);
     }
 

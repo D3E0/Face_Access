@@ -27,6 +27,7 @@ layui.use(['jquery', 'laypage', 'table', 'layer', 'element', 'laydate'], functio
                 content: '<div style="text-align: center">确定要删除该门禁吗？</div>'
                 , btn: ['取消', '删除'] //按钮
                 , btnAlign: 'c'
+                , height:'500px'
                 , yes: function () {
                     layer.msg("取消删除");
                 }

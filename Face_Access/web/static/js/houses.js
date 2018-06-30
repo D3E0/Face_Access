@@ -83,7 +83,7 @@ layui.use(['jquery', 'laypage', 'table', 'layer', 'element'], function () {
         layer.open({
             type: 2,
             content: ['/addhouseview', 'no'],
-            title: '添加门禁',
+            title: '添加房间',
             btn: ['确认', '取消'],
             area: ['500', '580'],
             resize: false,
@@ -97,12 +97,15 @@ layui.use(['jquery', 'laypage', 'table', 'layer', 'element'], function () {
                 var doorid = $("#doorid", doc).val();
                 var userid = $("#userid", doc).val();
                 var password = $("#password", doc).val();
+                $("#houseid", doc).removeClass("wrong");
                 if (!isValidID(id)) {
                     layer.msg("请输入正确的房间号");
+                    $("#houseid", doc).addClass("wrong");
+                    $( "#houseid", doc ).effect( 'shake', 500 );
                     return false
                 }
                 if (!isValidID(doorid)) {
-                    layer.msg("请输入正确的房间号");
+                    layer.msg("请输入正确的门号");
                     return false
                 }
                 if (!isValidID(userid)) {
