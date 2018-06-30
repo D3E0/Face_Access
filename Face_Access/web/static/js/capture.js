@@ -30,9 +30,8 @@ layui.use(['layer'], function () {
             layer.close(index);
             stopStreamedVideo();
             var dataObj = eval("(" + obj + ")");
-            var score = dataObj.result.user_list[0].score;
-            console.info(score);
-            if (score > 80) {
+
+            if (dataObj.result === 'success') {
                 layer.msg("登陆成功");
             } else {
                 layer.msg("似乎失败了呢，再试一次吧", {icon: 5});

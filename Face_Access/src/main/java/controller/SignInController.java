@@ -1,6 +1,5 @@
 package controller;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import entity.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -78,6 +77,19 @@ public class SignInController {
             object.put("result", "success");
         }
 
+        return object.toJSONString();
+    }
+
+    @RequestMapping("/processSignInByFace")
+    @ResponseBody
+    public String processSignInByFace(@RequestParam(value = "img", defaultValue = "0") String imgStr) {
+        JSONObject object = new JSONObject();
+        object.put("result", "fail");
+        imgStr = imgStr.replaceFirst("data:image/jpeg;base64,", "");
+        Boolean res = signInService.verifyUserByFace(imgStr);
+        if (res) {
+            object.put("result", "success");
+        }
         return object.toJSONString();
     }
 

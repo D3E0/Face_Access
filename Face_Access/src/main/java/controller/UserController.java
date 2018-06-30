@@ -11,10 +11,14 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import service.UserMangeService;
+import util.Base64Util;
 import util.EncryptInfo;
+import util.FileUtil;
 import util.VerifyCodeProducer;
 
 import javax.servlet.http.HttpSession;
+import java.io.File;
+import java.io.IOException;
 import java.util.logging.Logger;
 
 @Controller
@@ -94,14 +98,26 @@ public class UserController {
      */
     @RequestMapping("/upload")
     @ResponseBody
-    public String savePicture(@RequestPart("image") MultipartFile image) {
-        logger.info(String.valueOf(image.getSize()));
-//        try {
-//            image.transferTo(new File(image.getOriginalFilename()));
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-        return "{\"code\":0,\"msg\":\"success\"}";
+    public String savePicture(@RequestPart("image") MultipartFile image,
+                              @RequestParam int userId) {
+        JSONObject object = new JSONObject();
+        object.put("code", 0);
+        object.put("msg", "fail");
+        logger.info("dsada");
+        try {
+            File file = new File("D:\\fxml", image.getOriginalFilename());
+            logger.info(file.getAbsolutePath());
+            image.transferTo(file);
+            byte[] imgData = FileUtil.readFileByBytes(file.getAbsolutePath());
+            String imgStr = Base64Util.encode(imgData);
+            boolean res = userService.updateUserFace(userId, imgStr);
+            if (res) {
+                object.put("msg", "success");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return object.toJSONString();
     }
 
 }

@@ -30,7 +30,7 @@ public class UserDaoImp implements UserDao {
 //    public void setFactory(SessionFactory factory) {
 //        this.factory = factory;
 //    }
-//
+
     public UserDaoImp() {
         StandardServiceRegistry registry = new StandardServiceRegistryBuilder().configure().build();
         factory = new MetadataSources(registry).buildMetadata().buildSessionFactory();
@@ -64,10 +64,6 @@ public class UserDaoImp implements UserDao {
 
         if (user.getUserName() != null) {
             userEntity.setUserName(user.getUserName());
-        }
-
-        if (user.getUserFace() != null) {
-            userEntity.setUserFace(user.getUserFace());
         }
 
         if (user.getUserPassword() != null) {
