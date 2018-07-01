@@ -12,10 +12,6 @@
 <script rel="script" src="${pageContext.request.contextPath}/static/layui/layui.js"></script>
 <div class="panel-lite">
     <div class="layui-tab">
-        <ul class="layui-tab-title  tap">
-            <li class="layui-this">登录</li>
-            <li>人脸登录</li>
-        </ul>
         <div class="layui-tab-content">
             <div class="layui-tab-item layui-show">
                 <div class="thumbur">
@@ -34,12 +30,6 @@
                     <a href="#">忘记密码?</a>
                     <button class="floating-btn" type="submit"><i class="icon-arrow"></i></button>
                 </form>
-            </div>
-            <div class="layui-tab-item" onclick="startvideo()">
-                <video id="video" width="350" height="350" poster="/static/images/face.png"></video>
-                <canvas id="canvas" hidden width="350" height="350"></canvas>
-                <script type="text/javascript" src="${pageContext.request.contextPath}/static/js/takepic.js"></script>
-                <button class="layui-btn takepic" onclick="takepic()">点击触发</button>
             </div>
         </div>
     </div>

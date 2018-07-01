@@ -112,13 +112,13 @@
                     328
                 ],
                 "enableMouseTracking": false,
-                "color": "#81c784"
+                "color": "#5FB878"
             }
         ],
         "yAxis": [
             {
                 "title": {
-                    "text": "气温（℃）"
+                    "text": "开门数"
                 },
                 "index": 0
             }
@@ -134,10 +134,7 @@
             "type": "column"
         },
         "title": {
-            "text": "月平均气温"
-        },
-        "subtitle": {
-            "text": "数据来源: WorldClimate.com"
+            "text": "月平均开门"
         },
         "plotOptions": {
             "line": {
@@ -151,107 +148,6 @@
             }
         }
     });
-    var options = {
-        "xAxis": [
-            {
-                "type": "category",
-                "categories": [
-                    "一月",
-                    "二月",
-                    "三月",
-                    "四月",
-                    "五月",
-                    "六月",
-                    "七月",
-                    "八月",
-                    "九月",
-                    "十月",
-                    "十一月",
-                    "十二月"
-                ],
-                "index": 0,
-                "isX": true
-            }
-        ],
-        "series": [
-            {
-                "name": "进门失败",
-                "data": [
-                    20,
-                    27,
-                    10,
-                    25,
-                    24,
-                    35,
-                    39,
-                    20,
-                    34,
-                    54,
-                    25,
-                    35
-                ],
-                "animation": true,
-                "connectEnds": true,
-                "enableMouseTracking": false,
-                "negativeColor": "#0088FF",
-                "color": "#FF0000"
-            },
-            {
-                "name": "进门成功",
-                "data": [
-                    300,
-                    341,
-                    338,
-                    390,
-                    340,
-                    300,
-                    410,
-                    310,
-                    240,
-                    280,
-                    290,
-                    328
-                ],
-                "enableMouseTracking": false,
-                "color": "#81c784"
-            }
-        ],
-        "yAxis": [
-            {
-                "title": {
-                    "text": "气温（℃）"
-                },
-                "index": 0
-            }
-        ],
-        "chart": {
-            "style": {
-                "fontFamily": "\"微软雅黑\", Arial, Helvetica, sans-serif",
-                "color": "#333",
-                "fontSize": "12px",
-                "fontWeight": "normal",
-                "fontStyle": "normal"
-            },
-            "type": "column"
-        },
-        "title": {
-            "text": "月平均气温"
-        },
-        "subtitle": {
-            "text": "数据来源: WorldClimate.com"
-        },
-        "plotOptions": {
-            "line": {
-                "animation": false,
-                "allowPointSelect": false
-            },
-            "series": {
-                "dataLabels": {
-                    "enabled": true
-                }
-            }
-        }
-    }
 </script>
 <div class="content" align="right">
     <div id="search" ><input type="text" id="searchtxt" size="25px"  placeholder="根据位置或用户名搜索"><button id="searchbtn" class="layui-btn">搜索</button></div>
