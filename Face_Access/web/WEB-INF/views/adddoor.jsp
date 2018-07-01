@@ -41,8 +41,8 @@
             <div class="layui-input-inline">
                 <select id="status" lay-verify="">
                     <option value="">请选择状态</option>
-                    <option value="ok">正常</option>
-                    <option value="not ok">维护</option>
+                    <option value="normal">正常</option>
+                    <option value="broken">维护</option>
                 </select>
             </div>
         </div>

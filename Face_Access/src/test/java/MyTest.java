@@ -13,6 +13,7 @@ import manager.FaceManager;
 import manager.FaceManagerImp;
 import org.junit.Test;
 import util.Base64Util;
+import util.DateParse;
 import util.EncryptInfo;
 import util.FileUtil;
 
@@ -28,6 +29,20 @@ public class MyTest {
 
     @Test
     public void insertAuthority() {
+        int house[] = new int[]{120506, 90606};
+        String startDate = "2018-07-01";
+        String endDate = "2018-07-16";
+        Date startSqlDate = DateParse.stringToSql(startDate);
+        Date endSqlDate = DateParse.stringToSql(endDate);
+
+        AuthorityDao aut = new AuthorityDaoImp();
+        for (int i = 12; i < 250; i++) {
+            int houseIndex = (int) (Math.random() * 2);
+            AuthorityEntity entity = new AuthorityEntity(i, house[houseIndex]);
+            entity.setEndDate(endSqlDate);
+            entity.setStartDate(startSqlDate);
+            aut.addAuthority(entity);
+        }
 
     }
 

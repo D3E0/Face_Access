@@ -48,7 +48,7 @@
     </style>
 </head>
 <body class="layui-layout-body">
-<div id="container" style="min-width:400px;height:400px"></div>
+<%--<div id="container" style="min-width:400px;height:400px"></div>--%>
 <script>
     var chart = Highcharts.chart('container', {
         "xAxis": [
