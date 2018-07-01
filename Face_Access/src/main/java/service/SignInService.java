@@ -8,7 +8,7 @@ public interface SignInService {
 
     public boolean verifyUser(String username, String password);
 
-    public Boolean verifyUserByFace(String img);
+    public int verifyUserByFace(String img);
 
     public String getUsername(int userId);
 

@@ -7,5 +7,5 @@ public interface FaceManager {
 
     Boolean updateFace(String userid, String img);
 
-    Boolean searchFace(String img);
+    int searchFace(String img);
 }

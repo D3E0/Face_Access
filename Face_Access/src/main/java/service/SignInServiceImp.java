@@ -44,7 +44,7 @@ public class SignInServiceImp implements SignInService {
     }
 
     @Override
-    public Boolean verifyUserByFace(String img) {
+    public int verifyUserByFace(String img) {
         return faceManager.searchFace(img);
     }
 

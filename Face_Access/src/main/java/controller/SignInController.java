@@ -11,6 +11,7 @@ import service.SignInService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.Serializable;
 import java.util.logging.Logger;
 
 
@@ -82,12 +83,15 @@ public class SignInController {
 
     @RequestMapping("/processSignInByFace")
     @ResponseBody
-    public String processSignInByFace(@RequestParam(value = "img", defaultValue = "0") String imgStr) {
+    public String processSignInByFace(@RequestParam(value = "img") String imgStr,
+                                      HttpSession session) {
         JSONObject object = new JSONObject();
         object.put("result", "fail");
         imgStr = imgStr.replaceFirst("data:image/jpeg;base64,", "");
-        Boolean res = signInService.verifyUserByFace(imgStr);
-        if (res) {
+        int id = signInService.verifyUserByFace(imgStr);
+        if (id != -1) {
+            session.setAttribute("username", signInService.getUsername(id));
+            session.setAttribute("userid", id);
             object.put("result", "success");
         }
         return object.toJSONString();
