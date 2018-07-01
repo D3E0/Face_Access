@@ -31,7 +31,7 @@ public class FaceManagerImp implements FaceManager {
     }
 
     @Override
-    public Boolean searchFace(String img) {
+    public int searchFace(String img) {
         String str = Face.search(img);
         if (str != null) {
             str = str.replaceFirst("result:", "");
@@ -41,6 +41,11 @@ public class FaceManagerImp implements FaceManager {
         JSONArray array = jsonObject.getJSONArray("user_list");
         jsonObject = array.getJSONObject(0);
         double ans = jsonObject.getDouble("score");
-        return ans > 80;
+        int userId = jsonObject.getInteger("user_id");
+        if (ans > 80) {
+            return userId;
+        } else {
+            return -1;
+        }
     }
 }

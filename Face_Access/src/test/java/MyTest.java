@@ -1,5 +1,6 @@
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.sun.org.apache.bcel.internal.generic.NEW;
 import dao.AuthorityDao;
 import dao.AuthorityDaoImp;
 import dao.UserDao;
@@ -15,7 +16,7 @@ import util.Base64Util;
 import util.EncryptInfo;
 import util.FileUtil;
 
-import java.io.IOException;
+import java.io.*;
 import java.sql.Date;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -24,6 +25,45 @@ import java.util.Iterator;
 import java.util.List;
 
 public class MyTest {
+
+    @Test
+    public void insertAuthority() {
+
+    }
+
+    @Test
+    public void insertUser() {
+        UserDao userDao = new UserDaoImp();
+        File file = new File("C:\\Users\\91417\\Desktop", "name.txt");
+        try {
+            FileReader fr = new FileReader(file);
+            BufferedReader br = new BufferedReader(fr);
+            String str;
+            while ((str = br.readLine()) != null) {
+                System.out.println("--" + str + "--");
+                UserEntity entity = new UserEntity();
+                entity.setUserName(str);
+                String p = getTelephone();
+                entity.setUserTelephone(p);
+                entity.setUserPassword(EncryptInfo.MD5(p));
+                System.out.println(userDao.addUser(entity));
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private String getTelephone() {
+        int[] prefix = new int[]{134, 135, 136, 137, 138, 139, 150, 151, 152, 157, 158, 159, 130, 131, 132, 145, 155, 156, 171, 175, 176, 185, 186, 153, 173, 189, 177, 170};
+        int index = (int) (Math.random() * prefix.length);
+        StringBuffer buffer = new StringBuffer();
+        buffer.append(prefix[index]);
+        for (int i = 0; i < 8; i++) {
+            int x = (int) (Math.random() * 10);
+            buffer.append(x);
+        }
+        return String.valueOf(buffer);
+    }
 
     @Test
     public void testFace() throws IOException {
