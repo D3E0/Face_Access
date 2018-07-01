@@ -18,7 +18,9 @@ body{
     background-color: #efefef;
     *zoom: 1;
     margin: auto;
+    margin-top:50px ;
     border-radius: 100%;
+    overflow: hidden;
 }
 .form-group {
     position: relative;

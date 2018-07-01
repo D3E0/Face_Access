@@ -15,7 +15,7 @@
         <div class="layui-tab-content">
             <div class="layui-tab-item layui-show">
                 <div class="thumbur">
-                    <div class="icon-lock"></div>
+                    <img src="${pageContext.request.contextPath}/static/images/logo.jpg" width="150" height="150">
                 </div>
                 <h4>用户登录</h4>
                 <form action="" method="get">
