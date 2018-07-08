@@ -61,7 +61,7 @@ public class AuthorityController {
     public String showUserJson(HttpSession session, HttpServletRequest request,
                                @RequestParam int limit,
                                @RequestParam int page) {
-        Integer userId = (Integer) session.getAttribute("userid");
+        Integer userId = (Integer) session.getAttribute("userId");
         String additional = request.getParameter("data");
         logger.info(page + " " + limit);
         AuthorityListDTO authorityListDTO;

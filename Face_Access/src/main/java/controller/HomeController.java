@@ -1,9 +1,7 @@
 package controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import service.UserMangeServiceImp;
 
 import javax.servlet.http.HttpSession;
 
@@ -15,13 +13,6 @@ import javax.servlet.http.HttpSession;
 @Controller
 public class HomeController {
 
-    private UserMangeServiceImp userService;
-
-    @Autowired
-    public void setUserService(UserMangeServiceImp userService) {
-        this.userService = userService;
-    }
-
     /**
      * 主界面，判断用户是否登陆，没有登陆重定向至登陆界面
      *
@@ -30,10 +21,12 @@ public class HomeController {
      */
     @RequestMapping("/home")
     public String showHomePage(HttpSession session) {
-        String username = (String) session.getAttribute("username");
-        if (username == null) {
+        Integer userId = (Integer) session.getAttribute("userId");
+
+        if (userId == null) {
             return "redirect:/signIn";
         }
+
         return "home";
     }
 
@@ -46,8 +39,7 @@ public class HomeController {
 
     @RequestMapping("/quit")
     public String quit(HttpSession session) {
-        session.removeAttribute("userid");
-        session.removeAttribute("username");
+        session.removeAttribute("userId");
         return "redirect:/signIn";
     }
 

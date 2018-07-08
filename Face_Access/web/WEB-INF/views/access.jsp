@@ -28,7 +28,7 @@
 
         <div class="layui-col-md12">
             <div class="layui-card">
-                <div class="layui-card-header">可通行门列表——普通用户</div>
+                <div class="layui-card-header">可通行门列表</div>
                 <div class="layui-card-body">
                     <div class="layui-input-inline">
                         <input class="layui-input" id="searchVal">

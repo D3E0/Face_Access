@@ -1,7 +1,6 @@
 package controller;
 
 import com.alibaba.fastjson.JSONObject;
-import entity.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,11 +10,8 @@ import service.SignInService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.io.Serializable;
 import java.util.logging.Logger;
 
-
-//TODO 第一次登陆后上传人脸图像
 @Controller
 public class SignInController {
 
@@ -53,16 +49,24 @@ public class SignInController {
                                 HttpSession session) {
         JSONObject object = new JSONObject();
         object.put("result", "fail");
-
         if (signInService.verifyUser(username, password)) {
-            session.setAttribute("username", username);
-            session.setAttribute("userid", signInService.getUserId(username));
+            int userId = signInService.getUserId(username);
+            session.setAttribute("userId", userId);
+            session.setAttribute("type", signInService.getUserType(userId));
+            session.setAttribute("username", signInService.getUsername(userId));
             object.put("result", "success");
         }
-
         return object.toJSONString();
     }
 
+    /**
+     * 手机号、验证码登陆
+     *
+     * @param telephone
+     * @param verifyCode
+     * @param session
+     * @return
+     */
     @RequestMapping("/processSignInByTelephone")
     @ResponseBody
     public String processSignInByTelephone(@RequestParam String telephone,
@@ -72,15 +76,22 @@ public class SignInController {
         object.put("result", "fail");
         String digitVerifyCode = (String) session.getAttribute("digitVerifyCode");
         if (verifyCode.equals(digitVerifyCode)) {
-            UserEntity entity = signInService.getUserByTelephone(telephone);
-            session.setAttribute("username", entity.getUserName());
-            session.setAttribute("userid", entity.getUserId());
+            int userId = signInService.getUserIdByTelephone(telephone);
+            session.setAttribute("userId", userId);
+            session.setAttribute("type", signInService.getUserType(userId));
+            session.setAttribute("username", signInService.getUsername(userId));
             object.put("result", "success");
         }
-
         return object.toJSONString();
     }
 
+    /**
+     * 人脸登陆
+     *
+     * @param imgStr
+     * @param session
+     * @return
+     */
     @RequestMapping("/processSignInByFace")
     @ResponseBody
     public String processSignInByFace(@RequestParam(value = "img") String imgStr,
@@ -90,8 +101,9 @@ public class SignInController {
         imgStr = imgStr.replaceFirst("data:image/jpeg;base64,", "");
         int id = signInService.verifyUserByFace(imgStr);
         if (id != -1) {
+            session.setAttribute("userId", id);
             session.setAttribute("username", signInService.getUsername(id));
-            session.setAttribute("userid", id);
+            session.setAttribute("type", signInService.getUserType(id));
             object.put("result", "success");
         }
         return object.toJSONString();
@@ -158,6 +170,5 @@ public class SignInController {
         }
         return object.toJSONString();
     }
-
 
 }

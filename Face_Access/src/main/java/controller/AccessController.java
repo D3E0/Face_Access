@@ -35,7 +35,7 @@ public class AccessController {
                          HttpServletRequest request,
                          @RequestParam int limit,
                          @RequestParam int page) {
-        Integer userId = (Integer) session.getAttribute("userid");
+        Integer userId = (Integer) session.getAttribute("userId");
         String additional = request.getParameter("data");
         AuthorityListDTO authorityListDTO;
         if (additional == null) {

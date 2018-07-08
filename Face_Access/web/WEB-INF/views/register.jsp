@@ -59,11 +59,11 @@
 
 </head>
 <body>
-<div class="layui-container" style="margin-top: 50px; border: 1px solid black; height: 500px;">
+<div class="layui-container" style="margin-top: 50px;  height: 500px;">
     <div class="layui-row layui-col-space15">
         <div class="layui-col-md7">
             <div id="box">
-                <img src="/static/images/画板%201.png" id="img">
+                <img src="/static/images/door.png" id="img">
             </div>
         </div>
         <div class="layui-col-md5">

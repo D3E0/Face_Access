@@ -1,5 +1,6 @@
 package service;
 
+import dao.HouseDao;
 import dao.UserDao;
 import entity.UserEntity;
 import manager.FaceManager;
@@ -7,15 +8,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import util.EncryptInfo;
 
+import java.util.List;
 import java.util.logging.Logger;
 
 @Service
 public class SignInServiceImp implements SignInService {
 
     private UserDao userDao;
+    private HouseDao houseDao;
     private FaceManager faceManager;
 
     Logger logger = Logger.getLogger("dsad");
+
+    @Autowired
+    public void setHouseDao(HouseDao houseDao) {
+        this.houseDao = houseDao;
+    }
 
     @Autowired
     public void setUserDao(UserDao userDao) {
@@ -37,10 +45,7 @@ public class SignInServiceImp implements SignInService {
     public boolean verifyUser(String username, String password) {
         password = EncryptInfo.MD5(password);
         UserEntity entity = userDao.verifyUser(username, password);
-        if (entity != null) {
-            return true;
-        }
-        return false;
+        return entity != null;
     }
 
     @Override
@@ -54,13 +59,35 @@ public class SignInServiceImp implements SignInService {
     }
 
     @Override
+    public String getUserType(int userId) {
+        UserEntity entity = userDao.getUserById(userId);
+        if (0 == entity.getUserType()) {
+            List list = houseDao.getHouseIdByOwner(userId);
+            return list.size() > 0 ? "OWNER" : "USER";
+        } else {
+            return "ADMIN";
+        }
+    }
+
+    @Override
     public int getUserId(String username) {
         return userDao.getUserByName(username).getUserId();
     }
 
     @Override
-    public UserEntity getUserByTelephone(String telephone) {
-        return userDao.getUserByTelephone(telephone);
+    public int getUserIdByTelephone(String telephone) {
+        UserEntity entity = userDao.getUserByTelephone(telephone);
+        return entity == null ? -1 : entity.getUserId();
+    }
+
+    @Override
+    public UserEntity getUser(int userId) {
+        return userDao.getUserById(userId);
+    }
+
+    @Override
+    public UserEntity getUserByUsername(String username) {
+        return userDao.getUserByName(username);
     }
 
     @Override

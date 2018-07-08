@@ -12,9 +12,15 @@ public interface SignInService {
 
     public String getUsername(int userId);
 
+    public String getUserType(int userId);
+
     public int getUserId(String username);
 
-    public UserEntity getUserByTelephone(String telephone);
+    public int getUserIdByTelephone(String telephone);
+
+    public UserEntity getUser(int userId);
+
+    public UserEntity getUserByUsername(String username);
 
     public int addUser(String username, String userTel, String password);
 }

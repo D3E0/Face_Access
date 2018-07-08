@@ -3,7 +3,6 @@ package entity;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import java.util.Arrays;
 
 @Entity
 @Table(name = "user", schema = "my_data_base", catalog = "")
@@ -12,7 +11,7 @@ public class UserEntity {
     private int userId;
     private String userTelephone;
     private String userPassword;
-
+    private int userType;
 
     public UserEntity() {
     }
@@ -23,9 +22,21 @@ public class UserEntity {
         this.userTelephone = userTelephone;
     }
 
-    public UserEntity(String username){
-        userName=username;
+    public UserEntity(String username) {
+        userName = username;
     }
+
+
+    @Basic
+    @Column(name = "userType")
+    public int getUserType() {
+        return userType;
+    }
+
+    public void setUserType(int userType) {
+        this.userType = userType;
+    }
+
     @Basic
     @Column(name = "userName")
     public String getUserName() {
