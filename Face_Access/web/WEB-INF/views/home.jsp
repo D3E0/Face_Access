@@ -53,7 +53,7 @@
                     <dd><a href="javascript:">密码修改</a></dd>
                 </dl>
             </li>
-            <li class="layui-nav-item" id="quit"><a href="/quit">退下</a></li>
+            <li class="layui-nav-item" id="quit"><a href="/logout">退下</a></li>
         </ul>
     </div>
 
@@ -97,14 +97,14 @@
 
         if (type === 'ADMIN') {
             $('<li class="layui-nav-item layui-this"></li>').append($('<a href="/records" target="frame">进出门记录查看</a>')).appendTo($elem);
-            $('<li class="layui-nav-item"></li>').append($('<a href="/users" target="frame">人员管理</a>')).appendTo($elem);
+            $('<li class="layui-nav-item"></li>').append($('<a href="/authorities" target="frame">人员管理</a>')).appendTo($elem);
             $('<li class="layui-nav-item"></li>').append($('<a href="/doors" target="frame">门禁管理</a>')).appendTo($elem);
             $('<li class="layui-nav-item"></li>').append($('<a href="/houses" target="frame">房间管理</a>')).appendTo($elem);
             $('#frame').attr('src', '/records');
         } else if (type === 'OWNER') {
-            $('<li class="layui-nav-item layui-this"></li>').append($('<a href="/users" target="frame">人员管理</a>')).appendTo($elem);
+            $('<li class="layui-nav-item layui-this"></li>').append($('<a href="/authorities" target="frame">人员管理</a>')).appendTo($elem);
             $('<li class="layui-nav-item"></li>').append($('<a href="/access" target="frame">可通行门列表</a>')).appendTo($elem);
-            $('#frame').attr('src', '/users');
+            $('#frame').attr('src', '/authorities');
         } else {
             $('<li class="layui-nav-item layui-this"></li>').append($('<a href="/access" target="frame">可通行门列表</a>')).appendTo($elem);
             $('#frame').attr('src', '/access');

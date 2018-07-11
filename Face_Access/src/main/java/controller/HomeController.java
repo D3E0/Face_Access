@@ -3,7 +3,12 @@ package controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.util.Enumeration;
+import java.util.logging.Logger;
 
 /**
  * @author ACM-PC
@@ -13,20 +18,15 @@ import javax.servlet.http.HttpSession;
 @Controller
 public class HomeController {
 
+    private Logger logger = Logger.getLogger("a");
+
     /**
-     * 主界面，判断用户是否登陆，没有登陆重定向至登陆界面
+     * 返回主界面
      *
-     * @param session
      * @return
      */
     @RequestMapping("/home")
-    public String showHomePage(HttpSession session) {
-        Integer userId = (Integer) session.getAttribute("userId");
-
-        if (userId == null) {
-            return "redirect:/signIn";
-        }
-
+    public String showHomePage() {
         return "home";
     }
 
@@ -37,11 +37,32 @@ public class HomeController {
      * @return signIn.jsp
      */
 
-    @RequestMapping("/quit")
-    public String quit(HttpSession session) {
-        session.removeAttribute("userId");
+    @RequestMapping("/logout")
+    public String logout(HttpSession session,
+                         HttpServletRequest request,
+                         HttpServletResponse response) {
+        Enumeration<String> AttributeNames = session.getAttributeNames();
+        while (AttributeNames.hasMoreElements()) {
+            session.removeAttribute(AttributeNames.nextElement());
+        }
+
+        Cookie[] cookies = request.getCookies();
+        for (Cookie cookie : cookies) {
+            if ("autoLogin".equals(cookie.getName())) {
+                cookie.setMaxAge(0);
+                response.addCookie(cookie);
+            }
+        }
         return "redirect:/signIn";
     }
 
+    @RequestMapping("/denied")
+    public String denied() {
+        return "denied";
+    }
 
+    @RequestMapping("/error")
+    public String error() {
+        return "error";
+    }
 }

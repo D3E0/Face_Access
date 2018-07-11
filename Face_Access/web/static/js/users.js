@@ -5,7 +5,7 @@ layui.use(['jquery', 'laypage', 'table', 'layer', 'element', 'laydate'], functio
 
     parent.register.userTable = table.render({
         elem: '#userTable'
-        , url: '/Authorities'
+        , url: '/authorities/json'
         , page: true
         , cols: [[
             {field: 'houseId', title: '房间 ID', align: "center"}
@@ -40,7 +40,7 @@ layui.use(['jquery', 'laypage', 'table', 'layer', 'element', 'laydate'], functio
                     layer.msg("取消删除");
                 }
                 , btn2: function () {
-                    $.post("/deleteAuthority", {id: data.authorityId}, function (data) {
+                    $.post("/authorities/delete", {id: data.authorityId}, function (data) {
                         var dataObj = eval("(" + data + ")");
                         if (dataObj.result === 'success') {
                             layer.msg("删除成功");
@@ -54,7 +54,7 @@ layui.use(['jquery', 'laypage', 'table', 'layer', 'element', 'laydate'], functio
         } else if (layEvent === 'edit') { //编辑;
             parent.layer.open({
                 type: 2,
-                content: ['/authorityInfo?start=' + data.startDate + '&end=' + data.endDate + '&remark=' + data.remark, 'no'],
+                content: ['/authorities/info?start=' + data.startDate + '&end=' + data.endDate + '&remark=' + data.remark, 'no'],
                 title: false,
                 shade: 0,
                 btn: ['确认', '取消'],
@@ -67,7 +67,7 @@ layui.use(['jquery', 'laypage', 'table', 'layer', 'element', 'laydate'], functio
                     var editDoc = editFrame.contentDocument;
                     var endDate = $("#endDate", editDoc).val();
                     var remark = $("#remark", editDoc).val();
-                    $.post('/updateAuthority', {end: endDate, id: data.authorityId, remark: remark}, function (val) {
+                    $.post('/authorities/update', {end: endDate, id: data.authorityId, remark: remark}, function (val) {
                         var dataObj = eval("(" + val + ")");
                         if (dataObj.result === 'success') {
                             obj.update({
@@ -91,7 +91,7 @@ layui.use(['jquery', 'laypage', 'table', 'layer', 'element', 'laydate'], functio
         //用于关闭自身
         parent.register.addIndex = parent.layer.open({
             type: 2,
-            content: ['/addAuthority', 'no'],
+            content: ['/authorities/add', 'no'],
             title: '添加人员',
             area: ['500', '540'],
             resize: false,

@@ -12,7 +12,7 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 @Configuration
 @EnableWebMvc
 //@EnableAspectJAutoProxy
-@ComponentScan(basePackages = {"controller", "service", "manager"})
+@ComponentScan(basePackages = {"controller", "filter"})
 public class WebConfig implements WebMvcConfigurer {
 
     /**

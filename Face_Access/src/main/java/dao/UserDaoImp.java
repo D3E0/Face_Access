@@ -5,10 +5,8 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.annotations.DynamicUpdate;
-import org.hibernate.boot.MetadataSources;
-import org.hibernate.boot.registry.StandardServiceRegistry;
-import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.query.Query;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -26,15 +24,15 @@ public class UserDaoImp implements UserDao {
 
     private Logger logger = Logger.getLogger("dsd");
 
-//    @Autowired
-//    public void setFactory(SessionFactory factory) {
-//        this.factory = factory;
-//    }
-
-    public UserDaoImp() {
-        StandardServiceRegistry registry = new StandardServiceRegistryBuilder().configure().build();
-        factory = new MetadataSources(registry).buildMetadata().buildSessionFactory();
+    @Autowired
+    public void setFactory(SessionFactory factory) {
+        this.factory = factory;
     }
+
+//    public UserDaoImp() {
+//        StandardServiceRegistry registry = new StandardServiceRegistryBuilder().configure().build();
+//        factory = new MetadataSources(registry).buildMetadata().buildSessionFactory();
+//    }
 
     @Override
     public int addUser(UserEntity userEntity) {
@@ -122,7 +120,7 @@ public class UserDaoImp implements UserDao {
     public UserEntity getUserByName(String username) {
         Session session = factory.openSession();
         session.beginTransaction();
-        Query query = session.createQuery("select new UserEntity (userName, userId, userTelephone) from UserEntity  where userName = :A");
+        Query query = session.createQuery("from UserEntity  where userName = :A");
         query.setParameter("A", username);
         UserEntity entity = (UserEntity) query.getSingleResult();
         session.getTransaction().commit();

@@ -5,20 +5,27 @@ import dao.UserDao;
 import entity.UserEntity;
 import manager.FaceManager;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import util.EncryptInfo;
 
 import java.util.List;
 import java.util.logging.Logger;
 
 @Service
+//public class SignInServiceImp implements SignInService, UserDetailsService {
 public class SignInServiceImp implements SignInService {
 
     private UserDao userDao;
     private HouseDao houseDao;
     private FaceManager faceManager;
+    private BCryptPasswordEncoder passwordEncoder;
 
-    Logger logger = Logger.getLogger("dsad");
+    private Logger logger = Logger.getLogger("dsad");
+
+    @Autowired
+    public void setPasswordEncoder(BCryptPasswordEncoder passwordEncoder) {
+        this.passwordEncoder = passwordEncoder;
+    }
 
     @Autowired
     public void setHouseDao(HouseDao houseDao) {
@@ -43,9 +50,8 @@ public class SignInServiceImp implements SignInService {
 
     @Override
     public boolean verifyUser(String username, String password) {
-        password = EncryptInfo.MD5(password);
-        UserEntity entity = userDao.verifyUser(username, password);
-        return entity != null;
+        UserEntity entity = userDao.getUserByName(username);
+        return passwordEncoder.matches(password, entity.getUserPassword());
     }
 
     @Override
@@ -94,7 +100,7 @@ public class SignInServiceImp implements SignInService {
     public int addUser(String username, String telephone, String password) {
         UserEntity entity = new UserEntity();
         entity.setUserName(username);
-        entity.setUserPassword(EncryptInfo.MD5(password));
+        entity.setUserPassword(passwordEncoder.encode(password));
         entity.setUserTelephone(telephone);
         return userDao.addUser(entity);
     }

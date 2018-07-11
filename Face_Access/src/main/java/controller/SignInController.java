@@ -4,12 +4,17 @@ import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import service.SignInService;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.net.URLEncoder;
+import java.util.Base64;
 import java.util.logging.Logger;
 
 @Controller
@@ -17,7 +22,7 @@ public class SignInController {
 
     private SignInService signInService;
 
-    private Logger logger = Logger.getLogger("us");
+    private Logger logger = Logger.getLogger("SignInController");
 
     @Autowired
     public void setSignInService(SignInService signInService) {
@@ -29,7 +34,7 @@ public class SignInController {
      *
      * @return signIn.jsp
      */
-    @RequestMapping("/signIn")
+    @RequestMapping(value = "/signIn", method = RequestMethod.GET)
     public String doSignIn() {
         return "signIn";
     }
@@ -39,14 +44,12 @@ public class SignInController {
      *
      * @param username
      * @param password
-     * @param session
      * @return
      */
-    @RequestMapping("/processSignIn")
+    @RequestMapping("/signIn/process/username")
     @ResponseBody
-    public String processSignIn(@RequestParam String username,
-                                @RequestParam String password,
-                                HttpSession session) {
+    public String processSignIn(@RequestParam String username, @RequestParam String password,
+                                HttpSession session, HttpServletResponse response) {
         JSONObject object = new JSONObject();
         object.put("result", "fail");
         if (signInService.verifyUser(username, password)) {
@@ -54,9 +57,35 @@ public class SignInController {
             session.setAttribute("userId", userId);
             session.setAttribute("type", signInService.getUserType(userId));
             session.setAttribute("username", signInService.getUsername(userId));
+            logger.info("-----" + username + " " + password + " Match Success-----");
+            sendCookies(response, username, password);
             object.put("result", "success");
+        } else {
+            logger.info("-----" + username + " " + password + " Does Not Match-----");
         }
         return object.toJSONString();
+    }
+
+    private void sendCookies(HttpServletResponse response, String username, String password) {
+        String encodeStr = Base64.getEncoder().encodeToString(password.getBytes());
+        String urlEncodeStr = URLEncoder.encode(encodeStr);
+        Cookie cookie = new Cookie("autoLogin", username + "." + urlEncodeStr);
+        cookie.setMaxAge(24 * 60 * 60);
+        // 工程文件就是在根目录下 request.getContextPath() 为 ""
+        cookie.setPath("/");
+        response.addCookie(cookie);
+        logger.info("-----Add Cookies Success-----");
+    }
+
+    @RequestMapping("/signIn/cookie")
+    public String addCookies(HttpServletResponse response) {
+        Cookie cookie = new Cookie("test", "test");
+        cookie.setMaxAge(24 * 60 * 60);
+        // 工程文件就是在根目录下 request.getContextPath() 为 ""
+        cookie.setPath("/");
+        response.addCookie(cookie);
+        logger.info("-----" + cookie.getPath());
+        return "signIn";
     }
 
     /**
@@ -67,11 +96,13 @@ public class SignInController {
      * @param session
      * @return
      */
-    @RequestMapping("/processSignInByTelephone")
+    @RequestMapping("/signIn/process/telephone")
     @ResponseBody
     public String processSignInByTelephone(@RequestParam String telephone,
                                            @RequestParam String verifyCode,
-                                           HttpSession session) {
+                                           HttpSession session,
+                                           HttpServletRequest request,
+                                           HttpServletResponse response) {
         JSONObject object = new JSONObject();
         object.put("result", "fail");
         String digitVerifyCode = (String) session.getAttribute("digitVerifyCode");
@@ -92,10 +123,12 @@ public class SignInController {
      * @param session
      * @return
      */
-    @RequestMapping("/processSignInByFace")
+    @RequestMapping("/signIn/process/image")
     @ResponseBody
     public String processSignInByFace(@RequestParam(value = "img") String imgStr,
-                                      HttpSession session) {
+                                      HttpSession session,
+                                      HttpServletRequest request,
+                                      HttpServletResponse response) {
         JSONObject object = new JSONObject();
         object.put("result", "fail");
         imgStr = imgStr.replaceFirst("data:image/jpeg;base64,", "");
@@ -131,7 +164,7 @@ public class SignInController {
      * @param session
      * @return
      */
-    @RequestMapping("/processRegister")
+    @RequestMapping("/register/process")
     @ResponseBody
     public String processRegister(@RequestParam String username,
                                   @RequestParam String telephone,
@@ -158,7 +191,7 @@ public class SignInController {
      * @param req
      * @return JSON
      */
-    @RequestMapping("/verify")
+    @RequestMapping("/register/verify")
     @ResponseBody
     public String validateUsername(HttpServletRequest req) {
         String username = req.getParameter("username");

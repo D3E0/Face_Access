@@ -16,10 +16,11 @@ public class UserEntity {
     public UserEntity() {
     }
 
-    public UserEntity(String userName, int userId, String userTelephone) {
+    public UserEntity(String userName, int userId, String userTelephone, String userPassword) {
         this.userName = userName;
         this.userId = userId;
         this.userTelephone = userTelephone;
+        this.userPassword = userPassword;
     }
 
     public UserEntity(String username) {
@@ -87,6 +88,7 @@ public class UserEntity {
                 ", userId=" + userId +
                 ", userTelephone='" + userTelephone + '\'' +
                 ", userPassword='" + userPassword + '\'' +
+                ", userType=" + userType +
                 '}';
     }
 

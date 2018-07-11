@@ -52,7 +52,7 @@
         }
 
         .content {
-            margin-top:20px;
+            margin-top: 20px;
             width: 400px;
         }
     </style>
@@ -144,7 +144,7 @@
         var form = layui.form, $ = layui.jquery, layer = layui.layer;
         form.on('submit(submit)', function (data) {
             console.info(data.field);
-            $.post('/processRegister', data.field, function (val) {
+            $.post('//register/process', data.field, function (val) {
                 var dataObj = eval("(" + val + ")");
                 console.info(dataObj);
                 if (dataObj.result === 'success') {
@@ -196,7 +196,7 @@
                     tips: [2, FAIL]
                 });
             } else {
-                $.post('/verify', {username: data}, function (val) {
+                $.post('/register/verify', {username: data}, function (val) {
                     var dataObj = eval("(" + val + ")");
                     if (dataObj.result === 'success') {
                         layer.tips('验证通过', elem, {

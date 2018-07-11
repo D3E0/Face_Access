@@ -29,7 +29,7 @@ public class AccessController {
         return "access";
     }
 
-    @RequestMapping("/access.json")
+    @RequestMapping("/access/json")
     @ResponseBody
     public String access(HttpSession session,
                          HttpServletRequest request,

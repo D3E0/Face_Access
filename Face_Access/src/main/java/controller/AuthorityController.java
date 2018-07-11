@@ -33,7 +33,7 @@ public class AuthorityController {
 
     private UserMangeService userService;
 
-    private Logger logger = Logger.getLogger("heh");
+    private Logger logger = Logger.getLogger("authorities");
 
     @Autowired
 
@@ -46,7 +46,7 @@ public class AuthorityController {
      *
      * @return users.jsp
      */
-    @RequestMapping("/users")
+    @RequestMapping("/authorities")
     public String showUsers() {
         return "users";
     }
@@ -56,7 +56,7 @@ public class AuthorityController {
      *
      * @return JSON
      */
-    @RequestMapping(value = "/Authorities", produces = {"application/json;charset=UTF-8"})
+    @RequestMapping(value = "/authorities/json", produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public String showUserJson(HttpSession session, HttpServletRequest request,
                                @RequestParam int limit,
@@ -96,7 +96,7 @@ public class AuthorityController {
      *
      * @return addAuthority.jsp
      */
-    @RequestMapping("/addAuthority")
+    @RequestMapping("/authorities/add")
     public String saveUser() {
         return "addAuthority";
     }
@@ -106,7 +106,7 @@ public class AuthorityController {
      *
      * @return JSON
      */
-    @RequestMapping("/getAllUsername")
+    @RequestMapping("/authorities/usernameList")
     @ResponseBody
     public String getAllUsername() {
         List<String> list = userService.getUsernameList();
@@ -119,7 +119,7 @@ public class AuthorityController {
      * @param username
      * @return JSON
      */
-    @RequestMapping(value = "/user.json", produces = {"application/json;charset=UTF-8"})
+    @RequestMapping(value = "/authorities/user", produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public String getUserProfile(@RequestParam(value = "username") String username) {
         UserEntity entity = userService.getUserByUsername(username);
@@ -135,7 +135,7 @@ public class AuthorityController {
      * @param id
      * @return JSON
      */
-    @RequestMapping("/getHouse")
+    @RequestMapping("/authorities/houses")
     @ResponseBody
     public String getHouse(@RequestParam(value = "userId", defaultValue = "0") int id) {
         List<Integer> houseEntities = userService.getHousesByOwner(id);
@@ -148,7 +148,7 @@ public class AuthorityController {
      * @param request
      * @return JSON
      */
-    @RequestMapping("/processAddAuthority")
+    @RequestMapping("/authorities/add/process")
     @ResponseBody
     public String processAddUser(HttpServletRequest request) {
 
@@ -175,7 +175,7 @@ public class AuthorityController {
      * @param remark
      * @return
      */
-    @RequestMapping("/updateAuthority")
+    @RequestMapping("/authorities/update")
     @ResponseBody
     public String updateAuthority(@RequestParam(value = "end", defaultValue = "0 ") String end,
                                   @RequestParam(value = "id", defaultValue = "0") int authorityId,
@@ -197,7 +197,7 @@ public class AuthorityController {
      * @param model
      * @return updateAuthority.jsp
      */
-    @RequestMapping("/authorityInfo")
+    @RequestMapping("/authorities/info")
     public String saveDate(@RequestParam(value = "start", defaultValue = "0") String start,
                            @RequestParam(value = "end", defaultValue = "0") String end,
                            @RequestParam(value = "remark") String remark,
@@ -214,7 +214,7 @@ public class AuthorityController {
      * @param request
      * @return
      */
-    @RequestMapping("/deleteAuthority")
+    @RequestMapping("/authorities/delete")
     @ResponseBody
     public String deleteAuthority(HttpServletRequest request) {
         Integer authorityId;

@@ -139,8 +139,10 @@
     layui.use(['form', 'laydate', 'jquery', 'layer'], function () {
         var form = layui.form, $ = layui.jquery, layer = layui.layer;
         form.on('submit(signInByUsername)', function (data) {
-            $.post('/processSignIn', data.field, function (val) {
+            // $.post('/processSignIn', data.field, function (val) {
+            $.post('/signIn/process/username', data.field, function (val) {
                 var dataObj = eval("(" + val + ")");
+                console.info(dataObj);
                 if (dataObj.result === 'success') {
                     layer.msg("登陆成功");
                     window.location.href = '/home';
@@ -152,7 +154,7 @@
         });
 
         form.on('submit(signInByTelephone)', function (data) {
-            $.post('/processSignInByTelephone', data.field, function (val) {
+            $.post('/signIn/process/telephone', data.field, function (val) {
                 var dataObj = eval("(" + val + ")");
                 if (dataObj.result === 'success') {
                     layer.msg("登陆成功");

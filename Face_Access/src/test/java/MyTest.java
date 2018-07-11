@@ -1,6 +1,5 @@
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.sun.org.apache.bcel.internal.generic.NEW;
 import dao.AuthorityDao;
 import dao.AuthorityDaoImp;
 import dao.UserDao;
@@ -12,20 +11,68 @@ import entity.UserEntity;
 import manager.FaceManager;
 import manager.FaceManagerImp;
 import org.junit.Test;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import util.Base64Util;
 import util.DateParse;
 import util.EncryptInfo;
 import util.FileUtil;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.sql.Date;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Base64;
 import java.util.Iterator;
 import java.util.List;
 
 public class MyTest {
+
+    @Test
+    public void testBase64() {
+        Base64.Decoder decoder = Base64.getDecoder();
+        Base64.Encoder encoder = Base64.getEncoder();
+
+
+        String raw = "admin";
+        String encodeStr = encoder.encodeToString(raw.getBytes());
+        String urlEncodeStr = URLEncoder.encode(encodeStr);
+        System.out.println(urlEncodeStr);
+
+        String urlDecodeStr = URLDecoder.decode(urlEncodeStr);
+        String decodeStr = new String(decoder.decode(urlDecodeStr));
+
+        System.out.println(decodeStr);
+    }
+
+    @Test
+    public void testSplit() {
+        String val = "root,admin";
+        String[] temp = val.split("\\.");
+        System.out.println(temp.length);
+        for (String aTemp : temp) {
+            System.out.println(aTemp);
+        }
+//        String username = val.substring(0, val.indexOf('.'));
+//        String password = val.substring(val.indexOf('.') + 1, val.length());
+    }
+
+    @Test
+    public void testEncry() {
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
+        String password = passwordEncoder.encode(EncryptInfo.MD5("admin"));
+        String rawPassword = EncryptInfo.MD5("admin");
+        System.out.println(password);
+        System.out.println(rawPassword);
+        System.out.println(passwordEncoder.matches(rawPassword, password));
+    }
+
 
     @Test
     public void insertAuthority() {

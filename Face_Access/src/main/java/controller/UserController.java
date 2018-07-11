@@ -49,7 +49,7 @@ public class UserController {
         return "userProfile";
     }
 
-    @RequestMapping("/updatePassword")
+    @RequestMapping("/user/update/password")
     @ResponseBody
     public String updatePassword(@RequestParam int userId,
                                  @RequestParam String oldPassword,
@@ -63,7 +63,7 @@ public class UserController {
         return object.toJSONString();
     }
 
-    @RequestMapping("/updateTelephone")
+    @RequestMapping("/user/update/telephone")
     @ResponseBody
     public String updateTelephone(@RequestParam int userId,
                                   @RequestParam String verifyCode,
@@ -80,7 +80,7 @@ public class UserController {
         return object.toJSONString();
     }
 
-    @RequestMapping("/getDigitVerifyCode")
+    @RequestMapping("/user/digitVerifyCode")
     @ResponseBody
     public String getUpdateCode(HttpSession session) {
         String digitVerifyCode = VerifyCodeProducer.getDigitVerifyCode();
@@ -96,7 +96,7 @@ public class UserController {
      * @param image
      * @return JSON
      */
-    @RequestMapping("/upload")
+    @RequestMapping("/user/upload")
     @ResponseBody
     public String savePicture(@RequestPart("image") MultipartFile image,
                               @RequestParam int userId) {

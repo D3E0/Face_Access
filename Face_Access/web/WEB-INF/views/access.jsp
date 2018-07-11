@@ -53,7 +53,7 @@
 
         parent.register.accessTable = table.render({
             elem: '#accessTable'
-            , url: '/access.json'
+            , url: '/access/json'
             , page: true
             , cols: [[
                 {field: 'houseId', title: '房间 ID', align: "center"}
