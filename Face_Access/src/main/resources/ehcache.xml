@@ -1,5 +1,5 @@
 <ehcache>
-  <cache name="doorcount"
+  <cache name="doorCount"
           maxBytesLocalHeap="50m"
           timeToLiveSeconds="100">
   </cache>
@@ -7,11 +7,19 @@
          maxBytesLocalHeap="50m"
          timeToLiveSeconds="100">
   </cache>
-  <cache name="housecount"
+  <cache name="houseCount"
          maxBytesLocalHeap="50m"
          timeToLiveSeconds="100">
   </cache>
   <cache name="houseList"
+         maxBytesLocalHeap="50m"
+         timeToLiveSeconds="100">
+  </cache>
+  <cache name="house"
+         maxBytesLocalHeap="50m"
+         timeToLiveSeconds="100">
+  </cache>
+  <cache name="door"
          maxBytesLocalHeap="50m"
          timeToLiveSeconds="100">
   </cache>

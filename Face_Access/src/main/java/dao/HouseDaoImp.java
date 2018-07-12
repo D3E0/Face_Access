@@ -7,7 +7,10 @@ import org.hibernate.Transaction;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -24,6 +27,7 @@ public class HouseDaoImp implements HouseDao {
     }
 
     @Override
+    @Cacheable(value = "house",key = "'owenrid'+#args[0]")
     public List<Integer> getHouseIdByOwner(int ownerId) {
         Session session = factory.openSession();
         session.beginTransaction();
@@ -34,7 +38,7 @@ public class HouseDaoImp implements HouseDao {
         return list;
     }
     @Override
-//    @Cacheable(value = "houselist")
+    @Cacheable(value = "houseList")
     public List<HouseEntity> getHouseList(int page, int limit) {
         int start=(page-1)*limit;
         Session session = factory.openSession();
@@ -48,6 +52,7 @@ public class HouseDaoImp implements HouseDao {
     }
 
     @Override
+    @Cacheable(value = "houseList")
     public List<HouseEntity> getHouseListForSearch(int page, int limit, String keyword) {
         int start=(page-1)*limit;
         Session session = factory.openSession();
@@ -63,7 +68,7 @@ public class HouseDaoImp implements HouseDao {
     }
 
     @Override
-    @Cacheable(value = "housecount")
+    @Cacheable(value = "houseCount")
     public Long counthouse() {
         Session session=factory.openSession();
         Transaction tx = null;
@@ -84,6 +89,10 @@ public class HouseDaoImp implements HouseDao {
     }
 
     @Override
+    @Caching(evict = {
+            @CacheEvict(value = {"houseList","houseCount"},allEntries = true),
+            @CacheEvict(value = "house",key = "'houseid'+#args[0]")
+    })
     public String delhouse(int houseid) {
         String back="success";
         Session session=factory.openSession();
@@ -105,6 +114,9 @@ public class HouseDaoImp implements HouseDao {
     }
 
     @Override
+    @Caching(evict = {
+            @CacheEvict(value = {"houseList","houseCount"},allEntries = true),
+    },put = {@CachePut(value = "house",key = "'houseid'+#args[0].getHouseId()")})
     public String addhouse(HouseEntity houseEntity) {
         String back="success";
         Session session = factory.openSession();
@@ -124,6 +136,9 @@ public class HouseDaoImp implements HouseDao {
     }
 
     @Override
+    @Caching(evict = {
+            @CacheEvict(value = {"houseList","houseCount"},allEntries = true),
+    },put = {@CachePut(value = "house",key = "'houseid'+#args[0]")})
     public String updatehouse(HouseEntity house) {
         String back="success";
         Session session=factory.openSession();
@@ -149,6 +164,7 @@ public class HouseDaoImp implements HouseDao {
     }
 
     @Override
+    @Cacheable(value = "house",key = "'houseid'+#args[0]")
     public HouseEntity getHouse(int houseid) {
         Session session=factory.openSession();
         HouseEntity houseEntity=null;

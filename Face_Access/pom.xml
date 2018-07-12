@@ -103,11 +103,6 @@
             <artifactId>spring-data-redis</artifactId>
             <version>1.0.2.RELEASE</version>
         </dependency>
-        <dependency>
-            　　<groupId>org.apache.commons</groupId>
-            　　<artifactId>commons-lang3</artifactId>
-            　　<version>3.3.2</version>
-        </dependency>
         <!-- https://mvnrepository.com/artifact/net.sf.ehcache/ehcache -->
         <dependency>
             <groupId>net.sf.ehcache</groupId>

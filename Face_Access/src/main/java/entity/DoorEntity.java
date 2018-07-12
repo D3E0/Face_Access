@@ -1,10 +1,11 @@
 package entity;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "door", schema = "my_data_base", catalog = "")
-public class DoorEntity {
+public class DoorEntity implements Serializable {
     private int doorId;
     private String doorLocation;
     private String doorIp;
