@@ -101,7 +101,7 @@
                             <div class="layui-inline">
                                 <label class="layui-form-label">验证码</label>
                                 <div class="layui-input-inline " style="width: 150px;">
-                                    <input type="text" name="verifyCode" lay-verify="required"
+                                    <input type="text" name="digitCode" lay-verify="required"
                                            placeholder="验证码" class="layui-input">
                                 </div>
                                 <div class="layui-input-inline" style="width: 50px">

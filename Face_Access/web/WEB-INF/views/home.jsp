@@ -49,7 +49,7 @@
                     ${username}
                 </a>
                 <dl class="layui-nav-child">
-                    <dd><a href="/user?id=${userId}" target="frame">个人资料</a></dd>
+                    <dd><a href="<c:url value="/user?id=${userId}"/>" target="frame">个人资料</a></dd>
                     <dd><a href="javascript:">密码修改</a></dd>
                 </dl>
             </li>
@@ -61,23 +61,35 @@
         <div class="layui-side-scroll">
             <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
             <ul id="sideNav" class="layui-nav layui-nav-tree" lay-filter="sidenav">
-                <%--<li id="user" class="layui-nav-item">--%>
-                <%--<a href="/access" hidden target="frame">可通行门列表</a>--%>
-                <%--</li>--%>
-
-                <%--<li id="houseOwner" class="layui-nav-item  layui-this">--%>
-                <%--<a href="/users" target="frame">人员管理</a>--%>
-                <%--</li>--%>
-
-                <%--<li class="layui-nav-item"><a href="/doors" target="frame">门禁管理</a></li>--%>
-                <%--<li class="layui-nav-item"><a href="/houses" target="frame">房间管理</a></li>--%>
-                <%--<li class="layui-nav-item"><a href="/records" target="frame">进出门记录查看</a></li>--%>
+                <c:choose>
+                    <c:when test="${type == 'USER'}">
+                        <li id="user" class="layui-nav-item">
+                            <a href="<c:url value="/access"/>" hidden target="frame">可通行门列表</a>
+                        </li>
+                        <c:set var="tar" value="/access"/>
+                    </c:when>
+                    <c:when test="${type == 'OWNER'}">
+                        <li id="houseOwner" class="layui-nav-item  layui-this">
+                            <a href="<c:url value="/authorities"/>" target="frame">人员管理</a>
+                        </li>
+                        <li id="user" class="layui-nav-item">
+                            <a href="<c:url value="/access"/>" hidden target="frame">可通行门列表</a>
+                        </li>
+                        <c:set var="tar" value="/authorities"/>
+                    </c:when>
+                    <c:when test="${type == 'ADMIN'}">
+                        <li class="layui-nav-item"><a href="<c:url value="/doors"/>" target="frame">门禁管理</a></li>
+                        <li class="layui-nav-item"><a href="<c:url value="/houses"/>" target="frame">房间管理</a></li>
+                        <li class="layui-nav-item"><a href="<c:url value="/records"/>" target="frame">进出门记录查看</a></li>
+                        <c:set var="tar" value="/records"/>
+                    </c:when>
+                </c:choose>
             </ul>
         </div>
     </div>
 
     <div id="content">
-        <iframe id="frame" name="frame" src=""></iframe>
+        <iframe id="frame" name="frame" src="${tar}"></iframe>
     </div>
 
 </div>
@@ -86,49 +98,12 @@
 </div>
 <script>
     var id = ${userId};
-    var type = '${type}';
-    // var type = 'USER';
-    console.info('type is ' + type);
     layui.use(['jquery', 'layer', 'element'], function () {
         var $ = layui.$, layer = layui.layer, element = layui.element;
 
-        var $elem = $("#sideNav");
         $("#updatePreview").hide();
-
-        if (type === 'ADMIN') {
-            $('<li class="layui-nav-item layui-this"></li>').append($('<a href="/records" target="frame">进出门记录查看</a>')).appendTo($elem);
-            $('<li class="layui-nav-item"></li>').append($('<a href="/authorities" target="frame">人员管理</a>')).appendTo($elem);
-            $('<li class="layui-nav-item"></li>').append($('<a href="/doors" target="frame">门禁管理</a>')).appendTo($elem);
-            $('<li class="layui-nav-item"></li>').append($('<a href="/houses" target="frame">房间管理</a>')).appendTo($elem);
-            $('#frame').attr('src', '/records');
-        } else if (type === 'OWNER') {
-            $('<li class="layui-nav-item layui-this"></li>').append($('<a href="/authorities" target="frame">人员管理</a>')).appendTo($elem);
-            $('<li class="layui-nav-item"></li>').append($('<a href="/access" target="frame">可通行门列表</a>')).appendTo($elem);
-            $('#frame').attr('src', '/authorities');
-        } else {
-            $('<li class="layui-nav-item layui-this"></li>').append($('<a href="/access" target="frame">可通行门列表</a>')).appendTo($elem);
-            $('#frame').attr('src', '/access');
-        }
-        element.render('nav', 'sidenav');
     })
 
 </script>
 </body>
 </html>
-
-<%--<li class="layui-nav-item layui-nav-itemed">--%>
-<%--<a href="javascript:">Yu</a>--%>
-<%--<dl class="layui-nav-child ">--%>
-<%--<dd class="layui-this"><a href="/users" target="frame">人员管理</a></dd>--%>
-<%--<dd><a href="/access" target="frame">可通行门列表</a></dd>--%>
-<%--</dl>--%>
-<%--</li>--%>
-
-<%--<li class="layui-nav-item layui-nav-itemed">--%>
-<%--<a href="javascript:">Yan</a>--%>
-<%--<dl class="layui-nav-child">--%>
-<%--<dd><a href="/doors" target="frame">门禁管理</a></dd>--%>
-<%--<dd><a href="/houses" target="frame">房间管理</a></dd>--%>
-<%--<dd><a href="/records" target="frame">进出门记录查看</a></dd>--%>
-<%--</dl>--%>
-<%--</li>--%>

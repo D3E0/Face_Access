@@ -94,7 +94,7 @@
                         <div class="layui-inline">
                             <label class="layui-form-label">验证码</label>
                             <div class="layui-input-inline " style="width: 170px;">
-                                <input type="text" name="verifyCode" lay-verify="required"
+                                <input type="text" name="digitCode" lay-verify="required"
                                        placeholder="验证码" class="layui-input">
                             </div>
 
@@ -144,7 +144,7 @@
         var form = layui.form, $ = layui.jquery, layer = layui.layer;
         form.on('submit(submit)', function (data) {
             console.info(data.field);
-            $.post('//register/process', data.field, function (val) {
+            $.post('/register/process', data.field, function (val) {
                 var dataObj = eval("(" + val + ")");
                 console.info(dataObj);
                 if (dataObj.result === 'success') {
@@ -241,7 +241,7 @@
 
                 elem.toggleClass("layui-btn-disabled", true);
                 elem.attr("disabled", true);
-                $.post('/getDigitVerifyCode', {}, function (data) {
+                $.post('/register/digitCode', {}, function (data) {
                     console.info(data);
                 });
 

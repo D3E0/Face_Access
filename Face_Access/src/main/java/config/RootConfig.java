@@ -8,6 +8,7 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import util.VerifyCodeFactory;
 
 import javax.sql.DataSource;
 import java.util.Properties;
@@ -49,6 +50,11 @@ public class RootConfig {
     public BCryptPasswordEncoder passwordEncoder() {
         logger.info("-----BCryptPasswordEncoder Create Success-----");
         return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public VerifyCodeFactory imageCodeFactory() {
+        return new VerifyCodeFactory();
     }
 
     //    @Bean(name = "captchaProducer")

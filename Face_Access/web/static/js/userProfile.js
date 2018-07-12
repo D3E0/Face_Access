@@ -74,7 +74,7 @@ layui.use(['laydate', 'form', 'layer', 'upload'], function () {
             if (dataObj.result === 'success') {
                 layer.msg("修改成功");
                 $("input[name = 'userTel']").val(dataObj.telephone);
-                $("input[name = 'verifyCode']").val('');
+                $("input[name = 'digitCode']").val('');
                 $("input[name = 'telephone']").val('');
             } else {
                 layer.msg("修改失败");
@@ -91,7 +91,7 @@ layui.use(['laydate', 'form', 'layer', 'upload'], function () {
         elem.attr('disabled', true);
         elem.toggleClass("layui-btn-disabled", true);
 
-        $.post('/user/digitVerifyCode', {}, function (data) {
+        $.post('/register/digitCode', {}, function (data) {
             console.info(data);
         });
 

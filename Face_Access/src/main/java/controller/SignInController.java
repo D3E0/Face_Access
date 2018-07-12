@@ -8,11 +8,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import service.SignInService;
+import util.VerifyCodeFactory;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.net.URLEncoder;
 import java.util.Base64;
 import java.util.logging.Logger;
@@ -21,12 +23,18 @@ import java.util.logging.Logger;
 public class SignInController {
 
     private SignInService signInService;
+    private VerifyCodeFactory verifyCodeFactory;
 
     private Logger logger = Logger.getLogger("SignInController");
 
     @Autowired
     public void setSignInService(SignInService signInService) {
         this.signInService = signInService;
+    }
+
+    @Autowired
+    public void setImageCodeFactory(VerifyCodeFactory verifyCodeFactory) {
+        this.verifyCodeFactory = verifyCodeFactory;
     }
 
     /**
@@ -77,36 +85,24 @@ public class SignInController {
         logger.info("-----Add Cookies Success-----");
     }
 
-    @RequestMapping("/signIn/cookie")
-    public String addCookies(HttpServletResponse response) {
-        Cookie cookie = new Cookie("test", "test");
-        cookie.setMaxAge(24 * 60 * 60);
-        // 工程文件就是在根目录下 request.getContextPath() 为 ""
-        cookie.setPath("/");
-        response.addCookie(cookie);
-        logger.info("-----" + cookie.getPath());
-        return "signIn";
-    }
-
     /**
      * 手机号、验证码登陆
      *
      * @param telephone
-     * @param verifyCode
      * @param session
      * @return
      */
     @RequestMapping("/signIn/process/telephone")
     @ResponseBody
     public String processSignInByTelephone(@RequestParam String telephone,
-                                           @RequestParam String verifyCode,
+                                           @RequestParam String imageCode,
                                            HttpSession session,
                                            HttpServletRequest request,
                                            HttpServletResponse response) {
         JSONObject object = new JSONObject();
         object.put("result", "fail");
-        String digitVerifyCode = (String) session.getAttribute("digitVerifyCode");
-        if (verifyCode.equals(digitVerifyCode)) {
+        String digitVerifyCode = (String) session.getAttribute("imageCode");
+        if (imageCode.equals(digitVerifyCode)) {
             int userId = signInService.getUserIdByTelephone(telephone);
             session.setAttribute("userId", userId);
             session.setAttribute("type", signInService.getUserType(userId));
@@ -114,6 +110,21 @@ public class SignInController {
             object.put("result", "success");
         }
         return object.toJSONString();
+    }
+
+    @RequestMapping("/signIn/imageCode")
+    public void getImageCode(HttpServletResponse response,
+                             HttpServletRequest request) {
+        try {
+            String val = verifyCodeFactory.getImageVerifyCode(response.getOutputStream());
+            request.getSession().setAttribute("imageCode", val);
+            response.setContentType("image/jpeg");
+            response.setDateHeader("expries", -1);
+            response.setHeader("Cache-Control", "no-cache");
+            response.setHeader("Pragma", "no-cache");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -158,7 +169,6 @@ public class SignInController {
      *
      * @param username
      * @param telephone
-     * @param verifyCode
      * @param password
      * @param confirm
      * @param session
@@ -168,15 +178,15 @@ public class SignInController {
     @ResponseBody
     public String processRegister(@RequestParam String username,
                                   @RequestParam String telephone,
-                                  @RequestParam String verifyCode,
+                                  @RequestParam String digitCode,
                                   @RequestParam String password,
                                   @RequestParam String confirm,
                                   HttpSession session) {
         JSONObject object = new JSONObject();
         object.put("result", "false");
-        String digitVerifyCode = (String) session.getAttribute("digitVerifyCode");
+        String digitVerifyCode = (String) session.getAttribute("digitCode");
 
-        if (password.equals(confirm) && verifyCode.equals(digitVerifyCode)) {
+        if (password.equals(confirm) && digitCode.equals(digitVerifyCode)) {
             int userID = signInService.addUser(username, telephone, password);
             if (userID != 0) {
                 object.put("result", "success");
@@ -184,6 +194,17 @@ public class SignInController {
         }
         return object.toJSONString();
     }
+
+    @RequestMapping("/register/digitCode")
+    @ResponseBody
+    public String getUpdateCode(HttpSession session) {
+        String digitVerifyCode = verifyCodeFactory.getDigitVerifyCode();
+        session.setAttribute("digitCode", digitVerifyCode);
+        JSONObject object = new JSONObject();
+        object.put("digitCode", digitVerifyCode);
+        return object.toJSONString();
+    }
+
 
     /**
      * 验证 username 是否存在
@@ -202,6 +223,11 @@ public class SignInController {
             object.put("result", "fail");
         }
         return object.toJSONString();
+    }
+
+    @RequestMapping("/signIn/test")
+    public String test(HttpServletResponse response) {
+        return "test";
     }
 
 }

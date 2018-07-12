@@ -14,7 +14,6 @@ import service.UserMangeService;
 import util.Base64Util;
 import util.EncryptInfo;
 import util.FileUtil;
-import util.VerifyCodeProducer;
 
 import javax.servlet.http.HttpSession;
 import java.io.File;
@@ -66,27 +65,17 @@ public class UserController {
     @RequestMapping("/user/update/telephone")
     @ResponseBody
     public String updateTelephone(@RequestParam int userId,
-                                  @RequestParam String verifyCode,
+                                  @RequestParam String digitCode,
                                   @RequestParam String telephone,
                                   HttpSession session) {
         JSONObject object = new JSONObject();
         object.put("result", "fail");
         String digitVerifyCode = (String) session.getAttribute("digitVerifyCode");
-        if (verifyCode.equals(digitVerifyCode)) {
+        if (digitCode.equals(digitVerifyCode)) {
             userService.updateTelephone(userId, telephone);
             object.put("result", "success");
             object.put("telephone", EncryptInfo.encryptTelephone(telephone));
         }
-        return object.toJSONString();
-    }
-
-    @RequestMapping("/user/digitVerifyCode")
-    @ResponseBody
-    public String getUpdateCode(HttpSession session) {
-        String digitVerifyCode = VerifyCodeProducer.getDigitVerifyCode();
-        session.setAttribute("digitVerifyCode", digitVerifyCode);
-        JSONObject object = new JSONObject();
-        object.put("digitVerifyCode", digitVerifyCode);
         return object.toJSONString();
     }
 
