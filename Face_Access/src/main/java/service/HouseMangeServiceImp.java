@@ -4,9 +4,10 @@ import dao.HouseDao;
 import entity.HouseEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
-@Controller
+@Service
 public class HouseMangeServiceImp implements HouseMangeService{
     private HouseDao houseDao;
     @Autowired

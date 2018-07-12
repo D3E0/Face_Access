@@ -2,6 +2,7 @@ package controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -62,7 +63,9 @@ public class HomeController {
     }
 
     @RequestMapping("/error")
-    public String error() {
-        return "error";
+    public ModelAndView error() {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("error");
+        return modelAndView;
     }
 }
