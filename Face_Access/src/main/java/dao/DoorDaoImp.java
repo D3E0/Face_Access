@@ -7,6 +7,7 @@ import org.hibernate.Transaction;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -114,7 +115,9 @@ public class DoorDaoImp implements DoorDao {
     }
 
     @Override
+    @Cacheable(value = "doorList")
     public List<DoorEntity> getDoorList(int page, int limit) {
+        System.out.println("==================");
         int start=(page-1)*limit;
         System.out.println(page);
         System.out.println(limit);
@@ -166,6 +169,7 @@ public class DoorDaoImp implements DoorDao {
         return doorList;
     }
     @Override
+    @Cacheable(value = "doorcount")
     public Long countDoor() {
         Session session=factory.openSession();
         Transaction tx = null;

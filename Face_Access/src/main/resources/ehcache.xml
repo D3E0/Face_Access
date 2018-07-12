@@ -1,6 +1,18 @@
 <ehcache>
-  <cache name="spittleCache"
+  <cache name="doorcount"
           maxBytesLocalHeap="50m"
           timeToLiveSeconds="100">
+  </cache>
+  <cache name="doorList"
+         maxBytesLocalHeap="50m"
+         timeToLiveSeconds="100">
+  </cache>
+  <cache name="housecount"
+         maxBytesLocalHeap="50m"
+         timeToLiveSeconds="100">
+  </cache>
+  <cache name="houseList"
+         maxBytesLocalHeap="50m"
+         timeToLiveSeconds="100">
   </cache>
 </ehcache>

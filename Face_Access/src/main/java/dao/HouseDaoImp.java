@@ -7,6 +7,7 @@ import org.hibernate.Transaction;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -33,6 +34,7 @@ public class HouseDaoImp implements HouseDao {
         return list;
     }
     @Override
+//    @Cacheable(value = "houselist")
     public List<HouseEntity> getHouseList(int page, int limit) {
         int start=(page-1)*limit;
         Session session = factory.openSession();
@@ -61,6 +63,7 @@ public class HouseDaoImp implements HouseDao {
     }
 
     @Override
+    @Cacheable(value = "housecount")
     public Long counthouse() {
         Session session=factory.openSession();
         Transaction tx = null;

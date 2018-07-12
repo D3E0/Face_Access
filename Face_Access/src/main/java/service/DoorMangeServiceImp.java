@@ -18,8 +18,6 @@ public class DoorMangeServiceImp implements DoorMangeService {
     private DoorDao doorDao;
     private RecordDao recordDao;
     @Autowired
-    RedisTemplate redisTemplate;
-    @Autowired
     public void setDoorDao(DoorDao doorDao) {
         this.doorDao = doorDao;
     }
@@ -33,7 +31,6 @@ public class DoorMangeServiceImp implements DoorMangeService {
     }
 
     @Override
-    @Cacheable(value = "doorList",key = "#args[0]+#args[1]")
     public List<DoorEntity> getDoorList(int page, int limit) {
         return doorDao.getDoorList(page,limit);
     }
@@ -52,11 +49,7 @@ public class DoorMangeServiceImp implements DoorMangeService {
     }
 
     @Override
-    @Cacheable(value = "countdoor")
     public Long countdoor() {
-        System.out.println(redisTemplate.opsForValue().get( "count"));
-        redisTemplate.opsForValue().set( "123","count",10, TimeUnit.SECONDS);
-        System.out.println(redisTemplate.opsForValue().get( "count"));
         return doorDao.countDoor();
     }
 
