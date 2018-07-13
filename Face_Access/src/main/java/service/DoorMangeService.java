@@ -9,8 +9,8 @@ public interface DoorMangeService {
 
      List<DoorEntity> getDoorList(int page,int limit);
      List<DoorEntity> getDoorListForSearch(int page, int limit,String keyword);
-     String update(DoorEntity doorEntity);
-     String delete(int id);
-     String adddoor(DoorEntity doorEntity);
-     Long countdoor();
+     String updateDoor(DoorEntity doorEntity);
+     String deleteDoor(int id);
+     String addDoor(DoorEntity doorEntity);
+     Long countDoor();
 }

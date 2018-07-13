@@ -37,7 +37,6 @@ public class HouseDaoImp implements HouseDao {
         return list;
     }
     @Override
-    @Cacheable(value = "houseList")
     public List<HouseEntity> getHouseList(int page, int limit) {
         int start=(page-1)*limit;
         Session session = factory.openSession();
@@ -51,7 +50,6 @@ public class HouseDaoImp implements HouseDao {
     }
 
     @Override
-    @Cacheable(value = "houseList")
     public List<HouseEntity> getHouseListForSearch(int page, int limit, String keyword) {
         int start=(page-1)*limit;
         Session session = factory.openSession();
@@ -67,8 +65,7 @@ public class HouseDaoImp implements HouseDao {
     }
 
     @Override
-    @Cacheable(value = "houseCount")
-    public Long counthouse() {
+    public Long countHouse() {
         Session session=factory.openSession();
         Transaction tx = null;
         Long count=null;
@@ -88,11 +85,7 @@ public class HouseDaoImp implements HouseDao {
     }
 
     @Override
-    @Caching(evict = {
-            @CacheEvict(value = {"houseList","houseCount"},allEntries = true),
-            @CacheEvict(value = "house",key = "'houseid'+#args[0]")
-    })
-    public String delhouse(int houseid) {
+    public String delHouse(int houseid) {
         String back="success";
         Session session=factory.openSession();
         Transaction tx = null;
@@ -113,10 +106,7 @@ public class HouseDaoImp implements HouseDao {
     }
 
     @Override
-    @Caching(evict = {
-            @CacheEvict(value = {"houseList","houseCount"},allEntries = true),
-    },put = {@CachePut(value = "house",key = "'houseid'+#args[0].getHouseId()")})
-    public String addhouse(HouseEntity houseEntity) {
+    public String addHouse(HouseEntity houseEntity) {
         String back="success";
         Session session = factory.openSession();
         Transaction tx = null;
@@ -135,10 +125,7 @@ public class HouseDaoImp implements HouseDao {
     }
 
     @Override
-    @Caching(evict = {
-            @CacheEvict(value = {"houseList","houseCount"},allEntries = true),
-    },put = {@CachePut(value = "house",key = "'houseid'+#args[0]")})
-    public String updatehouse(HouseEntity house) {
+    public String updateHouse(HouseEntity house) {
         String back="success";
         Session session=factory.openSession();
         Transaction tx = null;
@@ -163,7 +150,6 @@ public class HouseDaoImp implements HouseDao {
     }
 
     @Override
-    @Cacheable(value = "house",key = "'houseid'+#args[0]")
     public HouseEntity getHouse(int houseid) {
         Session session=factory.openSession();
         HouseEntity houseEntity=null;

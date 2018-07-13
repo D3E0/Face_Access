@@ -4,6 +4,10 @@ import dao.DoorDao;
 import dao.RecordDao;
 import entity.DoorEntity;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,36 +29,51 @@ public class DoorMangeServiceImp implements DoorMangeService {
     }
 
     @Override
+    @Cacheable(value = "door",key = "#args[0]")
     public DoorEntity getDoorEntity(int doorID) {
         return doorDao.findDoor(doorID);
     }
 
     @Override
+    @Cacheable(value = "doorlist")
     public List<DoorEntity> getDoorList(int page, int limit) {
         return doorDao.getDoorList(page, limit);
     }
 
     @Override
+    @Cacheable(value = "doorList")
     public List<DoorEntity> getDoorListForSearch(int page, int limit, String keyword) {
         return doorDao.getDoorListForSearch(page, limit, keyword);
     }
 
     @Override
-    public String update(DoorEntity doorEntity) {
+    @Caching(evict = {
+            @CacheEvict(value = {"doorList","doorCount"},allEntries = true),
+    },put={ @CachePut(value = "door",key = "'doorid'+#args[0].getDoorId()")})
+    public String updateDoor(DoorEntity doorEntity) {
         return doorDao.updateDoor(doorEntity);
     }
 
-    public String delete(int id) {
+    @Override
+    @Caching(evict = {
+            @CacheEvict(value = {"doorList","doorCount"},allEntries = true),
+            @CacheEvict(value = "door",key = "'doorid'+#args[0].getDoorId()")
+    })
+    public String deleteDoor(int id) {
         return doorDao.deleteDoor(id);
     }
 
     @Override
-    public Long countdoor() {
+    @Cacheable(value = "doorCount")
+    public Long countDoor() {
         return doorDao.countDoor();
     }
 
     @Override
-    public String adddoor(DoorEntity doorEntity) {
+    @Caching(evict = {
+            @CacheEvict(value = {"doorList","doorCount"},allEntries = true),
+    },put={ @CachePut(value = "door",key = "'doorid'+#args[0].get")})
+    public String addDoor(DoorEntity doorEntity) {
         return doorDao.addDoor(doorEntity);
     }
 }

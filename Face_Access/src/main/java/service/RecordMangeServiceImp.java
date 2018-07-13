@@ -5,6 +5,7 @@ import dao.RecordDao;
 import dao.UserDaoImp;
 import entity.OpenRecordEntity;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
