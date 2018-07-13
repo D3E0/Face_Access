@@ -1,13 +1,11 @@
 package util;
 
 import javax.imageio.ImageIO;
-import javax.servlet.annotation.WebServlet;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Random;
-import java.util.logging.Logger;
 
 public class VerifyCodeFactory {
 
@@ -55,15 +53,17 @@ public class VerifyCodeFactory {
 
     private void initGraphics(Graphics g) {
         //设置图片的背景色
-        g.setColor(Color.WHITE);
+        g.setColor(Color.white);
         g.fillRect(0, 0, WIDTH, HEIGHT);
 
         //设置图片的边框
-        g.setColor(Color.BLUE);
+        Color c = new Color(230, 230, 230);
+        g.setColor(c);
         g.drawRect(1, 1, WIDTH - 2, HEIGHT - 2);
 
         //在图片上画随机线条
-        g.setColor(Color.GREEN);
+        c = new Color(67, 120, 217);
+        g.setColor(c);
         Random random = new Random();
         for (int i = 0; i < 5; i++) {
             int x2 = random.nextInt(WIDTH);
@@ -74,7 +74,8 @@ public class VerifyCodeFactory {
         }
 
         // 设置字体颜色
-        g.setColor(Color.RED);
+        c = new Color(0x009688);
+        g.setColor(c);
         g.setFont(new Font("宋体", Font.BOLD, 20));
     }
 

@@ -54,10 +54,24 @@
                                 </div>
                             </div>
 
+                            <div class="layui-form-item">
+                                <div class="layui-inline">
+                                    <label class="layui-form-label">验证码</label>
+                                    <div class="layui-input-inline " style="width: 160px;">
+                                        <input type="text" name="imageCode" lay-verify="required"
+                                               placeholder="验证码" class="layui-input">
+                                    </div>
+
+                                    <div class="layui-input-inline" style="width: 100px">
+                                        <img src="<c:url value="/signIn/imageCode"/>">
+                                    </div>
+                                </div>
+                            </div>
+
                             <div class="navi" style="margin-top: -10px; padding-bottom: 15px; margin-left: 90px">
                                 <a href="javascript:myTransition(1, 500)">手机号登陆</a>
                                 <a href="javascript:myTransition(-1, 500)">人脸登陆</a>
-                                <a href="/register">立即注册</a>
+                                <a href="<c:url value="/register"/>">立即注册</a>
                             </div>
 
                             <div class="layui-form-item">
@@ -79,14 +93,14 @@
                         <div class="navi">
                             <a href="javascript:myTransition(1, 300);myTransition(1, 300)">手机号登陆</a>
                             <a href="javascript:myTransition(1, 500)">账号密码登陆</a>
-                            <a href="/register">立即注册</a>
+                            <a href="<c:url value="/register"/>">立即注册</a>
                         </div>
                         <button id="start" class="layui-btn layui-btn-fluid ">开始登陆</button>
                     </div>
 
                     <div class="side bottom" id="Bottom">
                         <div class="thumb">
-                            <img class="thumb" src="/static/images/logo.jpg">
+                            <img class="thumb" src="<c:url value="/static/images/logo.jpg"/>">
                         </div>
                         <div style="color: #009688; text-align: center; font-size: 24px; padding: 20px;">
                             用户登录
@@ -103,17 +117,17 @@
                             <div class="layui-form-item">
                                 <div class="layui-inline">
                                     <label class="layui-form-label">验证码</label>
-                                    <div class="layui-input-inline " style="width: 160px;">
-                                        <input type="text" name="imageCode" lay-verify="required"
+                                    <div class="layui-input-inline " style="width: 170px;">
+                                        <input type="text" name="digitCode" lay-verify="required"
                                                placeholder="验证码" class="layui-input">
                                     </div>
 
-                                    <div class="layui-input-inline" style="width: 100px">
-                                        <%--<button type="button" id="getCode"--%>
-                                        <%--class="layui-btn layui-btn-primary">--%>
-                                        <%--获取验证码--%>
-                                        <%--</button>--%>
-                                        <img src="<c:url value="/signIn/imageCode"/>">
+                                    <div class="layui-input-inline" style="width: 70px">
+                                        <button type="button" id="getCode"
+                                                class="layui-btn layui-btn-primary">
+                                            获取验证码
+                                        </button>
+                                        <%--<img src="<c:url value="/signIn/imageCode"/>">--%>
                                     </div>
                                 </div>
                             </div>
@@ -121,7 +135,7 @@
                             <div class="navi" style="margin-top: -10px; padding-bottom: 15px">
                                 <a href="javascript:myTransition(-1, 300);myTransition(-1, 300)">人脸登陆</a>
                                 <a href="javascript:myTransition(-1, 500)">账号密码登陆</a>
-                                <a href="/register">立即注册</a>
+                                <a href="<c:url value="/register"/>">立即注册</a>
                             </div>
 
                             <div class="layui-form-item">
@@ -178,6 +192,43 @@
                 // if (value.length < 6) {
                 //     return "密码至少6位";
                 // }
+            }
+        });
+
+        $("#getCode").click(function () {
+            var telephone = $("input[name='telephone']");
+            var pattern = /^(13[0-9]|14[579]|15[0-3,5-9]|16[6]|17[0135678]|18[0-9]|19[89])\d{8}$/;
+            if (!pattern.test(telephone.val())) {
+                layer.tips('请输入合法的手机号', telephone, {
+                    tips: [2, '#d16d62']
+                });
+                telephone.focus();
+            } else {
+                var COUNT = 10;
+                var timeCount = COUNT;
+                var elem = $("#getCode");
+
+                elem.toggleClass("layui-btn-disabled", true);
+                elem.attr("disabled", true);
+                $.post('/register/digitCode', {}, function (data) {
+                    console.info(data);
+                });
+
+                //倒计时开始
+                var id = setInterval(function () {
+                    elem.text(timeCount + "s 后重发");
+                    timeCount--;
+                }, 1000);
+
+                //倒计时结束 可以点击
+                setTimeout(function () {
+                    clearInterval(id);
+                    elem.text("获取验证码");
+                    elem.toggleClass("layui-btn-disabled", false);
+                    elem.attr("disabled", false);
+                    timeCount = COUNT;
+                }, COUNT * 1000);
+
             }
         });
     });

@@ -32,7 +32,7 @@ public class Filter0_SignIn implements Filter {
         ServletContext sc = filterConfig.getServletContext();
         WebApplicationContext cxt = WebApplicationContextUtils.getWebApplicationContext(sc);
         service = cxt.getBean(SignInService.class);
-        logger.info("----Filter0_UniversalFilter Init----");
+        logger.info("----Filter0_SignInFilter Init----");
     }
 
     @Override
@@ -43,7 +43,7 @@ public class Filter0_SignIn implements Filter {
         HttpServletResponse response = (HttpServletResponse) resp;
 
         String uri = request.getRequestURI();
-//        logger.info("Request URI: " + uri);
+        //logger.info("Request URI: " + uri);
 
         // 设置请求的字符集（post请求方式有效）
         request.setCharacterEncoding("utf-8");
@@ -55,9 +55,10 @@ public class Filter0_SignIn implements Filter {
             }
         }
 
+        logger.info("Request URI: " + uri);
+
         if (request.getSession().getAttribute("userId") != null) {
-            // 已经登录，放行
-//            logger.info("Target Url, Already Login");
+            // 已经登录，放行 logger.info("Target Url, Already Login");
             chain.doFilter(request, response);
         } else {
             Cookie cookies[] = request.getCookies();
@@ -79,21 +80,20 @@ public class Filter0_SignIn implements Filter {
                         session.setAttribute("userId", userId);
                         session.setAttribute("type", service.getUserType(userId));
                         session.setAttribute("username", service.getUsername(userId));
-//                        logger.info("-----" + username + " " + password + " Match Success-----");
+                        logger.info("-----" + username + " " + password + " Match Success-----");
                         chain.doFilter(request, response);
                         return;
                     }
                     logger.info("-----" + username + " " + password + " Does Not Match-----");
                 }
             }
-//            logger.info("Target Url, Not Login && No Cookies, Send Redirect");
-            // 重定向到登录页面
+            // 重定向到登录页面 logger.info("Target Url, Not Login && No Cookies, Send Redirect");
             response.sendRedirect(request.getContextPath() + "/signIn");
         }
     }
 
     @Override
     public void destroy() {
-        logger.info("----Filter0_UniversalFilter Destroy----");
+        logger.info("----Filter0_SignInFilter Destroy----");
     }
 }

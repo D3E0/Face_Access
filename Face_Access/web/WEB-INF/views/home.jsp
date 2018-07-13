@@ -64,7 +64,7 @@
                 <c:choose>
                     <c:when test="${type == 'USER'}">
                         <li id="user" class="layui-nav-item">
-                            <a href="<c:url value="/access"/>" hidden target="frame">可通行门列表</a>
+                            <a href="<c:url value="/access"/>" target="frame">可通行门列表</a>
                         </li>
                         <c:set var="tar" value="/access"/>
                     </c:when>
@@ -73,14 +73,20 @@
                             <a href="<c:url value="/authorities"/>" target="frame">人员管理</a>
                         </li>
                         <li id="user" class="layui-nav-item">
-                            <a href="<c:url value="/access"/>" hidden target="frame">可通行门列表</a>
+                            <a href="<c:url value="/access"/>" target="frame">可通行门列表</a>
                         </li>
                         <c:set var="tar" value="/authorities"/>
                     </c:when>
                     <c:when test="${type == 'ADMIN'}">
-                        <li class="layui-nav-item  layui-this"><a href="<c:url value="/records"/>" target="frame">进出门记录查看</a></li>
-                        <li class="layui-nav-item"><a href="<c:url value="/doors"/>" target="frame">门禁管理</a></li>
-                        <li class="layui-nav-item"><a href="<c:url value="/houses"/>" target="frame">房间管理</a></li>
+                        <li class="layui-nav-item  layui-this">
+                            <a href="<c:url value="/records"/>" target="frame">进出门记录查看</a>
+                        </li>
+                        <li class="layui-nav-item">
+                            <a href="<c:url value="/doors"/>" target="frame">门禁管理</a>
+                        </li>
+                        <li class="layui-nav-item">
+                            <a href="<c:url value="/houses"/>" target="frame">房间管理</a>
+                        </li>
                         <c:set var="tar" value="/records"/>
                     </c:when>
                 </c:choose>

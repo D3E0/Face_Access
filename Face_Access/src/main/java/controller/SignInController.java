@@ -56,20 +56,25 @@ public class SignInController {
      */
     @RequestMapping("/signIn/process/username")
     @ResponseBody
-    public String processSignIn(@RequestParam String username, @RequestParam String password,
+    public String processSignIn(@RequestParam String username,
+                                @RequestParam String password,
+                                @RequestParam String imageCode,
                                 HttpSession session, HttpServletResponse response) {
         JSONObject object = new JSONObject();
         object.put("result", "fail");
-        if (signInService.verifyUser(username, password)) {
-            int userId = signInService.getUserId(username);
-            session.setAttribute("userId", userId);
-            session.setAttribute("type", signInService.getUserType(userId));
-            session.setAttribute("username", signInService.getUsername(userId));
-            logger.info("-----" + username + " " + password + " Match Success-----");
-            sendCookies(response, username, password);
-            object.put("result", "success");
-        } else {
-            logger.info("-----" + username + " " + password + " Does Not Match-----");
+        String imageVerifyCode = (String) session.getAttribute("imageCode");
+        if (imageCode.equals(imageVerifyCode)) {
+            if (signInService.verifyUser(username, password)) {
+                int userId = signInService.getUserId(username);
+                session.setAttribute("userId", userId);
+                session.setAttribute("type", signInService.getUserType(userId));
+                session.setAttribute("username", signInService.getUsername(userId));
+                logger.info("-----" + username + " " + password + " Match Success-----");
+                sendCookies(response, username, password);
+                object.put("result", "success");
+            } else {
+                logger.info("-----" + username + " " + password + " Does Not Match-----");
+            }
         }
         return object.toJSONString();
     }
@@ -95,14 +100,12 @@ public class SignInController {
     @RequestMapping("/signIn/process/telephone")
     @ResponseBody
     public String processSignInByTelephone(@RequestParam String telephone,
-                                           @RequestParam String imageCode,
-                                           HttpSession session,
-                                           HttpServletRequest request,
-                                           HttpServletResponse response) {
+                                           @RequestParam String digitCode,
+                                           HttpSession session) {
         JSONObject object = new JSONObject();
         object.put("result", "fail");
-        String digitVerifyCode = (String) session.getAttribute("imageCode");
-        if (imageCode.equals(digitVerifyCode)) {
+        String digitVerifyCode = (String) session.getAttribute("digitCode");
+        if (digitCode.equals(digitVerifyCode)) {
             int userId = signInService.getUserIdByTelephone(telephone);
             session.setAttribute("userId", userId);
             session.setAttribute("type", signInService.getUserType(userId));
@@ -137,9 +140,7 @@ public class SignInController {
     @RequestMapping("/signIn/process/image")
     @ResponseBody
     public String processSignInByFace(@RequestParam(value = "img") String imgStr,
-                                      HttpSession session,
-                                      HttpServletRequest request,
-                                      HttpServletResponse response) {
+                                      HttpSession session) {
         JSONObject object = new JSONObject();
         object.put("result", "fail");
         imgStr = imgStr.replaceFirst("data:image/jpeg;base64,", "");

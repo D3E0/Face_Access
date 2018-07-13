@@ -5,7 +5,7 @@
 <hibernate-configuration>
     <session-factory>
         <property name="connection.url">
-            jdbc:mysql://139.224.239.13:3306/my_data_base?useUnicode=true&amp;characterEncoding=utf8
+            jdbc:mysql://139.224.239.13:3306/my_data_base?useUnicode=true&amp;characterEncoding=utf8&amp;useSSL=false
         </property>
         <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
         <property name="hibernate.connection.password">admin</property>

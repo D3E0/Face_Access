@@ -11,7 +11,7 @@ import java.util.logging.Logger;
 
 @Component
 @WebFilter(filterName = "Filter1_AuthenticationFilter",
-        urlPatterns = {"/access/*", "/authorities/*"})
+        urlPatterns = {"/access/*", "/authorities/*", "/admin/*"})
 public class Filter1_Authentication implements Filter {
 
     private Logger logger = Logger.getLogger("filter");
@@ -58,6 +58,7 @@ public class Filter1_Authentication implements Filter {
                 }
             }
 
+            logger.info("-----" + type + " Access " + uri + " Denied-----");
             response.sendRedirect(request.getContextPath() + "/denied");
         }
     }

@@ -68,4 +68,11 @@ public class HomeController {
         modelAndView.setViewName("error");
         return modelAndView;
     }
+
+    @RequestMapping("/admin")
+    public ModelAndView admin() {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("home");
+        return modelAndView;
+    }
 }
