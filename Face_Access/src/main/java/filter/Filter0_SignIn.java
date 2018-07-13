@@ -43,7 +43,7 @@ public class Filter0_SignIn implements Filter {
         HttpServletResponse response = (HttpServletResponse) resp;
 
         String uri = request.getRequestURI();
-        logger.info("Request URI: " + uri);
+//        logger.info("Request URI: " + uri);
 
         // 设置请求的字符集（post请求方式有效）
         request.setCharacterEncoding("utf-8");
@@ -57,7 +57,7 @@ public class Filter0_SignIn implements Filter {
 
         if (request.getSession().getAttribute("userId") != null) {
             // 已经登录，放行
-            logger.info("Target Url, Already Login");
+//            logger.info("Target Url, Already Login");
             chain.doFilter(request, response);
         } else {
             Cookie cookies[] = request.getCookies();
@@ -79,14 +79,14 @@ public class Filter0_SignIn implements Filter {
                         session.setAttribute("userId", userId);
                         session.setAttribute("type", service.getUserType(userId));
                         session.setAttribute("username", service.getUsername(userId));
-                        logger.info("-----" + username + " " + password + " Match Success-----");
+//                        logger.info("-----" + username + " " + password + " Match Success-----");
                         chain.doFilter(request, response);
                         return;
                     }
                     logger.info("-----" + username + " " + password + " Does Not Match-----");
                 }
             }
-            logger.info("Target Url, Not Login && No Cookies, Send Redirect");
+//            logger.info("Target Url, Not Login && No Cookies, Send Redirect");
             // 重定向到登录页面
             response.sendRedirect(request.getContextPath() + "/signIn");
         }

@@ -54,7 +54,7 @@ layui.use(['jquery', 'laypage', 'table', 'layer', 'element', 'laydate'], functio
         } else if (layEvent === 'edit') { //编辑;
             parent.layer.open({
                 type: 2,
-                content: ['/authorities/info?start=' + data.startDate + '&end=' + data.endDate + '&remark=' + data.remark, 'no'],
+                content: ['/authorities/info?id=' + data.authorityId, 'no'],
                 title: false,
                 shade: 0,
                 btn: ['确认', '取消'],
@@ -67,6 +67,7 @@ layui.use(['jquery', 'laypage', 'table', 'layer', 'element', 'laydate'], functio
                     var editDoc = editFrame.contentDocument;
                     var endDate = $("#endDate", editDoc).val();
                     var remark = $("#remark", editDoc).val();
+                    console.info(endDate + " " + remark);
                     $.post('/authorities/update', {end: endDate, id: data.authorityId, remark: remark}, function (val) {
                         var dataObj = eval("(" + val + ")");
                         if (dataObj.result === 'success') {

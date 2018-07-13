@@ -49,8 +49,8 @@ public class UserMangeServiceImp implements UserMangeService {
     }
 
     @Override
-    public List getAuthoritiesByHouse(int houseID) {
-        return authorityDao.getAuthoritiesOfHouse(houseID);
+    public AuthorityEntity getAuthority(int authorityId) {
+        return authorityDao.getAuthority(authorityId);
     }
 
     @Override

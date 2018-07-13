@@ -4,27 +4,26 @@ import dao.DoorDao;
 import dao.RecordDao;
 import entity.DoorEntity;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.CacheManager;
-import org.springframework.cache.annotation.Cacheable;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 @Service
 public class DoorMangeServiceImp implements DoorMangeService {
 
     private DoorDao doorDao;
     private RecordDao recordDao;
+
     @Autowired
     public void setDoorDao(DoorDao doorDao) {
         this.doorDao = doorDao;
     }
+
     @Autowired
     public void setRecordDao(RecordDao recordDao) {
         this.recordDao = recordDao;
     }
+
     @Override
     public DoorEntity getDoorEntity(int doorID) {
         return doorDao.findDoor(doorID);
@@ -32,11 +31,12 @@ public class DoorMangeServiceImp implements DoorMangeService {
 
     @Override
     public List<DoorEntity> getDoorList(int page, int limit) {
-        return doorDao.getDoorList(page,limit);
+        return doorDao.getDoorList(page, limit);
     }
+
     @Override
-    public List<DoorEntity> getDoorListForSearch(int page, int limit,String keyword) {
-        return doorDao.getDoorListForSearch(page,limit,keyword);
+    public List<DoorEntity> getDoorListForSearch(int page, int limit, String keyword) {
+        return doorDao.getDoorListForSearch(page, limit, keyword);
     }
 
     @Override
@@ -44,7 +44,7 @@ public class DoorMangeServiceImp implements DoorMangeService {
         return doorDao.updateDoor(doorEntity);
     }
 
-    public String delete(int  id){
+    public String delete(int id) {
         return doorDao.deleteDoor(id);
     }
 

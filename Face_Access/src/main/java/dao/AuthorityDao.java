@@ -18,7 +18,7 @@ public interface AuthorityDao {
 
     int updateRemark(int authorityID, String remark);
 
-    AuthorityEntity getAuthority(int userID, int houseID);
+    AuthorityEntity getAuthority(int authorityId);
 
     List getAuthoritiesOfHouse(int houseID);
 

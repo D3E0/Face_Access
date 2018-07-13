@@ -78,9 +78,9 @@
                         <c:set var="tar" value="/authorities"/>
                     </c:when>
                     <c:when test="${type == 'ADMIN'}">
+                        <li class="layui-nav-item  layui-this"><a href="<c:url value="/records"/>" target="frame">进出门记录查看</a></li>
                         <li class="layui-nav-item"><a href="<c:url value="/doors"/>" target="frame">门禁管理</a></li>
                         <li class="layui-nav-item"><a href="<c:url value="/houses"/>" target="frame">房间管理</a></li>
-                        <li class="layui-nav-item"><a href="<c:url value="/records"/>" target="frame">进出门记录查看</a></li>
                         <c:set var="tar" value="/records"/>
                     </c:when>
                 </c:choose>

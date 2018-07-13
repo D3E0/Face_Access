@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import dto.AuthorityDTO;
 import dto.AuthorityListDTO;
+import entity.AuthorityEntity;
 import entity.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -192,19 +193,16 @@ public class AuthorityController {
     /**
      * 更新权限时，返回原授权日期、失效日期、备注
      *
-     * @param start
-     * @param end
      * @param model
      * @return updateAuthority.jsp
      */
     @RequestMapping("/authorities/info")
-    public String saveDate(@RequestParam(value = "start", defaultValue = "0") String start,
-                           @RequestParam(value = "end", defaultValue = "0") String end,
-                           @RequestParam(value = "remark") String remark,
+    public String saveDate(@RequestParam(value = "id", defaultValue = "0") int authorityId,
                            Model model) {
-        model.addAttribute("remark", remark);
-        model.addAttribute("start", start);
-        model.addAttribute("end", end);
+        AuthorityEntity entity = userService.getAuthority(authorityId);
+        model.addAttribute("remark", entity.getRemark());
+        model.addAttribute("start", entity.getStartDate());
+        model.addAttribute("end", entity.getEndDate());
         return "updateAuthority";
     }
 

@@ -27,7 +27,6 @@ public class HouseDaoImp implements HouseDao {
     }
 
     @Override
-    @Cacheable(value = "house",key = "'owenrid'+#args[0]")
     public List<Integer> getHouseIdByOwner(int ownerId) {
         Session session = factory.openSession();
         session.beginTransaction();

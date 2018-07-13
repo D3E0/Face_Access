@@ -75,25 +75,11 @@ public class AuthorityDaoImp implements AuthorityDao {
 
     }
 
-    /**
-     * 某一用户在某一房间的权限
-     *
-     * @param userID
-     * @param houseID
-     * @return
-     */
     @Override
-    public AuthorityEntity getAuthority(int userID, int houseID) {
+    public AuthorityEntity getAuthority(int authorityId) {
         Session session = factory.openSession();
         session.beginTransaction();
-        Query query = session.createQuery("from AuthorityEntity where user.userId = :A and house.houseId= :B");
-        query.setParameter("A", userID);
-        query.setParameter("B", houseID);
-        List list = query.list();
-        AuthorityEntity entity = null;
-        if (list.size() > 0) {
-            entity = (AuthorityEntity) list.get(0);
-        }
+        AuthorityEntity entity = session.get(AuthorityEntity.class, authorityId);
         session.getTransaction().commit();
         return entity;
     }
