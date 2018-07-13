@@ -3,10 +3,11 @@ package entity;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "user", schema = "my_data_base", catalog = "")
-public class UserEntity {
+public class UserEntity implements Serializable {
     private String userName;
     private int userId;
     private String userTelephone;

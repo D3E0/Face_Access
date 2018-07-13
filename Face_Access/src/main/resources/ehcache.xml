@@ -1,0 +1,26 @@
+<ehcache>
+  <cache name="doorCount"
+          maxBytesLocalHeap="50m"
+          timeToLiveSeconds="100">
+  </cache>
+  <cache name="doorList"
+         maxBytesLocalHeap="50m"
+         timeToLiveSeconds="100">
+  </cache>
+  <cache name="houseCount"
+         maxBytesLocalHeap="50m"
+         timeToLiveSeconds="100">
+  </cache>
+  <cache name="houseList"
+         maxBytesLocalHeap="50m"
+         timeToLiveSeconds="100">
+  </cache>
+  <cache name="house"
+         maxBytesLocalHeap="50m"
+         timeToLiveSeconds="100">
+  </cache>
+  <cache name="door"
+         maxBytesLocalHeap="50m"
+         timeToLiveSeconds="100">
+  </cache>
+</ehcache>

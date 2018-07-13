@@ -1,14 +1,15 @@
 package entity;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "house", schema = "my_data_base", catalog = "")
-public class HouseEntity {
+public class HouseEntity implements Serializable {
     private int houseId;
     private String housePassword;
-    private DoorEntity door;
     private UserEntity user;
+    private DoorEntity door;
     public HouseEntity(){}
     public HouseEntity(int houseId,String housePassword,String doorlocation,String username){
         UserEntity userEntity=new UserEntity();
