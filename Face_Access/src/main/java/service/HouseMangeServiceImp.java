@@ -3,6 +3,10 @@ package service;
 import dao.HouseDao;
 import entity.HouseEntity;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
 
@@ -16,36 +20,50 @@ public class HouseMangeServiceImp implements HouseMangeService{
     }
 
     @Override
-    public List<HouseEntity> gethouselist(int page, int limit) {
+    @Cacheable(value = "houseList")
+    public List<HouseEntity> getHouselist(int page, int limit) {
         return houseDao.getHouseList(page,limit);
     }
     @Override
+    @Cacheable(value = "houseList")
     public List<HouseEntity> getHouseListForSearch(int page, int limit,String keyword) {
         return houseDao.getHouseListForSearch(page,limit,keyword);
     }
 
     @Override
-    public Long counthouses() {
-        return houseDao.counthouse();
+    @Cacheable(value = "houseCount")
+    public Long countHouses() {
+        return houseDao.countHouse();
     }
 
     @Override
-    public String delhouse(int houseid) {
-        return houseDao.delhouse(houseid);
+    @Caching(evict = {
+            @CacheEvict(value = {"houseList","houseCount"},allEntries = true),
+            @CacheEvict(value = "house",key = "'houseid'+#args[0]")
+    })
+    public String delHouse(int houseid) {
+        return houseDao.delHouse(houseid);
     }
 
     @Override
-    public String addhouse(HouseEntity houseEntity) {
-        return houseDao.addhouse(houseEntity);
+    @Caching(evict = {
+            @CacheEvict(value = {"houseList","houseCount"},allEntries = true),
+    },put = {@CachePut(value = "house",key = "'houseid'+#args[0].getHouseId()")})
+    public String addHouse(HouseEntity houseEntity) {
+        return houseDao.addHouse(houseEntity);
     }
 
     @Override
-    public String updatehousepwd(HouseEntity house) {
-        return houseDao.updatehouse( house);
+    @Caching(evict = {
+            @CacheEvict(value = {"houseList","houseCount"},allEntries = true),
+    },put = {@CachePut(value = "house",key = "'houseid'+#args[0]")})
+    public String updateHousepwd(HouseEntity house) {
+        return houseDao.updateHouse( house);
     }
 
     @Override
-    public HouseEntity gethouse(int houseid) {
+    @Cacheable(value = "house",key = "'houseid'+#args[0]")
+    public HouseEntity getHouse(int houseid) {
         return houseDao.getHouse(houseid);
     }
 }

@@ -9,9 +9,9 @@ public interface HouseDao {
     List<Integer> getHouseIdByOwner(int ownerId);
     List<HouseEntity> getHouseList(int page, int limit);
     List<HouseEntity> getHouseListForSearch(int page, int limit,String keyword);
-    Long counthouse();
-    String delhouse(int houseid);
-    String addhouse(HouseEntity houseEntity);
-    String updatehouse(HouseEntity houseEntity);
+    Long countHouse();
+    String delHouse(int houseid);
+    String addHouse(HouseEntity houseEntity);
+    String updateHouse(HouseEntity houseEntity);
     HouseEntity getHouse(int houseid);
 }

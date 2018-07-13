@@ -5,6 +5,7 @@ import dao.RecordDao;
 import dao.UserDaoImp;
 import entity.OpenRecordEntity;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -31,6 +32,12 @@ public class RecordMangeServiceImp implements RecordMangeService {
     @Override
     public List<OpenRecordEntity> getRecordlist(int page, int limit) {
         List<OpenRecordEntity> list=recordDao.getRecordList(page,limit);
+        return list;
+    }
+
+    @Override
+    public List<OpenRecordEntity> getAllRecord() {
+        List<OpenRecordEntity> list=recordDao.getAllRecord();
         return list;
     }
 

@@ -7,7 +7,7 @@ layui.use(['jquery', 'laypage', 'table', 'layer', 'element', 'laydate'], functio
         elem: '#recordTable'
         , url: '/recordsjson'
         , page: true
-        ,limit:5
+        ,limit:10
         ,limits:[5, 10, 20, 30, 40, 50]
         , cols: [[
             // {field: 'Id', title: 'ID', align: "center"}

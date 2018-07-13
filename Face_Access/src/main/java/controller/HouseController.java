@@ -47,7 +47,7 @@ public class HouseController {
     public String gethouses(@RequestParam(value = "page",defaultValue = "1")String page, @RequestParam(value = "limit",defaultValue = "10")String limit,@RequestParam (value = "keyword",defaultValue = "")String keyword){
         List<HouseEntity> list =null;
         if (keyword.equals(""))
-        list= houseService.gethouselist(Integer.parseInt(page),Integer.parseInt(limit));//Integer.parseInt(page),Integer.parseInt(limit)
+        list= houseService.getHouselist(Integer.parseInt(page),Integer.parseInt(limit));//Integer.parseInt(page),Integer.parseInt(limit)
         else
             list=houseService.getHouseListForSearch(Integer.parseInt(page),Integer.parseInt(limit),keyword);
         JSONArray array = new JSONArray();
@@ -61,13 +61,13 @@ public class HouseController {
 //            object.put("Ip", entity.getDoorIp());
             array.add(object);
         }
-        String ans="{\"code\":0,\"msg\":\"\",\"count\":"+houseService.counthouses()+",\"data\":" + array + "}";
+        String ans="{\"code\":0,\"msg\":\"\",\"count\":"+houseService.countHouses()+",\"data\":" + array + "}";
         return ans;
     }
     @RequestMapping("/delhouse")
     @ResponseBody
     public String delhouse(@RequestParam(value = "houseid") String houseid){
-        return houseService.delhouse(Integer.parseInt(houseid));
+        return houseService.delHouse(Integer.parseInt(houseid));
     }
     @RequestMapping("/addhouseview")
     public String addhouseview(){
@@ -90,7 +90,7 @@ public class HouseController {
         houseEntity.setUser(userEntity);
         if (housepassword!=null)
         houseEntity.setHousePassword(EncryptInfo.MD5(housepassword));
-        return houseService.addhouse(houseEntity);
+        return houseService.addHouse(houseEntity);
     }
     @RequestMapping("/updatehouseview")
     public String updatehouseview(@RequestParam (value = "houseid")String houseid,@RequestParam (value = "userid")String userid, @RequestParam (value = "doorid")String doorid, Model model){
@@ -115,7 +115,7 @@ public class HouseController {
         houseEntity.setUser(userEntity);
         if (housepassword!=null)
             houseEntity.setHousePassword(EncryptInfo.MD5(housepassword));
-        return houseService.updatehousepwd(houseEntity);
+        return houseService.updateHousepwd(houseEntity);
     }
 
 }

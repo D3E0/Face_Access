@@ -27,15 +27,8 @@ public class DoorDaoImp implements DoorDao {
     public void setFactory(SessionFactory factory) {
         this.factory = factory;
     }
-    @Autowired
-    public void setCacheManager(CacheManager cacheManager){
-        this.cacheManager=cacheManager;
-    }
 
     @Override
-    @Caching(evict = {
-            @CacheEvict(value = {"doorList","doorCount"},allEntries = true),
-    },put={ @CachePut(value = "door",key = "'doorid'+#args[0].get")})
     public String addDoor(DoorEntity doorEntity) {
         String back="success";
         Session session = factory.openSession();
@@ -56,10 +49,6 @@ public class DoorDaoImp implements DoorDao {
 
 
     @Override
-    @Caching(evict = {
-            @CacheEvict(value = {"doorList","doorCount"},allEntries = true),
-            @CacheEvict(value = "door",key = "'doorid'+#args[0].getDoorId()")
-    })
     public String deleteDoor(int doorID) {
         String back="success";
         Session session=factory.openSession();
@@ -81,9 +70,6 @@ public class DoorDaoImp implements DoorDao {
     }
 
     @Override
-    @Caching(evict = {
-            @CacheEvict(value = {"doorList","doorCount"},allEntries = true),
-    },put={ @CachePut(value = "door",key = "'doorid'+#args[0].getDoorId()")})
     public String updateDoor(DoorEntity door) {
         String back="success";
         Session session=factory.openSession();
@@ -114,7 +100,6 @@ public class DoorDaoImp implements DoorDao {
     }
 
     @Override
-    @Cacheable(value = "door",key = "#args[0]")
     public DoorEntity findDoor(int doorID) {
         Session session=factory.openSession();
         Transaction tx = null;
@@ -134,12 +119,9 @@ public class DoorDaoImp implements DoorDao {
     }
 
     @Override
-    @Cacheable(value = "doorList")
     public List<DoorEntity> getDoorList(int page, int limit) {
         System.out.println("==================");
         int start=(page-1)*limit;
-        System.out.println(page);
-        System.out.println(limit);
         int count=limit;
         Session session=factory.openSession();
         Transaction tx = null;
@@ -162,7 +144,6 @@ public class DoorDaoImp implements DoorDao {
     }
 
     @Override
-    @Cacheable(value = "doorlist")
     public List<DoorEntity> getDoorListForSearch(int page, int limit,String keyword) {
         int start=(page-1)*limit;
         System.out.println(page);
@@ -189,14 +170,13 @@ public class DoorDaoImp implements DoorDao {
         return doorList;
     }
     @Override
-    @Cacheable(value = "doorCount")
     public Long countDoor() {
         Session session=factory.openSession();
         Transaction tx = null;
         Long count=null;
         try {
             tx = session.beginTransaction();
-            Query q   = session.createQuery("select count(*) from DoorEntity");
+            Query q   = session.createQuery("select count(doorId) from DoorEntity");
             count=(Long)q.uniqueResult();
             tx.commit();
         }

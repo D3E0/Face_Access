@@ -41,7 +41,7 @@ public class DoorController {
             object.put("Ip", entity.getDoorIp());
             array.add(object);
         }
-        String ans="{\"code\":0,\"msg\":\"\",\"count\":"+doorService.countdoor()+",\"data\":" + array + "}";
+        String ans="{\"code\":0,\"msg\":\"\",\"count\":"+doorService.countDoor()+",\"data\":" + array + "}";
         return ans;
     }
     @RequestMapping("/doors")
@@ -62,11 +62,11 @@ public class DoorController {
         doorEntity.setDoorStatus(status);
         doorEntity.setDoorIp(ip);
         doorEntity.setDoorLocation(location);
-        return  doorService.update(doorEntity);
+        return  doorService.updateDoor(doorEntity);
     }
     @RequestMapping("/deldoor")
     public String deldoor(@RequestParam(value = "id")String id){
-        return doorService.delete(Integer.parseInt(id));
+        return doorService.deleteDoor(Integer.parseInt(id));
     }
 
     @RequestMapping("/adddoorview")
@@ -80,6 +80,6 @@ public class DoorController {
         doorEntity.setDoorLocation(location);
         doorEntity.setDoorIp(ip);
         doorEntity.setDoorStatus(status);
-        return doorService.adddoor(doorEntity);
+        return doorService.addDoor(doorEntity);
     }
 }
