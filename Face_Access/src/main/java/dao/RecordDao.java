@@ -15,5 +15,6 @@ public interface RecordDao {
 
     List<OpenRecordEntity> getRecordList(int page, int limit);
     List<OpenRecordEntity> getRecordListForSearch(int page, int limit,String keyword);
+    List<OpenRecordEntity> getAllRecord();
     Long countRecord();
 }

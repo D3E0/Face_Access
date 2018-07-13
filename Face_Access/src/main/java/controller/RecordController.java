@@ -51,4 +51,25 @@ public class RecordController {
         String ans="{\"code\":0,\"msg\":\"\",\"count\":"+recordService.countRecord()+",\"data\":" + array + "}";
         return ans;
     }
+    @RequestMapping(value="allrecordsjson", produces = "text/html; charset=utf-8")
+    @ResponseBody
+    public String recordsjson(){
+        List<OpenRecordEntity> list=null;
+        list=recordService.getAllRecord();
+        JSONArray array = new JSONArray();
+        DateFormat dateFormat=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        for (OpenRecordEntity entity : list) {
+            JSONObject object = new JSONObject();
+//            object.put("Id", entity.getOpenId());
+//            object.put("doorId", entity.getDoorEntity().getDoorId());
+            object.put("openDate",dateFormat.format(entity.getOpenDate()));
+            object.put("openResult", entity.getOpenResult());
+//            object.put("userID",entity.getUserEntity().getUserId());
+            object.put("userName",entity.getUserEntity().getUserName());
+            object.put("doorLocation", entity.getDoorEntity().getDoorLocation());
+            array.add(object);
+        }
+        String ans="" + array + "";
+        return ans;
+    }
 }

@@ -35,7 +35,7 @@ public class DoorMangeServiceImp implements DoorMangeService {
     }
 
     @Override
-    @Cacheable(value = "doorlist")
+    @Cacheable(value = "doorList")
     public List<DoorEntity> getDoorList(int page, int limit) {
         return doorDao.getDoorList(page, limit);
     }

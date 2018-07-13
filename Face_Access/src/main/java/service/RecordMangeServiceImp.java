@@ -36,6 +36,12 @@ public class RecordMangeServiceImp implements RecordMangeService {
     }
 
     @Override
+    public List<OpenRecordEntity> getAllRecord() {
+        List<OpenRecordEntity> list=recordDao.getAllRecord();
+        return list;
+    }
+
+    @Override
     public Long countRecord() {
         return recordDao.countRecord();
     }

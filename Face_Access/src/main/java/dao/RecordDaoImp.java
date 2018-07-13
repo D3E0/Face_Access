@@ -60,7 +60,7 @@ public class RecordDaoImp implements RecordDao {
 
     @Override
     public List<OpenRecordEntity> getRecordList(int page, int limit) {
-        int start=(page-1)*limit+1;
+        int start=(page-1)*limit;
         int count=limit;
         Session session=factory.openSession();
         Transaction tx = null;
@@ -93,6 +93,26 @@ public class RecordDaoImp implements RecordDao {
             Query query=session.createQuery("select new OpenRecordEntity(userEntity.userName,openResult,openDate,doorEntity.doorLocation) from OpenRecordEntity where openId between "+start+" and "+(start+count-1)+" and (doorEntity.doorLocation like :A or userEntity.userName like :B)");
             query.setParameter("A","%"+keyword+"%");
             query.setParameter("B","%"+keyword+"%");
+            recordList=query.list();
+            tx.commit();
+        }
+        catch (Exception e) {
+            if (tx!=null) tx.rollback();
+            e.printStackTrace();
+        }finally {
+            session.close();
+        }
+        return recordList;
+    }
+
+    @Override
+    public List<OpenRecordEntity> getAllRecord() {
+        Session session=factory.openSession();
+        Transaction tx = null;
+        List<OpenRecordEntity> recordList=null;
+        try {
+            tx = session.beginTransaction();
+            Query query=session.createQuery("select new OpenRecordEntity(userEntity.userName,openResult,openDate,doorEntity.doorLocation) from OpenRecordEntity");
             recordList=query.list();
             tx.commit();
         }
