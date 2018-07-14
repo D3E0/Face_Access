@@ -161,7 +161,7 @@
                 console.info(dataObj);
                 if (dataObj.result === 'success') {
                     layer.msg("登陆成功");
-                    window.location.href = '/home';
+                    window.location.href = dataObj.url;
                 } else {
                     layer.msg("密码错误");
                 }

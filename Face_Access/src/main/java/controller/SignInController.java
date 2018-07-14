@@ -71,6 +71,13 @@ public class SignInController {
                 session.setAttribute("username", signInService.getUsername(userId));
                 logger.info("-----" + username + " " + password + " Match Success-----");
                 sendCookies(response, username, password);
+                String url = (String) session.getAttribute("url");
+                if (url != null) {
+                    object.put("url", url);
+                    session.removeAttribute("url");
+                } else {
+                    object.put("url", "/home");
+                }
                 object.put("result", "success");
             } else {
                 logger.info("-----" + username + " " + password + " Does Not Match-----");

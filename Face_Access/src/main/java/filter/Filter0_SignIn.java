@@ -88,6 +88,7 @@ public class Filter0_SignIn implements Filter {
                 }
             }
             // 重定向到登录页面 logger.info("Target Url, Not Login && No Cookies, Send Redirect");
+            request.getSession().setAttribute("url", uri);
             response.sendRedirect(request.getContextPath() + "/signIn");
         }
     }
