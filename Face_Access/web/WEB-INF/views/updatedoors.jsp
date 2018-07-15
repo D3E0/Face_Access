@@ -12,6 +12,9 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/layui/css/layui.css">
     <script src="${pageContext.request.contextPath}/static/layui/layui.js"></script>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/normal.css">
+    <script>
+        var contextPath = '${pageContext.request.contextPath}';
+    </script>
 </head>
 <body>
 <div class="father">

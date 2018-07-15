@@ -24,7 +24,7 @@ public class Filter0_SignIn implements Filter {
     private Logger logger = Logger.getLogger("filter");
     private SignInService service;
     private static final String[] INITPARAM = {
-            "/signIn", "/register", "/logout", "/denied", "/static"
+            "/signIn", "/register", "/logout", "/denied", "/static", "/error"
     };
 
     @Override
@@ -47,6 +47,11 @@ public class Filter0_SignIn implements Filter {
 
         // 设置请求的字符集（post请求方式有效）
         request.setCharacterEncoding("utf-8");
+        String path = request.getContextPath() + "/";
+        if (path.equals(uri)) {
+            chain.doFilter(request, response);// 非拦截请求，放行
+            return;
+        }
 
         for (String param : INITPARAM) {
             if (uri.contains(param)) {

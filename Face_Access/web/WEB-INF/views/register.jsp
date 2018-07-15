@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: ACM-PC
@@ -12,6 +13,9 @@
     <title>Register</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/layui/css/layui.css">
     <script src="${pageContext.request.contextPath}/static/layui/layui.js"></script>
+    <script>
+        var contextPath = '${pageContext.request.contextPath}';
+    </script>
     <style>
         body {
             margin-top: 50px;
@@ -63,7 +67,7 @@
     <div class="layui-row layui-col-space15">
         <div class="layui-col-md7">
             <div id="box">
-                <img src="/static/images/door.png" id="img">
+                <img src="<c:url value="/static/images/door.png"/>" id="img">
             </div>
         </div>
         <div class="layui-col-md5">
@@ -124,7 +128,7 @@
                     </div>
 
                     <div class="layui-input-block">
-                        <a href="/signIn" style="color: #009688">已有账号，立即登陆</a>
+                        <a href="<c:url value="/signIn"/>" style="color: #009688">已有账号，立即登陆</a>
                     </div>
 
                     <div class="layui-form-item">
@@ -138,18 +142,18 @@
     </div>
 </div>
 
-
 <script>
+    var contextPath = '${pageContext.request.contextPath}';
     layui.use(['form', 'laydate', 'jquery', 'layer'], function () {
         var form = layui.form, $ = layui.jquery, layer = layui.layer;
         form.on('submit(submit)', function (data) {
             console.info(data.field);
-            $.post('/register/process', data.field, function (val) {
+            $.post(contextPath + '/register/process', data.field, function (val) {
                 var dataObj = eval("(" + val + ")");
                 console.info(dataObj);
                 if (dataObj.result === 'success') {
                     layer.msg("注册成功");
-                    window.location.href = '/signIn';
+                    window.location.href = contextPath + '/signIn';
                 } else {
                     layer.msg("注册失败");
                 }
@@ -196,7 +200,7 @@
                     tips: [2, FAIL]
                 });
             } else {
-                $.post('/register/verify', {username: data}, function (val) {
+                $.post(contextPath + '/register/verify', {username: data}, function (val) {
                     var dataObj = eval("(" + val + ")");
                     if (dataObj.result === 'success') {
                         layer.tips('验证通过', elem, {
@@ -241,7 +245,7 @@
 
                 elem.toggleClass("layui-btn-disabled", true);
                 elem.attr("disabled", true);
-                $.post('/register/digitCode', {}, function (data) {
+                $.post(contextPath + '/register/digitCode', {}, function (data) {
                     console.info(data);
                 });
 

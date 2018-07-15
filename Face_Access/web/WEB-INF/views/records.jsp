@@ -10,6 +10,9 @@
 <html>
 <head>
     <title>users</title>
+    <script>
+        var contextPath = '${pageContext.request.contextPath}';
+    </script>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/layui/css/layui.css">
     <script src="${pageContext.request.contextPath}/static/layui/layui.js"></script>
     <script src="${pageContext.request.contextPath}/static/js/records.js"></script>
@@ -17,6 +20,7 @@
     <script src="${pageContext.request.contextPath}/static/js/xlsx.full.min.js"></script>
     <script src="${pageContext.request.contextPath}/static/js/FileSaver.min.js"></script>
     <script src="${pageContext.request.contextPath}/static/js/outXls.js"></script>
+
     <meta http-equiv="Pragma" content="no-cache">
     <style>
         .content {

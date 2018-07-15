@@ -53,7 +53,7 @@
                     <dd><a href="javascript:">密码修改</a></dd>
                 </dl>
             </li>
-            <li class="layui-nav-item" id="quit"><a href="/logout">退下</a></li>
+            <li class="layui-nav-item" id="quit"><a href="<c:url value="/logout"/>">退下</a></li>
         </ul>
     </div>
 
@@ -95,7 +95,7 @@
     </div>
 
     <div id="content">
-        <iframe id="frame" name="frame" src="${tar}"></iframe>
+        <iframe id="frame" name="frame" src="${pageContext.request.contextPath}${tar}"></iframe>
     </div>
 
 </div>

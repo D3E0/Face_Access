@@ -59,7 +59,9 @@ public class SignInController {
     public String processSignIn(@RequestParam String username,
                                 @RequestParam String password,
                                 @RequestParam String imageCode,
-                                HttpSession session, HttpServletResponse response) {
+                                HttpSession session,
+                                HttpServletResponse response,
+                                HttpServletRequest request) {
         JSONObject object = new JSONObject();
         object.put("result", "fail");
         String imageVerifyCode = (String) session.getAttribute("imageCode");
@@ -70,7 +72,7 @@ public class SignInController {
                 session.setAttribute("type", signInService.getUserType(userId));
                 session.setAttribute("username", signInService.getUsername(userId));
                 logger.info("-----" + username + " " + password + " Match Success-----");
-                sendCookies(response, username, password);
+                sendCookies(response, request, username, password);
                 String url = (String) session.getAttribute("url");
                 if (url != null) {
                     object.put("url", url);
@@ -86,15 +88,40 @@ public class SignInController {
         return object.toJSONString();
     }
 
-    private void sendCookies(HttpServletResponse response, String username, String password) {
+    private void sendCookies(HttpServletResponse response, HttpServletRequest request,
+                             String username, String password) {
         String encodeStr = Base64.getEncoder().encodeToString(password.getBytes());
         String urlEncodeStr = URLEncoder.encode(encodeStr);
         Cookie cookie = new Cookie("autoLogin", username + "." + urlEncodeStr);
         cookie.setMaxAge(24 * 60 * 60);
         // 工程文件就是在根目录下 request.getContextPath() 为 ""
-        cookie.setPath("/");
+        String path = request.getContextPath().equals("") ? "/" :
+                request.getContextPath();
+        cookie.setPath(path);
         response.addCookie(cookie);
-        logger.info("-----Add Cookies Success-----");
+        logger.info("-----Add Cookies To " + path + " Success-----");
+    }
+
+    @RequestMapping("/signIn/test/add")
+    @ResponseBody
+    public String add(HttpServletResponse response, HttpServletRequest request) {
+//        sendCookies(response, request, "test", "test");
+        return "test";
+    }
+
+    @RequestMapping("/signIn/test/remove")
+    @ResponseBody
+    public String remove(HttpServletResponse response, HttpServletRequest request) {
+//        Cookie[] cookies = request.getCookies();
+//        for (Cookie cookie : cookies) {
+//            if ("autoLogin".equals(cookie.getName())) {
+//                String path = request.getContextPath().equals("") ? "/" : request.getContextPath();
+//                cookie.setPath(path);
+//                cookie.setMaxAge(0);
+//                response.addCookie(cookie);
+//            }
+//        }
+        return "test";
     }
 
     /**
@@ -231,11 +258,6 @@ public class SignInController {
             object.put("result", "fail");
         }
         return object.toJSONString();
-    }
-
-    @RequestMapping("/signIn/test")
-    public String test(HttpServletResponse response) {
-        return "test";
     }
 
 }

@@ -14,6 +14,9 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/layui/css/layui.css">
     <script src="${pageContext.request.contextPath}/static/layui/layui.js"></script>
     <script src="${pageContext.request.contextPath}/static/js/users.js"></script>
+    <script>
+        var contextPath = '${pageContext.request.contextPath}';
+    </script>
     <style>
         body {
             background-color: #eee;
@@ -23,9 +26,7 @@
 </head>
 <body>
 <div class="layui-fluid">
-
     <div class="layui-row layui-col-space15">
-
         <div class="layui-col-md12">
             <div class="layui-card">
                 <div class="layui-card-header">人员管理</div>
@@ -45,15 +46,11 @@
         </div>
     </div>
 </div>
-
-
 <script type="text/html" id="toolBar">
     <%--<a class="layui-btn layui-btn-sm" lay-event="detail">查看</a>--%>
     <a class="layui-btn layui-btn-sm" lay-event="edit"> <i class="layui-icon">&#xe642;</i>编辑</a>
     <a class="layui-btn layui-btn-danger layui-btn-sm" lay-event="del"> <i class="layui-icon">&#xe640;</i>删除</a>
 </script>
-
-
 </body>
 </html>
 

@@ -14,6 +14,9 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/layui/css/layui.css">
     <script src="${pageContext.request.contextPath}/static/layui/layui.js"></script>
     <script src="${pageContext.request.contextPath}/static/js/users.js"></script>
+    <script>
+        var contextPath = '${pageContext.request.contextPath}';
+    </script>
     <style>
         body {
             background-color: #eee;
@@ -45,7 +48,7 @@
 
 
 <script>
-
+    var contextPath = '${pageContext.request.contextPath}';
     layui.use(['jquery', 'laypage', 'table', 'layer', 'element', 'laydate'], function () {
         var $ = layui.$, laypage = layui.laypage
             , table = layui.table, layer = layui.layer
@@ -53,7 +56,7 @@
 
         parent.register.accessTable = table.render({
             elem: '#accessTable'
-            , url: '/access/json'
+            , url: contextPath + '/access/json'
             , page: true
             , cols: [[
                 {field: 'houseId', title: '房间 ID', align: "center"}

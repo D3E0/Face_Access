@@ -42,14 +42,16 @@ public class HomeController {
     public String logout(HttpSession session,
                          HttpServletRequest request,
                          HttpServletResponse response) {
+        logger.info("-----User Logout-----");
         Enumeration<String> AttributeNames = session.getAttributeNames();
         while (AttributeNames.hasMoreElements()) {
             session.removeAttribute(AttributeNames.nextElement());
         }
-
         Cookie[] cookies = request.getCookies();
         for (Cookie cookie : cookies) {
             if ("autoLogin".equals(cookie.getName())) {
+                String path = request.getContextPath().equals("") ? "/" : request.getContextPath();
+                cookie.setPath(path);
                 cookie.setMaxAge(0);
                 response.addCookie(cookie);
             }

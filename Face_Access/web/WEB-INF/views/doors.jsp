@@ -13,6 +13,9 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/layui/css/layui.css">
     <script src="${pageContext.request.contextPath}/static/layui/layui.js"></script>
     <script src="${pageContext.request.contextPath}/static/js/doors.js"></script>
+    <script>
+        var contextPath = '${pageContext.request.contextPath}';
+    </script>
     <meta http-equiv="Pragma" content="no-cache">
     <style>
         .content {

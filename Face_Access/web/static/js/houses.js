@@ -5,7 +5,7 @@ layui.use(['jquery', 'laypage', 'table', 'layer', 'element'], function () {
     layer.load();
     var tableIns=table.render({
         elem: '#houseTable'
-        , url: '/housesjson'
+        , url: contextPath + '/housesjson'
         , page: true
         , cols: [[
             {field: 'houseId', title: '房间号', align: "center"}
@@ -35,7 +35,7 @@ layui.use(['jquery', 'laypage', 'table', 'layer', 'element'], function () {
                 , btn2: function () {
                     layer.msg("确认删除");
                     obj.del();
-                    $.post("/delhouse",
+                    $.post( contextPath+ "/delhouse",
                         {
                             houseid:data.houseId
                         },
@@ -47,7 +47,7 @@ layui.use(['jquery', 'laypage', 'table', 'layer', 'element'], function () {
         } else if (layEvent === 'edit') { //编辑;
             layer.open({
                 type: 2,
-                content: ['/updatehouseview?houseid=' + data.houseId+'&userid='+data.userId+'&doorid='+data.doorId, 'no'],
+                content: [contextPath + '/updatehouseview?houseid=' + data.houseId+'&userid='+data.userId+'&doorid='+data.doorId, 'no'],
                 title: "修改信息",
                 shade: 0,
                 btn: ['确认', '取消'],
@@ -62,7 +62,7 @@ layui.use(['jquery', 'laypage', 'table', 'layer', 'element'], function () {
                     var doorid = $("#doorid", doc).val();
                     var userid = $("#userid", doc).val();
                     var password = $("#password", doc).val();
-                    $.post("/updatehouse",
+                    $.post(contextPath + "/updatehouse",
                         {
                             "Content-Type:text/html;charset":"utf8",
                             houseid:id,
@@ -86,7 +86,7 @@ layui.use(['jquery', 'laypage', 'table', 'layer', 'element'], function () {
     $("#add").click(function () {
         layer.open({
             type: 2,
-            content: ['/addhouseview', 'no'],
+            content: [contextPath + '/addhouseview', 'no'],
             title: '添加房间',
             btn: ['确认', '取消'],
             area: ['500', '580'],
@@ -120,7 +120,7 @@ layui.use(['jquery', 'laypage', 'table', 'layer', 'element'], function () {
                 //     layer.msg("密码必须为6-18位字母、数字、特殊符号的");
                 //     return false
                 // }
-                $.post("/addhouse",
+                $.post(contextPath + "/addhouse",
                     {
                         "Content-Type:text/html;charset":"utf8",
                         houseid:id,

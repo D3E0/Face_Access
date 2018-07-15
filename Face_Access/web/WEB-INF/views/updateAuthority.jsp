@@ -11,6 +11,9 @@
 <head>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/layui/css/layui.css">
     <script src="${pageContext.request.contextPath}/static/layui/layui.js"></script>
+    <script>
+        var contextPath = '${pageContext.request.contextPath}';
+    </script>
     <style>
         .main {
             width: 375px;
@@ -43,7 +46,6 @@
         </div>
     </div>
 </div>
-</body>
 <script>
     layui.use(['laydate', 'form', 'layer', 'upload'], function () {
         var laydate = layui.laydate, $ = layui.jquery;

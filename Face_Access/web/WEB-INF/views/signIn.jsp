@@ -11,19 +11,22 @@
 <head>
     <meta charset="UTF-8">
     <title>Login</title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/static/layui/css/layui.css">
+    <link rel="stylesheet" href="<c:url value="/static/layui/css/layui.css"/>">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/signIn.css">
     <script src="${pageContext.request.contextPath}/static/layui/layui.js"></script>
     <script src="${pageContext.request.contextPath}/static/js/jquery-3.3.1.js"></script>
     <script src="${pageContext.request.contextPath}/static/js/jquery.transit.min.js"></script>
     <script src="${pageContext.request.contextPath}/static/js/capture.js"></script>
+    <script>
+        var contextPath = '${pageContext.request.contextPath}';
+    </script>
 </head>
 <body>
 <div class="layui-container" style="margin-top: 50p; height: 500px;">
     <div class="layui-row layui-col-space10">
         <div class="layui-col-md7">
             <div id="box">
-                <img src="${pageContext.request.contextPath}/static/images/door.png" id="img">
+                <img src="<c:url value="/static/images/door.png"/>" id="img">
             </div>
         </div>
         <div class="layui-col-md5">
@@ -152,16 +155,17 @@
 </div>
 <canvas id="canvas" hidden width="400" height="360"></canvas>
 <script>
+    var contextPath = '${pageContext.request.contextPath}';
     layui.use(['form', 'laydate', 'jquery', 'layer'], function () {
         var form = layui.form, $ = layui.jquery, layer = layui.layer;
         form.on('submit(signInByUsername)', function (data) {
             // $.post('/processSignIn', data.field, function (val) {
-            $.post('/signIn/process/username', data.field, function (val) {
+            $.post(contextPath + '/signIn/process/username', data.field, function (val) {
                 var dataObj = eval("(" + val + ")");
                 console.info(dataObj);
                 if (dataObj.result === 'success') {
                     layer.msg("登陆成功");
-                    window.location.href = dataObj.url;
+                    window.location.href = contextPath + dataObj.url;
                 } else {
                     layer.msg("密码错误");
                 }
@@ -170,11 +174,11 @@
         });
 
         form.on('submit(signInByTelephone)', function (data) {
-            $.post('/signIn/process/telephone', data.field, function (val) {
+            $.post(contextPath + '/signIn/process/telephone', data.field, function (val) {
                 var dataObj = eval("(" + val + ")");
                 if (dataObj.result === 'success') {
                     layer.msg("登陆成功");
-                    window.location.href = '/home';
+                    window.location.href = contextPath + '/home';
                 } else {
                     layer.msg("验证码错误");
                 }
@@ -210,7 +214,7 @@
 
                 elem.toggleClass("layui-btn-disabled", true);
                 elem.attr("disabled", true);
-                $.post('/register/digitCode', {}, function (data) {
+                $.post(contextPath + '/register/digitCode', {}, function (data) {
                     console.info(data);
                 });
 

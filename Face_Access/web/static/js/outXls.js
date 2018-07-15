@@ -58,7 +58,7 @@ function getCharCol(n) {
     return s
 }
 function Go() {
-    $.post("/allrecordsjson",
+    $.post(contextPath + "/allrecordsjson",
         {
         },
         function(data,status){

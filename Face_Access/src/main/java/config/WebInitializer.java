@@ -4,6 +4,7 @@ import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatche
 
 import javax.servlet.MultipartConfigElement;
 import javax.servlet.ServletRegistration;
+import java.util.Properties;
 
 /**
  * Servlet 容器配置类
@@ -28,7 +29,7 @@ public class WebInitializer extends AbstractAnnotationConfigDispatcherServletIni
     /**
      * 指定 DispatcherServlet 配置类
      * DispatcherServlet 启动时，自动创建 Spring ApplicationContext，
-     *（ApplicationContext 对象代表 Spring 控制反转容器）
+     * （ApplicationContext 对象代表 Spring 控制反转容器）
      * 并加载配置类或文件中声明的 Bean
      * DispatcherServlet 加载包含 WEB 组件的 Bean，如控制器、视图解析器以及处理器映射等
      **/
@@ -44,6 +45,14 @@ public class WebInitializer extends AbstractAnnotationConfigDispatcherServletIni
 
     @Override
     protected void customizeRegistration(ServletRegistration.Dynamic registration) {
-        registration.setMultipartConfig(new MultipartConfigElement("D:\\upload", 2097152, 4194304, 0));
+        Properties props = System.getProperties(); //系统属性
+        String platform = props.getProperty("os.name").toLowerCase();
+        String temp;
+        if (platform.contains("linux")) {
+            temp = "/tmp";
+        } else {
+            temp = "D:\\upload";
+        }
+        registration.setMultipartConfig(new MultipartConfigElement(temp, 2097152, 4194304, 0));
     }
 }

@@ -18,14 +18,14 @@ layui.use(['laydate', 'form', 'layer', 'jquery'], function () {
     });
 
     form.on('select(username)', function (data) {
-        $.getJSON('/authorities/user', {username: data.value}, function (val) {
+        $.getJSON(contextPath + '/authorities/user', {username: data.value}, function (val) {
             $("input[name='userTel']").val(val.userTel);
             $("input[name='userId']").val(val.userId);
         });
     });
 
     form.on('submit(submit)', function (data) {
-        $.post('/authorities/add/process', data.field, function (data) {
+        $.post(contextPath + '/authorities/add/process', data.field, function (data) {
             if (data.result === 'success') {
                 var index = parent.register.addIndex;
                 parent.layer.close(index); //关闭自身
@@ -45,7 +45,7 @@ layui.use(['laydate', 'form', 'layer', 'jquery'], function () {
     });
 
 
-    $.getJSON('/authorities/usernameList', function (val) {
+    $.getJSON(contextPath + '/authorities/usernameList', function (val) {
         $.each(val, function (i, n) {
             $("<option>" + n + "</option>").appendTo($("#username"));
         });
@@ -53,7 +53,7 @@ layui.use(['laydate', 'form', 'layer', 'jquery'], function () {
         form.render('select');
     });
 
-    $.getJSON('/authorities/houses', {userId: parent.id}, function (val) {
+    $.getJSON(contextPath + '/authorities/houses', {userId: parent.id}, function (val) {
         $.each(val, function (i, n) {
             $("<option>" + n + "</option>").appendTo($("#houseId"));
         });

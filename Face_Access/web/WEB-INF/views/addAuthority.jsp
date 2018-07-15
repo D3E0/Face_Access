@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: ACM-PC
@@ -12,6 +13,9 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/layui/css/layui.css">
     <script src="${pageContext.request.contextPath}/static/layui/layui.js"></script>
     <script src="${pageContext.request.contextPath}/static/js/addAuthority.js"></script>
+    <script>
+        var contextPath = '${pageContext.request.contextPath}';
+    </script>
     <style>
 
         body {
@@ -44,7 +48,7 @@
 </head>
 <body>
 <div class="father">
-    <form class="layui-form layui-form-pane son" action="/processuser">
+    <form class="layui-form layui-form-pane son" action="<c:url value="/authorities/add/process"/>">
 
         <div class="layui-form-item">
             <label class="layui-form-label">用户名</label>

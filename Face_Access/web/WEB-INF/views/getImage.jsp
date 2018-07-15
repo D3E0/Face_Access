@@ -50,6 +50,7 @@
     </div>
 </div>
 <script>
+    var contextPath = '${pageContext.request.contextPath}';
     layui.use(['laydate', 'form', 'layer', 'upload'], function () {
         var laydate = layui.laydate, form = layui.form
             , layer = layui.layer, upload = layui.upload;
@@ -58,7 +59,7 @@
 
         upload.render({
             elem: '#image' //绑定元素
-            , url: '/upload' //上传接口
+            , url: contextPath + '/upload' //上传接口
             , done: function (res) {
                 //上传完毕回调
                 layer.msg("success");
@@ -95,9 +96,7 @@
                 }
             });
         });
-
     })
-
 
 </script>
 </body>

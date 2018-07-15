@@ -5,7 +5,7 @@ layui.use(['laydate', 'form', 'layer', 'upload'], function () {
     var topDoc = parent.document;
     upload.render({
         elem: '#image' //绑定元素
-        , url: '/user/upload' //上传接口
+        , url: contextPath+'/user/upload' //上传接口
         , data: {userId: parent.id}
         , done: function (res) {
             //上传完毕回调
@@ -54,7 +54,7 @@ layui.use(['laydate', 'form', 'layer', 'upload'], function () {
         $("input[name = 'confirm']").val('');
         $("input[name = 'password']").val('');
         if (data.field.confirm === data.field.password) {
-            $.post('/user/update/password', data.field, function (val) {
+            $.post(contextPath+'/user/update/password', data.field, function (val) {
                 var dataObj = eval("(" + val + ")");
                 if (dataObj.result === 'success') {
                     layer.msg("修改成功")
@@ -69,7 +69,7 @@ layui.use(['laydate', 'form', 'layer', 'upload'], function () {
     });
 
     form.on('submit(updateTelephone)', function (data) {
-        $.post('/user/update/telephone', data.field, function (val) {
+        $.post(contextPath+'/user/update/telephone', data.field, function (val) {
             var dataObj = eval("(" + val + ")");
             if (dataObj.result === 'success') {
                 layer.msg("修改成功");
@@ -91,7 +91,7 @@ layui.use(['laydate', 'form', 'layer', 'upload'], function () {
         elem.attr('disabled', true);
         elem.toggleClass("layui-btn-disabled", true);
 
-        $.post('/register/digitCode', {}, function (data) {
+        $.post(contextPath+'/register/digitCode', {}, function (data) {
             console.info(data);
         });
 

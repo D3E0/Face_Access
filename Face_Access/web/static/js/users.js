@@ -5,7 +5,7 @@ layui.use(['jquery', 'laypage', 'table', 'layer', 'element', 'laydate'], functio
 
     parent.register.userTable = table.render({
         elem: '#userTable'
-        , url: '/authorities/json'
+        , url: contextPath + '/authorities/json'
         , page: true
         , cols: [[
             {field: 'houseId', title: '房间 ID', align: "center"}
@@ -21,15 +21,17 @@ layui.use(['jquery', 'laypage', 'table', 'layer', 'element', 'laydate'], functio
     //监听工具条 tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
     table.on('tool(userTable)', function (obj) {
         var data = obj.data; //获得当前行数据
+        console.info(obj.data);
         var layEvent = obj.event; //获得 lay-event 对应的值
-        // console.info(data.userId + " " + data.authorityId);
+        var srcPath = contextPath + '/static/images/666.jpg';
+
         if (layEvent === 'detail') { //查看
             parent.layer.open({
                 type: 1,
                 title: false,
                 closeBtn: 0,
                 shadeClose: true,
-                content: '<div><img src="/static/images/666.jpg" style="width: 100%"/></div>'
+                content: '<div><img src=' + srcPath + ' style="width: 100%"/></div>'
             });
         } else if (layEvent === 'del') { //删除
             layer.open({
@@ -40,11 +42,12 @@ layui.use(['jquery', 'laypage', 'table', 'layer', 'element', 'laydate'], functio
                     layer.msg("取消删除");
                 }
                 , btn2: function () {
-                    $.post("/authorities/delete", {id: data.authorityId}, function (data) {
+                    $.post(contextPath + "/authorities/delete", {id: data.authorityId}, function (data) {
                         var dataObj = eval("(" + data + ")");
                         if (dataObj.result === 'success') {
                             layer.msg("删除成功");
-                            obj.del();
+                            // obj.del();
+                            parent.register.userTable.reload({});
                         } else {
                             layer.msg("删除失败");
                         }
@@ -52,9 +55,10 @@ layui.use(['jquery', 'laypage', 'table', 'layer', 'element', 'laydate'], functio
                 }
             });
         } else if (layEvent === 'edit') { //编辑;
+            console.info(data);
             parent.layer.open({
                 type: 2,
-                content: ['/authorities/info?id=' + data.authorityId, 'no'],
+                content: [contextPath + '/authorities/info?id=' + data.authorityId, 'no'],
                 title: false,
                 shade: 0,
                 btn: ['确认', '取消'],
@@ -67,10 +71,15 @@ layui.use(['jquery', 'laypage', 'table', 'layer', 'element', 'laydate'], functio
                     var editDoc = editFrame.contentDocument;
                     var endDate = $("#endDate", editDoc).val();
                     var remark = $("#remark", editDoc).val();
-                    console.info(endDate + " " + remark);
-                    $.post('/authorities/update', {end: endDate, id: data.authorityId, remark: remark}, function (val) {
+                    $.post(contextPath + '/authorities/update', {
+                        end: endDate,
+                        id: data.authorityId,
+                        remark: remark
+                    }, function (val) {
                         var dataObj = eval("(" + val + ")");
                         if (dataObj.result === 'success') {
+                            console.info(endDate, remark);
+                            console.info(obj.data);
                             obj.update({
                                 endDate: endDate,
                                 remark: remark
@@ -92,7 +101,7 @@ layui.use(['jquery', 'laypage', 'table', 'layer', 'element', 'laydate'], functio
         //用于关闭自身
         parent.register.addIndex = parent.layer.open({
             type: 2,
-            content: ['/authorities/add', 'no'],
+            content: [contextPath + '/authorities/add', 'no'],
             title: '添加人员',
             area: ['500', '540'],
             resize: false,

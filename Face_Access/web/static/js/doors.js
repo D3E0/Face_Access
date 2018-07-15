@@ -5,7 +5,7 @@ layui.use(['jquery', 'laypage', 'table', 'layer', 'element', 'laydate'], functio
     layer.load();
     var tableIns=table.render({
         elem: '#doorTable'
-        , url: '/doorsjson'
+        , url: contextPath + '/doorsjson'
         , page: true
         , cols: [[
             {field: 'Id', title: '门号', align: "center"}
@@ -34,7 +34,7 @@ layui.use(['jquery', 'laypage', 'table', 'layer', 'element', 'laydate'], functio
                 , btn2: function () {
                     layer.msg("确认删除");
                     obj.del();
-                    $.post("/deldoor",
+                    $.post(contextPath +"/deldoor",
                         {
                             id:data.Id
                         },
@@ -46,7 +46,7 @@ layui.use(['jquery', 'laypage', 'table', 'layer', 'element', 'laydate'], functio
         } else if (layEvent === 'edit') { //编辑;
             layer.open({
                 type: 2,
-                content: ['/updatedoorview?id=' + data.Id+ '&location=' + data.Location+ '&ip=' + data.Ip+ '&status=' + data.Status, 'no'],
+                content: [contextPath + '/updatedoorview?id=' + data.Id+ '&location=' + data.Location+ '&ip=' + data.Ip+ '&status=' + data.Status, 'no'],
                 title: "修改信息",
                 shade: 0,
                 btn: ['确认', '取消'],
@@ -69,7 +69,7 @@ layui.use(['jquery', 'laypage', 'table', 'layer', 'element', 'laydate'], functio
                         layer.msg("请输入正确的ip地址");
                         return false
                     }
-                    $.post("/updatedoor",
+                    $.post(contextPath + "/updatedoor",
                         {
                             "Content-Type:text/html;charset":"utf8",
                             id:id,
@@ -95,7 +95,7 @@ layui.use(['jquery', 'laypage', 'table', 'layer', 'element', 'laydate'], functio
     $("#add").click(function () {
         layer.open({
             type: 2,
-            content: ['/adddoorview', 'no'],
+            content: [contextPath + '/adddoorview', 'no'],
             title: '添加门禁',
             btn: ['确认', '取消'],
             area: ['500', '580'],
@@ -118,7 +118,7 @@ layui.use(['jquery', 'laypage', 'table', 'layer', 'element', 'laydate'], functio
                     layer.msg("请输入正确的ip地址");
                     return false;
                 }
-                $.post("/adddoor",
+                $.post(contextPath + "/adddoor",
                     {
                         "Content-Type:text/html;charset":"utf8",
                         id:id,

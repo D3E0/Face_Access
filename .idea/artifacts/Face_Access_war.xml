@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="Face_Access:war">
+    <output-path>$PROJECT_DIR$/out/artifacts/Face_Access_war</output-path>
+    <root id="archive" name="Face_Access_war.war">
+      <element id="artifact" artifact-name="Face_Access:war exploded" />
+    </root>
+  </artifact>
+</component>

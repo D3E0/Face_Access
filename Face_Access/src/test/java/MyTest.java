@@ -30,8 +30,39 @@ import java.text.SimpleDateFormat;
 import java.util.Base64;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Properties;
 
 public class MyTest {
+
+    @Test
+    public void testAddAuthority() {
+        AuthorityDao authorityDao = new AuthorityDaoImp();
+
+        int start = 10;
+        int end = 10;
+        int id = 62;
+        for (int i = 0; i < 19; i++) {
+            AuthorityEntity entity = new AuthorityEntity(id++, 90606);
+            String startDate = "2018-05-" + start++;
+            String endDate = "2018-08-" + end++;
+            Date startSqlDate = DateParse.stringToSql(startDate);
+            Date endSqlDate = DateParse.stringToSql(endDate);
+            entity.setStartDate(startSqlDate);
+            entity.setEndDate(endSqlDate);
+            authorityDao.addAuthority(entity);
+        }
+    }
+
+    @Test
+    public void testOS() {
+        Properties props = System.getProperties(); //系统属性
+        System.out.println("操作系统的名称：" + props.getProperty("os.name"));
+        System.out.println("文件分隔符：" + props.getProperty("file.separator"));
+        System.out.println("用户的账户名称：" + props.getProperty("user.name"));
+        System.out.println("用户的主目录：" + props.getProperty("user.home"));
+        String path = props.getProperty("user.home");
+        System.out.println("用户的当前工作目录：" + props.getProperty("user.dir"));
+    }
 
     @Test
     public void testBase64() {

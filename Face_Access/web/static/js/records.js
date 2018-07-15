@@ -3,23 +3,23 @@ layui.use(['jquery', 'laypage', 'table', 'layer', 'element', 'laydate'], functio
         , table = layui.table, layer = layui.layer
         , element = layui.element;
     layer.load();
-    tableIns=table.render({
+    tableIns = table.render({
         elem: '#recordTable'
-        , url: '/recordsjson'
+        , url: contextPath + '/recordsjson'
         , page: true
-        ,limit:10
-        ,limits:[5, 10, 20, 30, 40, 50]
+        , limit: 10
+        , limits: [5, 10, 20, 30, 40, 50]
         , cols: [[
             // {field: 'Id', title: 'ID', align: "center"}
             // , {field: 'doorId', title: '门的id', align: "center"}
-             {field: 'doorLocation', title: '门的位置', align: "center"}
+            {field: 'doorLocation', title: '门的位置', align: "center"}
             // , {field: 'userID', title: '用户id', align: "center"}
             , {field: 'userName', title: '用户名', align: "center"}
             , {field: 'openDate', title: '开门日期', align: "center"}
             , {field: 'openResult', title: '结果', align: "center"}
             , {fixed: 'right', title: '操作', align: 'center', toolbar: '#toolBar'}
         ]],
-        done:function(res, curr, count){
+        done: function (res, curr, count) {
             layer.closeAll('loading');
         }
     });
@@ -27,6 +27,7 @@ layui.use(['jquery', 'laypage', 'table', 'layer', 'element', 'laydate'], functio
     table.on('tool(recordTable)', function (obj) {
         var data = obj.data; //获得当前行数据
         var layEvent = obj.event; //获得 lay-event 对应的值
+        var path = contextPath + '/static/images/666.jpg';
         if (layEvent === 'showpic') {
             layer.open({
                 type: 1,
@@ -34,17 +35,17 @@ layui.use(['jquery', 'laypage', 'table', 'layer', 'element', 'laydate'], functio
                 closeBtn: 0,
                 shadeClose: true,
                 offset: 'auto',
-                content: '<img src="/static/images/666.jpg" style="width: 100%;"/>'
+                content: '<img src=' + path + ' style="width: 100%;"/>'
             });
         }
     });
     $("#searchbtn").click(function () {
-        var txt=$("#searchtxt").val();
+        var txt = $("#searchtxt").val();
         tableIns.reload({
             where: { //设定异步数据接口的额外参数，任意设
-                keyword:txt
+                keyword: txt
             }
-            ,page: {
+            , page: {
                 curr: 1 //重新从第 1 页开始
             }
         });
@@ -52,18 +53,18 @@ layui.use(['jquery', 'laypage', 'table', 'layer', 'element', 'laydate'], functio
     var lastTime;
     $("#searchtxt").keyup(function (event) {
         lastTime = event.timeStamp;
-        setTimeout(function(){
-            if(lastTime - event.timeStamp == 0){
-                var txt=$("#searchtxt").val();
+        setTimeout(function () {
+            if (lastTime - event.timeStamp == 0) {
+                var txt = $("#searchtxt").val();
                 tableIns.reload({
                     where: { //设定异步数据接口的额外参数，任意设
-                        keyword:txt
+                        keyword: txt
                     }
-                    ,page: {
+                    , page: {
                         curr: 1 //重新从第 1 页开始
                     }
                 });
             }
-        },100);
+        }, 100);
     });
 });
