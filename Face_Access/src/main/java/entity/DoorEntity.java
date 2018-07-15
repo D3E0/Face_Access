@@ -67,15 +67,27 @@ public class DoorEntity implements Serializable {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
 
         DoorEntity that = (DoorEntity) o;
 
-        if (doorId != that.doorId) return false;
-        if (doorLocation != null ? !doorLocation.equals(that.doorLocation) : that.doorLocation != null) return false;
-        if (doorIp != null ? !doorIp.equals(that.doorIp) : that.doorIp != null) return false;
-        if (doorStatus != null ? !doorStatus.equals(that.doorStatus) : that.doorStatus != null) return false;
+        if (doorId != that.doorId) {
+            return false;
+        }
+        if (doorLocation != null ? !doorLocation.equals(that.doorLocation) : that.doorLocation != null) {
+            return false;
+        }
+        if (doorIp != null ? !doorIp.equals(that.doorIp) : that.doorIp != null) {
+            return false;
+        }
+        if (doorStatus != null ? !doorStatus.equals(that.doorStatus) : that.doorStatus != null) {
+            return false;
+        }
 
         return true;
     }

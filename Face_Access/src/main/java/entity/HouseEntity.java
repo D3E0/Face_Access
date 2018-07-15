@@ -71,14 +71,21 @@ public class HouseEntity implements Serializable {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
 
         HouseEntity that = (HouseEntity) o;
 
-        if (houseId != that.houseId) return false;
-        if (housePassword != null ? !housePassword.equals(that.housePassword) : that.housePassword != null)
+        if (houseId != that.houseId) {
             return false;
+        }
+        if (housePassword != null ? !housePassword.equals(that.housePassword) : that.housePassword != null) {
+            return false;
+        }
 
         return true;
     }

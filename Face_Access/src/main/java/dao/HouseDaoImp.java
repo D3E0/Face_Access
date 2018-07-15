@@ -76,7 +76,9 @@ public class HouseDaoImp implements HouseDao {
             tx.commit();
         }
         catch (Exception e) {
-            if (tx!=null) tx.rollback();
+            if (tx!=null) {
+                tx.rollback();
+            }
             e.printStackTrace();
         }finally {
             session.close();
@@ -96,7 +98,9 @@ public class HouseDaoImp implements HouseDao {
             tx.commit();
         }
         catch (Exception e) {
-            if (tx!=null) tx.rollback();
+            if (tx!=null) {
+                tx.rollback();
+            }
             e.printStackTrace();
             back="fail";
         }finally {
@@ -116,7 +120,9 @@ public class HouseDaoImp implements HouseDao {
             tx.commit();
         } catch (Exception e) {
             back="fail";
-            if (tx != null) tx.rollback();
+            if (tx != null) {
+                tx.rollback();
+            }
             e.printStackTrace();
         } finally {
             session.close();
@@ -132,15 +138,18 @@ public class HouseDaoImp implements HouseDao {
         try {
             tx = session.beginTransaction();
             HouseEntity houseEntity=session.get(HouseEntity.class,house.getHouseId());
-            if (house.getHousePassword()!=null)
+            if (house.getHousePassword()!=null) {
                 houseEntity.setHousePassword(house.getHousePassword());
+            }
             houseEntity.setDoor(house.getDoor());
             houseEntity.setUser(house.getUser());
             session.update(houseEntity);
             tx.commit();
         }
         catch (Exception e) {
-            if (tx!=null) tx.rollback();
+            if (tx!=null) {
+                tx.rollback();
+            }
             e.printStackTrace();
             back="fail";
         }finally {
@@ -160,7 +169,9 @@ public class HouseDaoImp implements HouseDao {
             tx.commit();
         }
         catch (Exception e) {
-            if (tx!=null) tx.rollback();
+            if (tx!=null) {
+                tx.rollback();
+            }
             e.printStackTrace();
         }finally {
             session.close();

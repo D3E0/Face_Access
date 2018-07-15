@@ -39,7 +39,9 @@ public class DoorDaoImp implements DoorDao {
             tx.commit();
         } catch (Exception e) {
             back="fail";
-            if (tx != null) tx.rollback();
+            if (tx != null) {
+                tx.rollback();
+            }
             e.printStackTrace();
         } finally {
             session.close();
@@ -60,7 +62,9 @@ public class DoorDaoImp implements DoorDao {
             tx.commit();
         }
         catch (Exception e) {
-            if (tx!=null) tx.rollback();
+            if (tx!=null) {
+                tx.rollback();
+            }
             e.printStackTrace();
             back="fail";
         }finally {
@@ -90,7 +94,9 @@ public class DoorDaoImp implements DoorDao {
             tx.commit();
         }
         catch (Exception e) {
-            if (tx!=null) tx.rollback();
+            if (tx!=null) {
+                tx.rollback();
+            }
             e.printStackTrace();
             back="fail";
         }finally {
@@ -110,7 +116,9 @@ public class DoorDaoImp implements DoorDao {
             tx.commit();
         }
         catch (Exception e) {
-            if (tx!=null) tx.rollback();
+            if (tx!=null) {
+                tx.rollback();
+            }
             e.printStackTrace();
         }finally {
             session.close();
@@ -135,7 +143,9 @@ public class DoorDaoImp implements DoorDao {
             tx.commit();
         }
         catch (Exception e) {
-            if (tx!=null) tx.rollback();
+            if (tx!=null) {
+                tx.rollback();
+            }
             e.printStackTrace();
         }finally {
             session.close();
@@ -162,7 +172,9 @@ public class DoorDaoImp implements DoorDao {
             tx.commit();
         }
         catch (Exception e) {
-            if (tx!=null) tx.rollback();
+            if (tx!=null) {
+                tx.rollback();
+            }
             e.printStackTrace();
         }finally {
             session.close();
@@ -181,7 +193,9 @@ public class DoorDaoImp implements DoorDao {
             tx.commit();
         }
         catch (Exception e) {
-            if (tx!=null) tx.rollback();
+            if (tx!=null) {
+                tx.rollback();
+            }
             e.printStackTrace();
         }finally {
             session.close();

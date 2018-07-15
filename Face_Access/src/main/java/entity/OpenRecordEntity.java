@@ -94,16 +94,30 @@ public class OpenRecordEntity {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
 
         OpenRecordEntity that = (OpenRecordEntity) o;
 
-        if (openId != that.openId) return false;
-        if (userId != null ? !userId.equals(that.userId) : that.userId != null) return false;
-        if (doorId != null ? !doorId.equals(that.doorId) : that.doorId != null) return false;
-        if (openDate != null ? !openDate.equals(that.openDate) : that.openDate != null) return false;
-        if (openResult != null ? !openResult.equals(that.openResult) : that.openResult != null) return false;
+        if (openId != that.openId) {
+            return false;
+        }
+        if (userId != null ? !userId.equals(that.userId) : that.userId != null) {
+            return false;
+        }
+        if (doorId != null ? !doorId.equals(that.doorId) : that.doorId != null) {
+            return false;
+        }
+        if (openDate != null ? !openDate.equals(that.openDate) : that.openDate != null) {
+            return false;
+        }
+        if (openResult != null ? !openResult.equals(that.openResult) : that.openResult != null) {
+            return false;
+        }
 
         return true;
     }

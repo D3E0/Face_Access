@@ -28,10 +28,11 @@ public class DoorController {
     @ResponseBody
     public String showDoorJSon(@RequestParam(value = "page",defaultValue = "1")String page,@RequestParam(value = "limit",defaultValue = "10")String limit,@RequestParam (value = "keyword",defaultValue = "")String keyword) throws UnsupportedEncodingException {
         List<DoorEntity> list=null;
-        if (keyword.equals(""))
+        if (keyword.equals("")) {
             list= doorService.getDoorList(Integer.parseInt(page),Integer.parseInt(limit));
-        else
+        } else {
             list=doorService.getDoorListForSearch(Integer.parseInt(page),Integer.parseInt(limit),keyword);
+        }
         JSONArray array = new JSONArray();
         for (DoorEntity entity : list) {
             JSONObject object = new JSONObject();

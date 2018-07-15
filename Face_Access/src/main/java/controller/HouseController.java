@@ -46,10 +46,11 @@ public class HouseController {
     @ResponseBody
     public String gethouses(@RequestParam(value = "page",defaultValue = "1")String page, @RequestParam(value = "limit",defaultValue = "10")String limit,@RequestParam (value = "keyword",defaultValue = "")String keyword){
         List<HouseEntity> list =null;
-        if (keyword.equals(""))
-        list= houseService.getHouselist(Integer.parseInt(page),Integer.parseInt(limit));//Integer.parseInt(page),Integer.parseInt(limit)
-        else
+        if (keyword.equals("")) {
+            list= houseService.getHouselist(Integer.parseInt(page),Integer.parseInt(limit));//Integer.parseInt(page),Integer.parseInt(limit)
+        } else {
             list=houseService.getHouseListForSearch(Integer.parseInt(page),Integer.parseInt(limit),keyword);
+        }
         JSONArray array = new JSONArray();
         for (HouseEntity entity : list) {
             JSONObject object = new JSONObject();
@@ -88,8 +89,9 @@ public class HouseController {
         houseEntity.setHouseId(Integer.parseInt(houseid));
         houseEntity.setDoor(doorEntity);
         houseEntity.setUser(userEntity);
-        if (housepassword!=null)
-        houseEntity.setHousePassword(EncryptInfo.MD5(housepassword));
+        if (housepassword!=null) {
+            houseEntity.setHousePassword(EncryptInfo.MD5(housepassword));
+        }
         return houseService.addHouse(houseEntity);
     }
     @RequestMapping("/updatehouseview")
@@ -113,8 +115,9 @@ public class HouseController {
         houseEntity.setHouseId(Integer.parseInt(houseid));
         houseEntity.setDoor(doorEntity);
         houseEntity.setUser(userEntity);
-        if (housepassword!=null)
+        if (housepassword!=null) {
             houseEntity.setHousePassword(EncryptInfo.MD5(housepassword));
+        }
         return houseService.updateHousepwd(houseEntity);
     }
 

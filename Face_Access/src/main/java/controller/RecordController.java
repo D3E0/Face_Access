@@ -31,10 +31,11 @@ public class RecordController {
     @ResponseBody
     public String recordsjson(@RequestParam (value = "page",defaultValue = "1")String page,@RequestParam (value = "limit",defaultValue = "5")String limit,@RequestParam (value = "keyword",defaultValue = "")String keyword){
         List<OpenRecordEntity> list=null;
-        if (keyword.equals(""))
+        if (keyword.equals("")) {
             list = recordService.getRecordlist(Integer.parseInt(page),Integer.parseInt(limit));
-        else
+        } else {
             list=recordService.getRecordListForSearch(Integer.parseInt(page),Integer.parseInt(limit),keyword);
+        }
         JSONArray array = new JSONArray();
         DateFormat dateFormat=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         for (OpenRecordEntity entity : list) {
